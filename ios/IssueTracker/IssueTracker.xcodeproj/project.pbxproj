@@ -23,6 +23,7 @@
 		AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA443266F3AD900855F20 /* IssueCell.swift */; };
 		AECEA446266F3AD900855F20 /* IssueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AECEA444266F3AD900855F20 /* IssueCell.xib */; };
 		AED83A4926772D6600C36CA4 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83A4826772D6600C36CA4 /* NetworkService.swift */; };
+		AED83A4B2677453A00C36CA4 /* NetworkComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83A4A2677453A00C36CA4 /* NetworkComponents.swift */; };
 		AEE2A4D32670A00300FA6274 /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE2A4D22670A00300FA6274 /* IssueViewModel.swift */; };
 		AEE2A4D52670A8C000FA6274 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE2A4D42670A8C000FA6274 /* LabelView.swift */; };
 		FF89A95E266F0BD000983577 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A95D266F0BD000983577 /* AppDelegate.swift */; };
@@ -86,6 +87,7 @@
 		AECEA443266F3AD900855F20 /* IssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
 		AECEA444266F3AD900855F20 /* IssueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueCell.xib; sourceTree = "<group>"; };
 		AED83A4826772D6600C36CA4 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		AED83A4A2677453A00C36CA4 /* NetworkComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkComponents.swift; sourceTree = "<group>"; };
 		AEE2A4D22670A00300FA6274 /* IssueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
 		AEE2A4D42670A8C000FA6274 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		FF89A95A266F0BD000983577 /* IssueTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IssueTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				AED83A4826772D6600C36CA4 /* NetworkService.swift */,
+				AED83A4A2677453A00C36CA4 /* NetworkComponents.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED83A4B2677453A00C36CA4 /* NetworkComponents.swift in Sources */,
 				AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */,
 				AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */,
 				AECEA442266F38D000855F20 /* IssueDataSource.swift in Sources */,
