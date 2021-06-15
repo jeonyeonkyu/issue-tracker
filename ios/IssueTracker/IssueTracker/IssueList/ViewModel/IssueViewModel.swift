@@ -31,10 +31,8 @@ extension IssueViewModel {
             switch result {
             case .success(let issues):
                 self.issues = issues
-                print(issues)
             case .failure(let error):
                 self.error = error
-                print(error)
             }
         }
     }
