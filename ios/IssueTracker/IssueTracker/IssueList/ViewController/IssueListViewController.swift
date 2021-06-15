@@ -40,19 +40,11 @@ class IssueListViewController: UIViewController, ViewControllerIdentifierable {
     
     private var isCheckAll: Bool!
     private var viewModel: IssueViewModel!
-<<<<<<< HEAD
-    private var dataSource: IssueDataSource!
     private var cancelBag = Set<AnyCancellable>()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setViewModel()
-=======
     private lazy var dataSource = IssueDataSource(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
->>>>>>> iOS/main
         setting()
         viewModel.requestIssues()
         bind()
@@ -64,16 +56,10 @@ class IssueListViewController: UIViewController, ViewControllerIdentifierable {
 
 extension IssueListViewController {
     
-<<<<<<< HEAD
-    func setViewModel() {
-        viewModel = IssueViewModel()
-        dataSource = IssueDataSource(viewModel: viewModel)
-=======
     private func setting() {
         setTableView()
         setNavigation()
         setUI()
->>>>>>> iOS/main
     }
     
     private func setTableView() {
