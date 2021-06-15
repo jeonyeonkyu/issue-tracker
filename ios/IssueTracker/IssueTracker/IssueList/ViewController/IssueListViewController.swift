@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class IssueListViewController: UIViewController {
     
@@ -23,11 +24,14 @@ class IssueListViewController: UIViewController {
     
     private var viewModel: IssueViewModel!
     private var dataSource: IssueDataSource!
+    private var cancelBag = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setViewModel(with: IssueListMock.data)
+        setViewModel()
         setting()
+        viewModel.requestIssues()
+        bind()
     }
     
 }
@@ -36,8 +40,8 @@ class IssueListViewController: UIViewController {
 
 extension IssueListViewController {
     
-    func setViewModel(with issues: [Issue]) {
-        viewModel = IssueViewModel(issues: issues)
+    func setViewModel() {
+        viewModel = IssueViewModel()
         dataSource = IssueDataSource(viewModel: viewModel)
     }
     
@@ -51,6 +55,23 @@ extension IssueListViewController {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    private func bind() {
+        viewModel.$issues.receive(on: DispatchQueue.main)
+            .sink { issues in
+                self.dataSource = IssueDataSource(viewModel: self.viewModel)
+                self.issueTableView.dataSource = self.dataSource
+                self.issueTableView.reloadData()
+            }
+            .store(in: &cancelBag)
+        
+        viewModel.$error
+            .receive(on: DispatchQueue.main)
+            .sink { error in
+                guard let error = error else { return }
+                print(error) ///사용자에게 에러 표시하기
+            }.store(in: &cancelBag)
     }
     
 }
