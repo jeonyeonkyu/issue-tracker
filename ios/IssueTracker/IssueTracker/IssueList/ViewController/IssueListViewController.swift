@@ -46,7 +46,6 @@ class IssueListViewController: UIViewController, ViewControllerIdentifierable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
-        viewModel.requestIssues()
         bind()
     }
     

@@ -13,49 +13,34 @@ class IssueViewModel {
     @Published var issues: [Issue]
     @Published var error: Error!
     
-    private var networkManager: NetworkManageable
     private var fetchIssueListUseCase: FetchIssueListUseCase
-    private var cancelBag = Set<AnyCancellable>()  
 
-    init(_ fetchIssueListUseCase: FetchIssueListUseCase, networkManager: NetworkManageable = NetworkManager()) {
+    init(_ fetchIssueListUseCase: FetchIssueListUseCase) {
         self.fetchIssueListUseCase = fetchIssueListUseCase
-        self.networkManager = networkManager
         self.issues = []
-        load()
+        loadIssues()
     }
-    
-    private func load() {
-        fetchIssueListUseCase.excute { result in
-            switch result {
-            case .success(let issues):
-                self.issues = issues
-            case .failure(let error):
-                self.error = error
-            }
-        }
-    }
+
 }
 
 
 extension IssueViewModel {
+    
+    private func loadIssues() {
+        fetchIssueListUseCase.excute { result in
+            switch result {
+            case .success(let issues):
+                self.issues = issues
+                print(issues)
+            case .failure(let error):
+                self.error = error
+                print(error)
+            }
+        }
+    }
 
     func deleteIssue(at index: Int) {
         issues.remove(at: index)
-    }
-    
-}
-
-
-extension IssueViewModel  {
-    
-    func requestIssues() {
-        networkManager.get(path: "/issues", type: Issues.self)
-            .receive(on: DispatchQueue.main)
-            .sink { error in
-                self.error = error as? Error
-            } receiveValue: { issues in
-                self.issues = issues.issues
-            }.store(in: &cancelBag)
     }
     
 }

@@ -5,22 +5,42 @@
 //  Created by 지북 on 2021/06/15.
 //
 
-import Foundation
 import UIKit
+import Combine
 
 protocol FetchIssueListUseCase {
-    
     func excute(completion: @escaping (Result<[Issue], Error>) -> Void)
 }
 
+
 class DefaultFetchIssueListUseCase: FetchIssueListUseCase {
-    func excute(completion: @escaping (Result<[Issue], Error>) -> Void) {
-        // 기준이 될 UseCase 입니다. NetworkService를 가지고 있으며 Network 통신을 이용한 Issue List Fetch 가 이루어 져야 합니다.
+    
+    private var networkManager: NetworkManageable
+    private var cancelBag = Set<AnyCancellable>()
+    
+    init(networkManager: NetworkManageable) {
+        self.networkManager = networkManager
     }
+    
+    func excute(completion: @escaping (Result<[Issue], Error>) -> Void) {
+        networkManager.get(path: "/issues", type: Issues.self)
+            .receive(on: DispatchQueue.main)
+            .sink { error in
+                guard let error = error as? Error else { return }
+                completion(.failure(error))
+            } receiveValue: { issues in
+                completion(.success(issues.issues))
+            }.store(in: &cancelBag)
+    }
+    
 }
 
+
 class MockFetchIssueListUseCase: FetchIssueListUseCase {
+    
     func excute(completion: @escaping (Result<[Issue], Error>) -> Void) {
-        completion(.success(IssueListMock.data))
+//        completion(.success(IssueListMock.data))
+        //MARK: mock data 수정 필요
     }
+    
 }
