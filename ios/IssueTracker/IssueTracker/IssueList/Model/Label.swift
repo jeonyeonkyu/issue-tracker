@@ -13,3 +13,7 @@ struct Label: Codable {
     var description: String?
     var color: String
 }
+
+struct Labels: Codable {
+    var labels: [Label]
+}

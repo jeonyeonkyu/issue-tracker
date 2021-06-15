@@ -12,11 +12,16 @@ struct Issue: Codable {
     var number: Int
     var title: String
     var description: String
-    var isOpened: Bool
-    var isMyCommentExist: Bool
-    var timeStamp: String
-    var writer: User
-    var assignees: [User]?
-    var labels: [Label]?
+    var hasSameAuthorComments: Bool
+    var createDateTime: String
+    var closed: Bool
+    var author: User
+    var assignees: Users?
+    var labels: Labels?
     var milestone: Milestone?
 }
+
+struct Issues: Codable {
+    var issues: [Issue]
+}
+

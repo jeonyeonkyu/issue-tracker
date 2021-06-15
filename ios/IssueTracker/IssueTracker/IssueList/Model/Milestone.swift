@@ -11,7 +11,8 @@ struct Milestone: Codable {
     var id: Int
     var name: String
     var description: String?
-    var isOpend: Bool
+    var dueDate: String
     var openedIssueCount: Int
     var closedIssueCount: Int
+    var closed: Bool
 }

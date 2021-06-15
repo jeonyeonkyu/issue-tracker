@@ -9,6 +9,11 @@ import Foundation
 
 struct User: Codable {
     var id: Int
+    var email: String
     var name: String
-    var imageURL: String?
+//    var imageURL: String?
+}
+
+struct Users: Codable {
+    var users: [User]
 }
