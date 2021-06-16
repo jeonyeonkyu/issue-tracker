@@ -289,11 +289,11 @@
 		FF89A95C266F0BD000983577 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
-				FF76F8C226786FD000342633 /* Application */,
 				FF89A963266F0BD000983577 /* Main.storyboard */,
+				FF76F8C226786FD000342633 /* Application */,
 				FF89A98E266F116000983577 /* IssueList */,
-				FF89A98D266F109800983577 /* SupportingFiles */,
 				AED83A4726772D1F00C36CA4 /* Network */,
+				FF89A98D266F109800983577 /* SupportingFiles */,
 			);
 			path = IssueTracker;
 			sourceTree = "<group>";
