@@ -25,7 +25,7 @@ extension IssueCell {
         descriptionLabel.text = issue.description
         descriptionLabel.addLineSpacing()
         configureMilestone(with: issue.milestone)
-        fillLabels(with: issue.labels?.labels ?? [])
+        fillLabels(with: issue.labels ?? [])
     }
     
     private func fillLabels(with labels: [Label]) {

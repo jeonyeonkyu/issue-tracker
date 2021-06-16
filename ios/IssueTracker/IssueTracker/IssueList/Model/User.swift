@@ -13,7 +13,3 @@ struct User: Codable {
     var name: String
 //    var imageURL: String?
 }
-
-struct Users: Codable {
-    var users: [User]
-}

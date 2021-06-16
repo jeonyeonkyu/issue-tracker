@@ -16,12 +16,7 @@ struct Issue: Codable {
     var createDateTime: String
     var closed: Bool
     var author: User
-    var assignees: Users?
-    var labels: Labels?
+    var assignees: [User]?
+    var labels: [Label]?
     var milestone: Milestone?
 }
-
-struct Issues: Codable {
-    var issues: [Issue]
-}
-
