@@ -23,15 +23,15 @@ class DefaultFetchIssueListUseCase: FetchIssueListUseCase {
     }
     
     func excute(completion: @escaping (Result<[Issue], NetworkError>) -> Void) {
-        networkManager.get(path: "/issues", type: Issues.self)
+        networkManager.get(path: "/issues", type: [Issue].self)
             .receive(on: DispatchQueue.main)
             .sink { error in
-                print("❣️", error)
-                guard let error = error as? Error else { return }
-                print("📮👉🏻", error)
-                completion(.failure(error as! NetworkError))
+                switch error {
+                case .failure(let error): completion(.failure(error))
+                case .finished: print("🔥")
+                }
             } receiveValue: { issues in
-                completion(.success(issues.issues))
+                completion(.success(issues))
             }.store(in: &cancelBag)
     }
     
