@@ -97,7 +97,7 @@ extension IssueListViewController {
     }
     
     private func bind() {
-        viewModel.$issues.receive(on: DispatchQueue.main)
+        viewModel.fetchIssueList().receive(on: DispatchQueue.main)
             .sink { issues in
                 self.dataSource = IssueDataSource(viewModel: self.viewModel)
                 self.issueTableView.dataSource = self.dataSource
@@ -105,10 +105,8 @@ extension IssueListViewController {
             }
             .store(in: &cancelBag)
         
-        viewModel.$error
-            .receive(on: DispatchQueue.main)
+        viewModel.fetchError().receive(on: DispatchQueue.main)
             .sink { error in
-                guard let error = error else { return }
                 print(error) ///사용자에게 에러 표시하기
             }.store(in: &cancelBag)
     }

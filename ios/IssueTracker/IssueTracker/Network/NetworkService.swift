@@ -28,27 +28,48 @@ class NetworkManager {
 extension NetworkManager: NetworkManageable {
     
     func get<T: Decodable>(path: String, type: T.Type) -> AnyPublisher<T, NetworkError> {
-        let url = EndPoint.url(path: path)!
-        
-        return self.session.dataTaskPublisher(for: url)
-            .mapError{ error -> NetworkError in
-                return NetworkError.BadURL
-            }
-            .tryMap { element -> Data in
-                guard let httpResponse = element.response as? HTTPURLResponse else { throw NetworkError.Unknown }
-                let statusCode = httpResponse.statusCode
-                if statusCode != 200 { throw NetworkError.Status(statusCode) }
-                return element.data
-            }
-            .decode(type: T.self, decoder: JSONDecoder())
-            .mapError{ error -> NetworkError in
-                return NetworkError.DecodingError(error)
-            }
-            .eraseToAnyPublisher()
+        guard let url = EndPoint.url(path: path) else {
+            return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
+        }
+        let urlRequest = URLRequest(url: url)
+        return request(with: urlRequest, type: type)
     }
     
     func post<T: Encodable, R: Decodable>(path: String, data: T, result: R.Type) -> AnyPublisher<R, NetworkError> {
-        let url = EndPoint.url(path: path)!
+        guard let url = EndPoint.url(path: path) else {
+            return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
+        }
+        return request(url: url, data: data, result: result)
+    }
+    
+}
+
+
+extension NetworkManager {
+    
+    private func request<T: Decodable>(with request: URLRequest, type: T.Type) -> AnyPublisher<T, NetworkError> {
+        
+        return self.session.dataTaskPublisher(for: request)
+            .mapError { _ in
+                NetworkError.BadRequest
+            }
+            .flatMap { (data, response) -> AnyPublisher<T, NetworkError> in
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    return Fail(error: NetworkError.BadResponse).eraseToAnyPublisher()
+                }
+                guard 200..<300 ~= httpResponse.statusCode else {
+                    return Fail(error:NetworkError.Status(httpResponse.statusCode)).eraseToAnyPublisher()
+                }
+                return Just(data)
+                    .decode(type: T.self, decoder: JSONDecoder())
+                    .mapError { error in
+                        NetworkError.DecodingError(error)
+                    }.eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+        
+    private func request<T: Encodable, R: Decodable>(url: URL, data: T, result: R.Type) -> AnyPublisher<R, NetworkError> {
         
         return Just(data)
             .encode(encoder: JSONEncoder())
@@ -65,22 +86,8 @@ extension NetworkManager: NetworkManageable {
                 return request
             }
             .flatMap { request in
-                return self.session.dataTaskPublisher(for: request)
-                    .mapError{ error -> NetworkError in
-                        return NetworkError.BadURL
-                    }
-                    .tryMap { element in
-                        guard let httpResponse = element.response as? HTTPURLResponse else { throw NetworkError.Unknown }
-                        let statusCode = httpResponse.statusCode
-                        if statusCode != 200 { throw NetworkError.Status(statusCode) }
-                        return element.data
-                    }
-                    .decode(type: R.self, decoder: JSONDecoder())
-                    .mapError({ (error) -> NetworkError in
-                        return NetworkError.DecodingError(error)
-                    })
-            }
-            .eraseToAnyPublisher()
+                return self.request(with: request, type: R.self)
+            }.eraseToAnyPublisher()
     }
     
 }

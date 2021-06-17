@@ -28,7 +28,7 @@ class DefaultFetchIssueListUseCase: FetchIssueListUseCase {
             .sink { error in
                 switch error {
                 case .failure(let error): completion(.failure(error))
-                case .finished: print("🔥")
+                case .finished: break
                 }
             } receiveValue: { issues in
                 completion(.success(issues))
