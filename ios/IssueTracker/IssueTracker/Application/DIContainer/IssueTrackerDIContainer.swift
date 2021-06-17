@@ -9,12 +9,10 @@ import UIKit
 
 class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     
-    private func makeNetworkManager() -> NetworkManageable {
-        return NetworkManager()
-    }
+    private let networkManager = NetworkManager()
     
     private func makeFetchIssueListUseCase() -> FetchIssueListUseCase {
-        return DefaultFetchIssueListUseCase(networkManager: makeNetworkManager())
+        return DefaultFetchIssueListUseCase(networkManager: networkManager)
     }
     
     private func makeIssueListViewModel() -> IssueViewModel {
