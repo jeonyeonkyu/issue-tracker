@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Issue: Codable {
+struct Issue: Decodable {
     var id: Int
     var number: Int
     var title: String

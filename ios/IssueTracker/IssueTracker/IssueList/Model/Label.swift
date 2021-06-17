@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Label: Codable {
+struct Label: Decodable {
     var id: Int
     var name: String
     var description: String?

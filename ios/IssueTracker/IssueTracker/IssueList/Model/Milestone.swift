@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Milestone: Codable {
+struct Milestone: Decodable {
     var id: Int
     var name: String
     var description: String?
