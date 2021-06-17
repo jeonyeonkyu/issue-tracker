@@ -3,6 +3,8 @@ package com.codesquad.issuetracker.label.service;
 import com.codesquad.issuetracker.label.controller.LabelDummyData;
 import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.Labels;
+import com.codesquad.issuetracker.label.dto.LabelRequest;
+import com.codesquad.issuetracker.label.dto.LabelResponse;
 import com.codesquad.issuetracker.label.dto.LabelResponses;
 import com.codesquad.issuetracker.label.repository.LabelRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,6 +62,34 @@ class LabelServiceTest {
                                         .build()
                         ),
                         LabelDummyData.labelResponses()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("createProvider")
+    void create(Label given, LabelResponse expected) {
+        LabelRequest givenParameter = LabelRequest.from(given);
+
+        BDDMockito.given(labelRepository.save(givenParameter.toEntity()))
+                .willReturn(given);
+
+        LabelResponse actual = labelService.create(givenParameter);
+
+        then(actual).isEqualTo(expected);
+    }
+
+    @SuppressWarnings("unused")
+    static Stream<Arguments> createProvider() {
+        return Stream.of(
+                Arguments.of(
+                        Label.builder()
+                                .id(1L)
+                                .name("be")
+                                .description("label for backend")
+                                .color("#1679CF")
+                                .build(),
+                        LabelDummyData.labelBe()
                 )
         );
     }
