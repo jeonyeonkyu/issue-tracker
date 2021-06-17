@@ -12,4 +12,12 @@ public class Label {
     private String name;
     private String description;
     private String color;
+
+    public Label update(Label labelForUpdate) {
+        name = labelForUpdate.getName();
+        description = labelForUpdate.getDescription();
+        color = labelForUpdate.getColor();
+
+        return this;
+    }
 }

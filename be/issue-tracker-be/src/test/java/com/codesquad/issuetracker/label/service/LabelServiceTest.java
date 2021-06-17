@@ -15,9 +15,12 @@ import org.mockito.BDDMockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest(classes = {LabelService.class})
 class LabelServiceTest {
@@ -90,6 +93,58 @@ class LabelServiceTest {
                                 .color("#1679CF")
                                 .build(),
                         LabelDummyData.labelBe()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("updateProvider")
+    void update(Label given, LabelResponse expected) {
+        BDDMockito.given(labelRepository.readById(given.getId()))
+                .willReturn(Optional.of(
+                        Label.builder()
+                                .id(given.getId())
+                                .name("name to be updated")
+                                .color("#000000")
+                                .build()
+                ));
+
+        BDDMockito.given(labelRepository.save(given))
+                .willReturn(given);
+
+        LabelResponse actual = labelService.update(given.getId(), LabelRequest.from(given));
+
+        then(actual).isEqualTo(expected);
+    }
+
+    @SuppressWarnings("unused")
+    static Stream<Arguments> updateProvider() {
+        return Stream.of(
+                Arguments.of(
+                        Label.builder()
+                                .id(1L)
+                                .name("be")
+                                .description("label for backend")
+                                .color("#1679CF")
+                                .build(),
+                        LabelDummyData.labelBe()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("deleteProvider")
+    void delete(long given) {
+        labelService.delete(given);
+
+        verify(labelRepository, times(1)).deleteById(given);
+    }
+
+    @SuppressWarnings("unused")
+    static Stream<Arguments> deleteProvider() {
+        return Stream.of(
+                Arguments.of(
+                        1L
                 )
         );
     }

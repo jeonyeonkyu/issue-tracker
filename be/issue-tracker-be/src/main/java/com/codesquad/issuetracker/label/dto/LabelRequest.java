@@ -33,4 +33,12 @@ public class LabelRequest {
                        .color(color)
                        .build();
     }
+
+    public Label toEntity(long id) {
+        return Label.builder()
+                       .name(name)
+                       .description(description)
+                       .color(color)
+                       .build();
+    }
 }

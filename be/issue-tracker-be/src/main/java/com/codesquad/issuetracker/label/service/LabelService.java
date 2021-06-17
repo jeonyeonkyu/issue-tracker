@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.label.service;
 
+import com.codesquad.issuetracker.common.exception.EntityNotFoundException;
 import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.Labels;
 import com.codesquad.issuetracker.label.dto.LabelRequest;
@@ -25,5 +26,18 @@ public class LabelService {
         Label savedLabel = labelRepository.save(labelRequest.toEntity());
 
         return LabelResponse.from(savedLabel);
+    }
+
+    public LabelResponse update(long id, LabelRequest labelRequest) {
+        Label savedLabel = labelRepository.readById(id)
+                                   .orElseThrow(() -> new EntityNotFoundException());
+
+        Label updatedLabel = labelRepository.save(savedLabel.update(labelRequest.toEntity()));
+
+        return LabelResponse.from(updatedLabel);
+    }
+
+    public void delete(long id) {
+        labelRepository.deleteById(id);
     }
 }
