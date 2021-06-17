@@ -41,8 +41,7 @@ class DefaultFetchIssueListUseCase: FetchIssueListUseCase {
 class MockFetchIssueListUseCase: FetchIssueListUseCase {
     
     func excute(completion: @escaping (Result<[Issue], NetworkError>) -> Void) {
-//        completion(.success(IssueListMock.data))
-        //MARK: mock data 수정 필요
+        completion(.success(IssueListMock.data))
     }
     
 }

@@ -11,5 +11,5 @@ struct User: Decodable {
     var id: Int
     var email: String
     var name: String
-//    var imageURL: String?
+    var profileImage: String
 }
