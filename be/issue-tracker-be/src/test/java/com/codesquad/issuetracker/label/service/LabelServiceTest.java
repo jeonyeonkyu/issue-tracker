@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -34,6 +35,7 @@ class LabelServiceTest {
     void setUp() {
         labelService = new LabelService(labelRepository);
     }
+    
 
     @ParameterizedTest
     @MethodSource("readAllProvider")
@@ -79,7 +81,7 @@ class LabelServiceTest {
 
         LabelResponse actual = labelService.create(givenParameter);
 
-        then(actual).isEqualTo(expected);
+        thenVerifyLabel(actual, expected);
     }
 
     @SuppressWarnings("unused")
@@ -114,7 +116,7 @@ class LabelServiceTest {
 
         LabelResponse actual = labelService.update(given.getId(), LabelRequest.from(given));
 
-        then(actual).isEqualTo(expected);
+        thenVerifyLabel(actual, expected);
     }
 
     @SuppressWarnings("unused")
@@ -147,5 +149,12 @@ class LabelServiceTest {
                         1L
                 )
         );
+    }
+
+    private void thenVerifyLabel(LabelResponse actual, LabelResponse expected) {
+        assertThat(actual.getId()).isEqualTo(expected.getId());
+        assertThat(actual.getName()).isEqualTo(expected.getName());
+        assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
+        assertThat(actual.getColor()).isEqualTo(expected.getColor());
     }
 }
