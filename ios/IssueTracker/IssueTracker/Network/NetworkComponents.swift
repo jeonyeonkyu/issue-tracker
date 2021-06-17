@@ -27,7 +27,7 @@ enum HTTPMethodType {
 
 enum EndPoint {
     static let scheme = "https"
-    static let host   = "issue-tracker-swagger.herokuapp.comERROR"
+    static let host   = "issue-tracker-swagger.herokuapp.com"
     
     static func url(path: String) -> URL? {
         var components = URLComponents()

@@ -106,9 +106,23 @@ extension IssueListViewController {
             .store(in: &cancelBag)
         
         viewModel.fetchError().receive(on: DispatchQueue.main)
+            .dropFirst()
             .sink { error in
-                print(error) ///사용자에게 에러 표시하기
+                self.alertForNetwork(with: error)
             }.store(in: &cancelBag)
+    }
+    
+}
+
+//MARK:- NetworkError Handling
+
+extension IssueListViewController {
+    
+    private func alertForNetwork(with message: String) {
+        let alert = UIAlertController(title: "네트워크 에러 발생!", message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
