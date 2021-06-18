@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Issue {
+struct Issue: Decodable {
     let id: Int
     let number: Int
     let title: String
     let description: String
-    let isOpened: Bool
-    let isMyCommentExist: Bool
-    let timeStamp: String
-    let writer: User
+    let hasSameAuthorComments: Bool
+    let createDateTime: String
+    let closed: Bool
+    let author: User
     let assignees: [User]?
     let labels: [Label]?
     let milestone: Milestone?

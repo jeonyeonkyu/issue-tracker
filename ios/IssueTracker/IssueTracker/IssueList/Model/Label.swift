@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Label {
+struct Label: Decodable {
     let id: Int
     let name: String
     let description: String?

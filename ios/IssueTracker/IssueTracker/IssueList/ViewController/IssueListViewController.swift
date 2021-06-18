@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
     
@@ -39,11 +40,13 @@ final class IssueListViewController: UIViewController, ViewControllerIdentifiera
     
     private var isCheckAll: Bool!
     private var viewModel: IssueViewModel!
+    private var cancelBag = Set<AnyCancellable>()
     private lazy var dataSource = IssueDataSource(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
+        bind()
     }
     
 }
@@ -91,6 +94,35 @@ extension IssueListViewController {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    private func bind() {
+        viewModel.fetchIssueList().receive(on: DispatchQueue.main)
+            .sink { issues in
+                self.dataSource = IssueDataSource(viewModel: self.viewModel)
+                self.issueTableView.dataSource = self.dataSource
+                self.issueTableView.reloadData()
+            }
+            .store(in: &cancelBag)
+        
+        viewModel.fetchError().receive(on: DispatchQueue.main)
+            .dropFirst()
+            .sink { error in
+                self.alertForNetwork(with: error)
+            }.store(in: &cancelBag)
+    }
+    
+}
+
+//MARK:- NetworkError Handling
+
+extension IssueListViewController {
+    
+    private func alertForNetwork(with message: String) {
+        let alert = UIAlertController(title: "네트워크 에러 발생!", message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

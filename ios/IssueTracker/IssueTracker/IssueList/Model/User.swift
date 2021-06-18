@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct User {
+struct User: Decodable {
     let id: Int
+    let email: String
     let name: String
-    let imageURL: String?
+    let profileImage: String
 }

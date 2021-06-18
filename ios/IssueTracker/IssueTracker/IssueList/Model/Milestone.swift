@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct Milestone {
+struct Milestone: Decodable {
     let id: Int
     let name: String
     let description: String?
-    let isOpend: Bool
+    let dueDate: String
     let openedIssueCount: Int
     let closedIssueCount: Int
+    let closed: Bool
 }
