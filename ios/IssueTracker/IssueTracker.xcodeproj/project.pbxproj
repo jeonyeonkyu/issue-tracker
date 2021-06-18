@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -31,6 +31,7 @@
 		FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8CB2678704200342633 /* SceneFlowCoordinator.swift */; };
 		FF76F8CE2678739B00342633 /* ViewControllerIdentifierable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8CD2678739B00342633 /* ViewControllerIdentifierable.swift */; };
 		FF76F8D12678772000342633 /* FetchIssueListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8D02678772000342633 /* FetchIssueListUseCase.swift */; };
+		FF79E018267C73570088D2C7 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = FF79E017267C73570088D2C7 /* MarkdownView */; };
 		FF89A95E266F0BD000983577 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A95D266F0BD000983577 /* AppDelegate.swift */; };
 		FF89A960266F0BD000983577 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A95F266F0BD000983577 /* SceneDelegate.swift */; };
 		FF89A962266F0BD000983577 /* IssueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A961266F0BD000983577 /* IssueListViewController.swift */; };
@@ -140,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF79E018267C73570088D2C7 /* MarkdownView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +405,9 @@
 			dependencies = (
 			);
 			name = IssueTracker;
+			packageProductDependencies = (
+				FF79E017267C73570088D2C7 /* MarkdownView */,
+			);
 			productName = IssueTracker;
 			productReference = FF89A95A266F0BD000983577 /* IssueTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -482,6 +487,9 @@
 				Base,
 			);
 			mainGroup = FF89A951266F0BD000983577;
+			packageReferences = (
+				FF79E016267C73570088D2C7 /* XCRemoteSwiftPackageReference "MarkdownView" */,
+			);
 			productRefGroup = FF89A95B266F0BD000983577 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1027,6 +1035,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FF79E016267C73570088D2C7 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/keitaoouchi/MarkdownView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FF79E017267C73570088D2C7 /* MarkdownView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF79E016267C73570088D2C7 /* XCRemoteSwiftPackageReference "MarkdownView" */;
+			productName = MarkdownView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FF89A952266F0BD000983577 /* Project object */;
 }
