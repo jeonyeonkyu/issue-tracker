@@ -33,3 +33,26 @@
 ### 회의 시간
 
 - 5시 반 고정
+
+## 실행 화면
+### iOS
+
+**이슈 선택**
+
+<img src = "https://user-images.githubusercontent.com/73650994/122521655-10a2d500-d050-11eb-9061-f9d56c2d8d16.gif" width = "200">   
+
+**새로운 이슈**
+
+<img src = "https://user-images.githubusercontent.com/41679458/122520103-2d3e0d80-d04e-11eb-92ab-41fe820c0722.gif" width = "200">
+
+---
+
+
+**네트워크**
+
+**네트워크 정상**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**잘못된 요청**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**디코딩 에러**
+
+<img src = "https://user-images.githubusercontent.com/73650994/122520737-f5839580-d04e-11eb-8316-a18a4685968a.gif" width = "200">&nbsp; <img src = "https://user-images.githubusercontent.com/73650994/122520746-f9171c80-d04e-11eb-95b2-62de6b10ce0b.gif" width = "200">&nbsp; <img src = "https://user-images.githubusercontent.com/73650994/122520755-fb797680-d04e-11eb-95cc-cadc518f6d48.gif" width = "200">
+
+### FE
+<img src = "https://user-images.githubusercontent.com/61257242/122511436-31fcc480-d042-11eb-872d-2e7057861f15.gif" width = "80%">
