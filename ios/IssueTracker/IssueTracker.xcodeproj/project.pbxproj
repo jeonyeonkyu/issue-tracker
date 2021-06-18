@@ -32,6 +32,11 @@
 		FF76F8CE2678739B00342633 /* ViewControllerIdentifierable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8CD2678739B00342633 /* ViewControllerIdentifierable.swift */; };
 		FF76F8D12678772000342633 /* FetchIssueListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8D02678772000342633 /* FetchIssueListUseCase.swift */; };
 		FF79E018267C73570088D2C7 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = FF79E017267C73570088D2C7 /* MarkdownView */; };
+		FF79E024267C74F00088D2C7 /* NewIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E023267C74F00088D2C7 /* NewIssueViewController.swift */; };
+		FF79E027267C750A0088D2C7 /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E026267C750A0088D2C7 /* MarkdownViewController.swift */; };
+		FF79E029267C75130088D2C7 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E028267C75130088D2C7 /* PreviewViewController.swift */; };
+		FF79E02B267C756D0088D2C7 /* NewIssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E02A267C756D0088D2C7 /* NewIssueViewModel.swift */; };
+		FF79E02D267C75B60088D2C7 /* PostNewIssueUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E02C267C75B60088D2C7 /* PostNewIssueUseCase.swift */; };
 		FF89A95E266F0BD000983577 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A95D266F0BD000983577 /* AppDelegate.swift */; };
 		FF89A960266F0BD000983577 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A95F266F0BD000983577 /* SceneDelegate.swift */; };
 		FF89A962266F0BD000983577 /* IssueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A961266F0BD000983577 /* IssueListViewController.swift */; };
@@ -101,6 +106,11 @@
 		FF76F8CB2678704200342633 /* SceneFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFlowCoordinator.swift; sourceTree = "<group>"; };
 		FF76F8CD2678739B00342633 /* ViewControllerIdentifierable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerIdentifierable.swift; sourceTree = "<group>"; };
 		FF76F8D02678772000342633 /* FetchIssueListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchIssueListUseCase.swift; sourceTree = "<group>"; };
+		FF79E023267C74F00088D2C7 /* NewIssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueViewController.swift; sourceTree = "<group>"; };
+		FF79E026267C750A0088D2C7 /* MarkdownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownViewController.swift; sourceTree = "<group>"; };
+		FF79E028267C75130088D2C7 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		FF79E02A267C756D0088D2C7 /* NewIssueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueViewModel.swift; sourceTree = "<group>"; };
+		FF79E02C267C75B60088D2C7 /* PostNewIssueUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNewIssueUseCase.swift; sourceTree = "<group>"; };
 		FF89A95A266F0BD000983577 /* IssueTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IssueTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF89A95D266F0BD000983577 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF89A95F266F0BD000983577 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -264,6 +274,58 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
+		FF79E01E267C74AA0088D2C7 /* NewIssue */ = {
+			isa = PBXGroup;
+			children = (
+				FF79E022267C74C30088D2C7 /* View */,
+				FF79E021267C74BD0088D2C7 /* ViewController */,
+				FF79E020267C74B50088D2C7 /* ViewModel */,
+				FF79E01F267C74AF0088D2C7 /* UseCase */,
+			);
+			path = NewIssue;
+			sourceTree = "<group>";
+		};
+		FF79E01F267C74AF0088D2C7 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				FF79E02C267C75B60088D2C7 /* PostNewIssueUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		FF79E020267C74B50088D2C7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FF79E02A267C756D0088D2C7 /* NewIssueViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FF79E021267C74BD0088D2C7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FF79E023267C74F00088D2C7 /* NewIssueViewController.swift */,
+				FF79E025267C74FC0088D2C7 /* Container */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		FF79E022267C74C30088D2C7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FF79E025267C74FC0088D2C7 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				FF79E026267C750A0088D2C7 /* MarkdownViewController.swift */,
+				FF79E028267C75130088D2C7 /* PreviewViewController.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
 		FF89A951266F0BD000983577 = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +353,7 @@
 		FF89A95C266F0BD000983577 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				FF79E01E267C74AA0088D2C7 /* NewIssue */,
 				FF89A963266F0BD000983577 /* Main.storyboard */,
 				FF76F8C226786FD000342633 /* Application */,
 				FF89A98E266F116000983577 /* IssueList */,
@@ -573,6 +636,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AED83A4B2677453A00C36CA4 /* NetworkComponents.swift in Sources */,
+				FF79E024267C74F00088D2C7 /* NewIssueViewController.swift in Sources */,
 				AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */,
 				AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */,
 				FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */,
@@ -581,9 +645,13 @@
 				FF89A95E266F0BD000983577 /* AppDelegate.swift in Sources */,
 				AED83A4926772D6600C36CA4 /* NetworkService.swift in Sources */,
 				FF76F8D12678772000342633 /* FetchIssueListUseCase.swift in Sources */,
+				FF79E02D267C75B60088D2C7 /* PostNewIssueUseCase.swift in Sources */,
 				AEE2A4D32670A00300FA6274 /* IssueViewModel.swift in Sources */,
+				FF79E029267C75130088D2C7 /* PreviewViewController.swift in Sources */,
 				FF89A99B2670780F00983577 /* Label.swift in Sources */,
+				FF79E02B267C756D0088D2C7 /* NewIssueViewModel.swift in Sources */,
 				AE7505312670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift in Sources */,
+				FF79E027267C750A0088D2C7 /* MarkdownViewController.swift in Sources */,
 				FF89A99F2670793B00983577 /* IssueListMockData.swift in Sources */,
 				FF76F8CE2678739B00342633 /* ViewControllerIdentifierable.swift in Sources */,
 				FF76F8C82678701000342633 /* IssueTrackerDIContainer.swift in Sources */,

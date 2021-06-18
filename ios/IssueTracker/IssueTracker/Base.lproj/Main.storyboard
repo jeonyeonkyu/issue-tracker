@@ -209,11 +209,71 @@
             </objects>
             <point key="canvasLocation" x="976.81159420289862" y="108.48214285714285"/>
         </scene>
+        <!--Markdown View Controller-->
+        <scene sceneID="wgK-kx-xwQ">
+            <objects>
+                <viewController storyboardIdentifier="MarkdownViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oVU-OT-Id8" customClass="MarkdownViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J2t-mX-C8G">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eFi-se-PvF">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="jpy-7i-GUv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eFi-se-PvF" firstAttribute="top" secondItem="jpy-7i-GUv" secondAttribute="top" id="0bj-fl-1dI"/>
+                            <constraint firstItem="jpy-7i-GUv" firstAttribute="bottom" secondItem="eFi-se-PvF" secondAttribute="bottom" id="KN7-XY-ZRC"/>
+                            <constraint firstItem="jpy-7i-GUv" firstAttribute="trailing" secondItem="eFi-se-PvF" secondAttribute="trailing" id="a71-rS-hZM"/>
+                            <constraint firstItem="eFi-se-PvF" firstAttribute="leading" secondItem="jpy-7i-GUv" secondAttribute="leading" id="dpg-Mi-dJI"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bo8-ea-7KT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1864" y="-139"/>
+        </scene>
+        <!--Preview View Controller-->
+        <scene sceneID="9q2-qR-iYp">
+            <objects>
+                <viewController storyboardIdentifier="PreviewViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nIK-MZ-BO6" customClass="PreviewViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="m8C-HE-DZc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Htv-VU-X7W" customClass="MarkdownView" customModule="MarkdownView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="IEV-rY-Cqn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="IEV-rY-Cqn" firstAttribute="trailing" secondItem="Htv-VU-X7W" secondAttribute="trailing" id="7y1-fO-z0D"/>
+                            <constraint firstItem="Htv-VU-X7W" firstAttribute="top" secondItem="IEV-rY-Cqn" secondAttribute="top" id="dTP-st-yMJ"/>
+                            <constraint firstItem="Htv-VU-X7W" firstAttribute="leading" secondItem="IEV-rY-Cqn" secondAttribute="leading" id="f2n-uj-c0g"/>
+                            <constraint firstItem="IEV-rY-Cqn" firstAttribute="bottom" secondItem="Htv-VU-X7W" secondAttribute="bottom" id="mV9-nL-xS3"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pLm-9c-UVK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1864" y="526"/>
+        </scene>
     </scenes>
     <resources>
         <image name="archivebox" catalog="system" width="128" height="106"/>
         <image name="checkmark.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
