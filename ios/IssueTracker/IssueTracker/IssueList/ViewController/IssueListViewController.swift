@@ -8,13 +8,18 @@
 import UIKit
 import Combine
 
+struct IssueListViewControllerAction {
+    let showNewIssueView: () -> ()
+}
+
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
     
-    static func create(_ viewModel: IssueViewModel) -> IssueListViewController {
+    static func create(_ viewModel: IssueViewModel, _ action: IssueListViewControllerAction) -> IssueListViewController {
         guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? IssueListViewController else {
             return IssueListViewController()
         }
         vc.viewModel = viewModel
+        vc.action = action
         return vc
     }
     
@@ -39,6 +44,7 @@ final class IssueListViewController: UIViewController, ViewControllerIdentifiera
     }()
     
     private var isCheckAll: Bool!
+    private var action: IssueListViewControllerAction?
     private var viewModel: IssueViewModel!
     private var cancelBag = Set<AnyCancellable>()
     private lazy var dataSource = IssueDataSource(viewModel: viewModel)
@@ -230,5 +236,13 @@ extension IssueListViewController {
 extension IssueListViewController {
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
         
+    }
+}
+
+//MARK: - PlustButtonTouched
+
+extension IssueListViewController {
+    @IBAction func plusButtonTouched(_ sender: Any) {
+        action?.showNewIssueView()
     }
 }
