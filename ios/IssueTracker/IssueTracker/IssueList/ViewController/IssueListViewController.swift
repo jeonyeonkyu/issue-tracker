@@ -229,6 +229,6 @@ extension IssueListViewController {
 
 extension IssueListViewController {
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        
+        self.present(IssueFilterViewController.create(nil), animated: true)
     }
 }
