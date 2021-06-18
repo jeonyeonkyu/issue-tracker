@@ -7,7 +7,7 @@
 
 import UIKit
 
-class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
+final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     
     private let networkManager = NetworkManager()
     

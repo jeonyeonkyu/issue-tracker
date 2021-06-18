@@ -7,13 +7,14 @@
 
 import UIKit
 
-class IssueCell: UITableViewCell, ReuseIdentifierable, UINibCreatable {
+final class IssueCell: UITableViewCell, ReuseIdentifierable, UINibCreatable {
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var milestoneView: UIView!
     @IBOutlet private weak var milestoneLabel: UILabel!
     @IBOutlet private weak var labelStackView: UIStackView!
+    @IBOutlet private weak var milestoneHeightAnchor: NSLayoutConstraint!
     
 }
 
@@ -33,7 +34,7 @@ extension IssueCell {
             label.removeFromSuperview()
         }
         labels.forEach { label in
-            let label_ = LabelView()
+            let label_ = IssueLabel()
             label_.fillUI(with: label)
             self.labelStackView.addArrangedSubview(label_)
         }
@@ -43,11 +44,10 @@ extension IssueCell {
         if let milestone = milestone {
             milestoneView.isHidden = false
             milestoneLabel.text = milestone.name
+            milestoneHeightAnchor.constant  = 30
         } else {
             milestoneView.isHidden = true
-            NSLayoutConstraint.activate([
-                milestoneView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0)
-            ])
+            milestoneHeightAnchor.constant = 0
         }
     }
     

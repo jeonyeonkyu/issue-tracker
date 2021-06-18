@@ -8,11 +8,11 @@
 import Foundation
 
 struct Milestone: Decodable {
-    var id: Int
-    var name: String
-    var description: String?
-    var dueDate: String
-    var openedIssueCount: Int
-    var closedIssueCount: Int
-    var closed: Bool
+    let id: Int
+    let name: String
+    let description: String?
+    let dueDate: String
+    let openedIssueCount: Int
+    let closedIssueCount: Int
+    let closed: Bool
 }
