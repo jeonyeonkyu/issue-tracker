@@ -1,5 +1,7 @@
 package com.codesquad.issuetracker.issue.dto;
 
+import com.codesquad.issuetracker.issue.domain.Issue;
+import com.codesquad.issuetracker.issue.domain.User;
 import com.codesquad.issuetracker.label.dto.LabelResponses;
 import com.codesquad.issuetracker.milestone.dto.MilestoneResponse;
 import com.codesquad.issuetracker.user.dto.UserResponse;
@@ -25,4 +27,20 @@ public class IssueResponse {
     private UserResponses assignees;
     private LabelResponses labels;
     private MilestoneResponse milestone;
+
+    public static IssueResponse of(Issue issue, User user) {
+        return IssueResponse.builder()
+                       .id(issue.getId())
+                       .number(issue.getNumber())
+                       .title(issue.getTitle())
+                       .description(issue.description())
+                       .isClosed(issue.isClosed())
+                       .hasSameAuthorComments(issue.hasSameAuthorComments(user))
+                       .createDateTime(issue.getCreateDateTime())
+                       .author(UserResponse.from(issue.getAuthor()))
+                       .assignees(UserResponses.from(issue.getAssignees()))
+                       .labels(LabelResponses.from(issue.getLabels()))
+                       .milestone(MilestoneResponse.from(issue.getMilestone()))
+                       .build();
+    }
 }

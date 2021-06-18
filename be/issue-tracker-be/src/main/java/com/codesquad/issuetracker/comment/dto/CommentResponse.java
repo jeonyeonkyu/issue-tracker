@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.comment.dto;
 
 import com.codesquad.issuetracker.comment.vo.Emojis;
+import com.codesquad.issuetracker.issue.domain.Comment;
 import com.codesquad.issuetracker.user.dto.UserResponse;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Builder;
@@ -20,4 +21,13 @@ public class CommentResponse {
 
     @JsonUnwrapped
     private Emojis emojis;
+
+    public static CommentResponse from(Comment comment) {
+        return CommentResponse.builder()
+                       .id(comment.getId())
+                       .author(UserResponse.from(comment.getAuthor()))
+                       .contents(comment.getContents())
+                       .createDateTime(comment.getCreateDateTime())
+                       .build();
+    }
 }
