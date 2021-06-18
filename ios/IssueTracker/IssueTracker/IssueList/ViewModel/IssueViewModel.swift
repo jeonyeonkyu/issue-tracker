@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class IssueViewModel {
+final class IssueViewModel {
     
     @Published private(set) var issues: [Issue]
     @Published private(set) var error: String

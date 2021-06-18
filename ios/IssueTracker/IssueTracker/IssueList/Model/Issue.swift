@@ -8,15 +8,15 @@
 import Foundation
 
 struct Issue: Decodable {
-    var id: Int
-    var number: Int
-    var title: String
-    var description: String
-    var hasSameAuthorComments: Bool
-    var createDateTime: String
-    var closed: Bool
-    var author: User
-    var assignees: [User]?
-    var labels: [Label]?
-    var milestone: Milestone?
+    let id: Int
+    let number: Int
+    let title: String
+    let description: String
+    let hasSameAuthorComments: Bool
+    let createDateTime: String
+    let closed: Bool
+    let author: User
+    let assignees: [User]?
+    let labels: [Label]?
+    let milestone: Milestone?
 }

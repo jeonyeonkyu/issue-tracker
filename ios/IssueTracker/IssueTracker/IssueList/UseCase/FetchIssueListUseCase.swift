@@ -13,7 +13,7 @@ protocol FetchIssueListUseCase {
 }
 
 
-class DefaultFetchIssueListUseCase: FetchIssueListUseCase {
+final class DefaultFetchIssueListUseCase: FetchIssueListUseCase {
     
     private var networkManager: NetworkManageable
     private var cancelBag = Set<AnyCancellable>()
@@ -38,7 +38,7 @@ class DefaultFetchIssueListUseCase: FetchIssueListUseCase {
 }
 
 
-class MockFetchIssueListUseCase: FetchIssueListUseCase {
+final class MockFetchIssueListUseCase: FetchIssueListUseCase {
     
     func excute(completion: @escaping (Result<[Issue], NetworkError>) -> Void) {
         completion(.success(IssueListMock.data))
