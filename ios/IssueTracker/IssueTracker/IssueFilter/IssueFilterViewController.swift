@@ -22,60 +22,7 @@ extension IssueFilterViewController: ViewControllerIdentifierable {
 
 class IssueFilterViewController: UIViewController {
     
-    private struct Item: Hashable {
-        let title: String?
-        private let identifier = UUID()
-    }
-    
-    // MARK: Identifier Types
-    struct Parents: Hashable {
-        let title: String
-        let isStatus: Bool
-        let children: [Child]
-    }
-    
-    struct Child: Hashable {
-        let title: String
-        let id = UUID()
-    }
-    
-    enum Status: String, CaseIterable {
-        case written = "내가 작성한 이슈"
-        case assigned = "나에게 할당된 이슈"
-        case commented = "내가 댓글을 남긴 이슈"
-        case opened = "열린 이슈"
-        case closed = "닫힌 이슈"
-    }
-    
-    enum DataItem: Hashable {
-        case parent(Parents)
-        case child(Child)
-    }
-    
-    // MARK: Model objects
-    let parents = [
-        Parents(title: "상태", isStatus: true, children: Status.allCases.map { Child(title: $0.rawValue) }),
-        Parents(title: "작성자", isStatus: false, children: [
-            Child(title: "Dumba"),
-            Child(title: "Lia"),
-            Child(title: "Beemo"),
-            Child(title: "Hiro"),
-        ]),
-        Parents(title: "레이블", isStatus: false, children: [
-            Child(title: "Documentation"),
-            Child(title: "bug"),
-            Child(title: "iOS"),
-            Child(title: "BE"),
-        ]),
-        Parents(title: "마일스톤", isStatus: false, children: [
-            Child(title: "Filter"),
-            Child(title: "NewIssue"),
-            Child(title: "MockData"),
-            Child(title: "OAuth"),
-        ]),
-    ]
-    
-    private var dataSource: UICollectionViewDiffableDataSource<Parents, DataItem>! = nil
+    private var dataSource: UICollectionViewDiffableDataSource<Parent, DataItem>! = nil
     @IBOutlet private var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -99,27 +46,22 @@ extension IssueFilterViewController {
         }
         collectionView.collectionViewLayout = layout
     }
-}
-
-extension IssueFilterViewController {
     
     private func configureDataSource() {
-        let headerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Parents> { (cell, indexPath, item) in
+        let headerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Parent> { (cell, indexPath, item) in
             var content = cell.defaultContentConfiguration()
             content.text = item.title
             cell.contentConfiguration = content
             
             if !item.isStatus { cell.accessories = [.outlineDisclosure()] }
         }
-        
         let childRegistration = UICollectionView.CellRegistration<UICollectionViewListCell,Child> { (cell, indexPath, item) in
-            
             var content = cell.defaultContentConfiguration()
             content.text = item.title
             cell.contentConfiguration = content
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Parents, DataItem>(collectionView: collectionView) { (collectionView, index, listItem) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Parent, DataItem>(collectionView: collectionView) { (collectionView, index, listItem) -> UICollectionViewCell? in
             switch listItem {
             case .parent(let parent):
                 return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: index, item: parent)
@@ -131,7 +73,7 @@ extension IssueFilterViewController {
     }
     
     private func applySnapShot() {
-        for parent in parents {
+        for parent in MockIdentifier.parents {
             var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<DataItem>()
             
             let parentDataItem = DataItem.parent(parent)
@@ -144,4 +86,5 @@ extension IssueFilterViewController {
             dataSource.apply(sectionSnapshot, to: parent, animatingDifferences: true)
         }
     }
+    
 }
