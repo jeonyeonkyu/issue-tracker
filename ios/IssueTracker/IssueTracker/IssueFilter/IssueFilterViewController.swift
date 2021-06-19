@@ -7,7 +7,7 @@
 
 import UIKit
 
-class IssueFilterViewController: UIViewController, ViewControllerIdentifierable {
+extension IssueFilterViewController: ViewControllerIdentifierable {
     
     static func create(_ viewModel: IssueViewModel?) -> IssueFilterViewController {
         guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? IssueFilterViewController else {
@@ -16,121 +16,132 @@ class IssueFilterViewController: UIViewController, ViewControllerIdentifierable 
 //        vc.viewModel = viewModel
         return vc
     }
+
+}
+
+
+class IssueFilterViewController: UIViewController {
     
     private struct Item: Hashable {
         let title: String?
         private let identifier = UUID()
     }
     
-    private var dataSource: UICollectionViewDiffableDataSource<Int, Item>! = nil
+    // MARK: Identifier Types
+    struct Parents: Hashable {
+        let title: String
+        let isStatus: Bool
+        let children: [Child]
+    }
+    
+    struct Child: Hashable {
+        let title: String
+        let id = UUID()
+    }
+    
+    enum Status: String, CaseIterable {
+        case written = "내가 작성한 이슈"
+        case assigned = "나에게 할당된 이슈"
+        case commented = "내가 댓글을 남긴 이슈"
+        case opened = "열린 이슈"
+        case closed = "닫힌 이슈"
+    }
+    
+    enum DataItem: Hashable {
+        case parent(Parents)
+        case child(Child)
+    }
+    
+    // MARK: Model objects
+    let parents = [
+        Parents(title: "상태", isStatus: true, children: Status.allCases.map { Child(title: $0.rawValue) }),
+        Parents(title: "작성자", isStatus: false, children: [
+            Child(title: "Dumba"),
+            Child(title: "Lia"),
+            Child(title: "Beemo"),
+            Child(title: "Hiro"),
+        ]),
+        Parents(title: "레이블", isStatus: false, children: [
+            Child(title: "Documentation"),
+            Child(title: "bug"),
+            Child(title: "iOS"),
+            Child(title: "BE"),
+        ]),
+        Parents(title: "마일스톤", isStatus: false, children: [
+            Child(title: "Filter"),
+            Child(title: "NewIssue"),
+            Child(title: "MockData"),
+            Child(title: "OAuth"),
+        ]),
+    ]
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Parents, DataItem>! = nil
     @IBOutlet private var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "List Appearances"
-        collectionView.collectionViewLayout = createLayout()
+        configureLayout()
         configureDataSource()
-        updateBarButtonItem()
+        applySnapShot()
     }
     
-    private var appearance = UICollectionLayoutListConfiguration.Appearance.plain
-    
-    @objc
-    private func changeListAppearance() {
-        switch appearance {
-        case .plain:
-            appearance = .sidebarPlain
-        case .sidebarPlain:
-            appearance = .sidebar
-        case .sidebar:
-            appearance = .grouped
-        case .grouped:
-            appearance = .insetGrouped
-        case .insetGrouped:
-            appearance = .plain
-        default:
-            break
-        }
-        let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first
-        dataSource.apply(dataSource.snapshot(), animatingDifferences: false)
-        collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: [])
-        updateBarButtonItem()
-    }
-    
-    private func updateBarButtonItem() {
-        var title: String? = nil
-        switch appearance {
-        case .plain: title = "Plain"
-        case .sidebarPlain: title = "Sidebar Plain"
-        case .sidebar: title = "Sidebar"
-        case .grouped: title = "Grouped"
-        case .insetGrouped: title = "Inset Grouped"
-        default: break
-        }
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(changeListAppearance))
-    }
 }
 
+
 extension IssueFilterViewController {
-    /// - Tag: ListAppearances
-    private func createLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { [unowned self] section, layoutEnvironment in
-            var config = UICollectionLayoutListConfiguration(appearance: self.appearance)
+
+    private func configureLayout() {
+        let appearance = UICollectionLayoutListConfiguration.Appearance.insetGrouped
+        let layout = UICollectionViewCompositionalLayout { section, layoutEnvironment in
+            var config = UICollectionLayoutListConfiguration(appearance: appearance)
             config.headerMode = .firstItemInSection
             return NSCollectionLayoutSection.list(using: config, layoutEnvironment: layoutEnvironment)
         }
+        collectionView.collectionViewLayout = layout
     }
 }
 
 extension IssueFilterViewController {
     
     private func configureDataSource() {
-        
-        let headerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Item> { (cell, indexPath, item) in
+        let headerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Parents> { (cell, indexPath, item) in
             var content = cell.defaultContentConfiguration()
             content.text = item.title
             cell.contentConfiguration = content
             
-            cell.accessories = [.outlineDisclosure()]
+            if !item.isStatus { cell.accessories = [.outlineDisclosure()] }
         }
         
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Item> { [weak self] (cell, indexPath, item) in
-            guard let self = self else { return }
+        let childRegistration = UICollectionView.CellRegistration<UICollectionViewListCell,Child> { (cell, indexPath, item) in
             
             var content = cell.defaultContentConfiguration()
             content.text = item.title
             cell.contentConfiguration = content
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Parents, DataItem>(collectionView: collectionView) { (collectionView, index, listItem) -> UICollectionViewCell? in
+            switch listItem {
+            case .parent(let parent):
+                return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: index, item: parent)
+                
+            case .child(let child):
+                return collectionView.dequeueConfiguredReusableCell(using: childRegistration, for: index, item: child)
+            }
+        }
+    }
+    
+    private func applySnapShot() {
+        for parent in parents {
+            var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<DataItem>()
             
-            switch self.appearance {
-            case .sidebar, .sidebarPlain:
-                cell.accessories = []
-            default:
-                cell.accessories = [.disclosureIndicator()]
-            }
-        }
-        
-        dataSource = UICollectionViewDiffableDataSource<Int, Item>(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, item: Item) -> UICollectionViewCell? in
-            if indexPath.item == 0 {
-                return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: item)
-            } else {
-                return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
-            }
-        }
-        
-        // initial data
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
-        let sections = Array(0..<5)
-        snapshot.appendSections(sections)
-        dataSource.apply(snapshot, animatingDifferences: false)
-        for section in sections {
-            var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<Item>()
-            let headerItem = Item(title: "Section \(section)")
-            sectionSnapshot.append([headerItem])
-            let items = Array(0..<3).map { Item(title: "Item \($0)") }
-            sectionSnapshot.append(items, to: headerItem)
-            sectionSnapshot.expand([headerItem])
-            dataSource.apply(sectionSnapshot, to: section)
+            let parentDataItem = DataItem.parent(parent)
+            sectionSnapshot.append([parentDataItem])
+            
+            let childDataItemArray = parent.children.map { DataItem.child($0) }
+            sectionSnapshot.append(childDataItemArray, to: parentDataItem)
+            
+            sectionSnapshot.expand([parentDataItem])
+            dataSource.apply(sectionSnapshot, to: parent, animatingDifferences: true)
         }
     }
 }
