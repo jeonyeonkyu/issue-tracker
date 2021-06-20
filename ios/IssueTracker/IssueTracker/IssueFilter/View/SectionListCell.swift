@@ -13,6 +13,7 @@ class SectionListCell: UICollectionViewListCell {
         var newBgConfiguration = UIBackgroundConfiguration.listGroupedCell()
         newBgConfiguration.backgroundColor = .clear
         backgroundConfiguration = newBgConfiguration
+        tintColor = .systemGray4
     }
     
 }
