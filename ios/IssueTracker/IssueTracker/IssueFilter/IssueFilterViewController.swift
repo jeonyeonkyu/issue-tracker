@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 extension IssueFilterViewController: ViewControllerIdentifierable {
     
@@ -25,6 +26,7 @@ class IssueFilterViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Parent, DataItem>! = nil
     @IBOutlet private var collectionView: UICollectionView!
     private var viewModel: FilterViewModel!
+    private var cancelBag = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,27 @@ class IssueFilterViewController: UIViewController {
         collectionView.allowsMultipleSelection = true
         configureLayout()
         configureDataSource()
-        applySnapShot()
+        bind()
+    }
+    
+}
+
+
+extension IssueFilterViewController {
+    
+    private func bind() {
+        viewModel.fetchFilterList().receive(on: DispatchQueue.main)
+            .sink { parents in
+                print(parents)
+                self.applySnapShot(with: parents)
+            }
+            .store(in: &cancelBag)
+        
+        viewModel.fetchError().receive(on: DispatchQueue.main)
+            .dropFirst()
+            .sink { error in
+                print(error)
+            }.store(in: &cancelBag)
     }
     
 }
@@ -75,8 +97,12 @@ extension IssueFilterViewController {
         }
     }
     
-    private func applySnapShot() {
-        for parent in MockIdentifier.parents {
+    private func applySnapShot(with parents: [Parent]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Parent, DataItem>()
+        snapshot.appendSections(parents)
+        dataSource.apply(snapshot, animatingDifferences: false)
+        
+        for parent in parents {
             var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<DataItem>()
             
             let parentDataItem = DataItem.parent(parent)
@@ -84,9 +110,9 @@ extension IssueFilterViewController {
             
             let childDataItemArray = parent.children.map { DataItem.child($0) }
             sectionSnapshot.append(childDataItemArray, to: parentDataItem)
-            
             sectionSnapshot.expand([parentDataItem])
-            dataSource.apply(sectionSnapshot, to: parent, animatingDifferences: true)
+            
+            dataSource.apply(sectionSnapshot, to: parent, animatingDifferences: false)
         }
     }
     
