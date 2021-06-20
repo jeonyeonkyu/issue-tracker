@@ -11,6 +11,7 @@
 		AE011CEF267F8A5100181FB9 /* SectionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CEE267F8A5100181FB9 /* SectionListCell.swift */; };
 		AE011CF1267F8A8300181FB9 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF0267F8A8300181FB9 /* FilterViewModel.swift */; };
 		AE011CF4267F8C7600181FB9 /* FetchFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */; };
+		AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */; };
 		AE6EFF51267E466C00C905FC /* IdentifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF50267E466C00C905FC /* IdentifierModel.swift */; };
 		AE6EFF53267E4C4B00C905FC /* MockIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */; };
 		AE7505312670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */; };
@@ -89,6 +90,7 @@
 		AE011CEE267F8A5100181FB9 /* SectionListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionListCell.swift; sourceTree = "<group>"; };
 		AE011CF0267F8A8300181FB9 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFilterUseCase.swift; sourceTree = "<group>"; };
+		AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterUseCase.swift; sourceTree = "<group>"; };
 		AE6EFF50267E466C00C905FC /* IdentifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModel.swift; sourceTree = "<group>"; };
 		AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIdentifier.swift; sourceTree = "<group>"; };
 		AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AddLineSpacing.swift"; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */,
+				AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				FF89A999267077E800983577 /* User.swift in Sources */,
 				AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */,
 				AE6EFF53267E4C4B00C905FC /* MockIdentifier.swift in Sources */,
+				AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */,
 				AE7505332670EE0600BA14F7 /* UIColor+hexToUIColor.swift in Sources */,
 				FF89A997267075CD00983577 /* Issue.swift in Sources */,
 				FF89A99D2670784200983577 /* Milestone.swift in Sources */,

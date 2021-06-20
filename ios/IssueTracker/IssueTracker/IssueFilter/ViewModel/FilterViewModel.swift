@@ -13,18 +13,12 @@ final class FilterViewModel {
     @Published private var identifierFilter: [Parent]
     @Published private var error: String
     
-    struct Filter {
-        var status: IndexPath?
-        var writer: IndexPath?
-        var label: IndexPath?
-        var milestone: IndexPath?
-    }
-    
-    private var filter = Filter()
-    private var filterUseCase: FetchFilterUseCase
+    private var fetchFilterUseCase: FetchFilterUseCase
+    private var filterUseCase: FilterUseCase
 
     init(_ fetchIssueListUseCase: FetchFilterUseCase) {
-        self.filterUseCase = fetchIssueListUseCase
+        self.fetchFilterUseCase = fetchIssueListUseCase
+        self.filterUseCase = FilterUseCase()
         self.identifierFilter = MockIdentifier.parents
         self.error = ""
         loadFilters()
@@ -36,7 +30,7 @@ final class FilterViewModel {
 extension FilterViewModel {
     
     private func loadFilters() {
-        filterUseCase.excute { result in
+        fetchFilterUseCase.excute { result in
             switch result {
             case .success(let filterList):
                 self.loadFilterList(with: filterList)
@@ -89,43 +83,14 @@ extension FilterViewModel {
 extension FilterViewModel {
     
     func select(index: IndexPath) {
-        switch index.section {
-        case 0:
-            filter.status = index
-        case 1:
-            filter.writer = index
-        case 2:
-            filter.label = index
-        case 3:
-            filter.milestone = index
-        default:
-            break
-        }
+        filterUseCase.select(index: index)
     }
     
     func indexPaths() -> [IndexPath] {
-        var indexPaths = [IndexPath]()
-        if let status = filter.status { indexPaths.append(status) }
-        if let writer = filter.writer { indexPaths.append(writer) }
-        if let label = filter.label { indexPaths.append(label) }
-        if let milestone = filter.milestone { indexPaths.append(milestone) }
-        
-        return indexPaths
+        return filterUseCase.indexPaths()
     }
     
     func deselect(index: IndexPath) {
-        switch index.section {
-        case 0:
-            filter.status = nil
-        case 1:
-            filter.writer = nil
-        case 2:
-            filter.label = nil
-        case 3:
-            filter.milestone = nil
-        default:
-            break
-        }
+        filterUseCase.deselect(index: index)
     }
 }
-
