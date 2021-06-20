@@ -93,4 +93,8 @@ extension FilterViewModel {
     func deselect(index: IndexPath) {
         filterUseCase.deselect(index: index)
     }
+    
+    func setFilter() {
+        filterUseCase.setFilter(dataSource: identifierFilter)
+    }
 }
