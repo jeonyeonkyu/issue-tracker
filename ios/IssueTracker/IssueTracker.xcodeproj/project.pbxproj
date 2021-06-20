@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE011CED267F8A3E00181FB9 /* FilterListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CEC267F8A3E00181FB9 /* FilterListCell.swift */; };
+		AE011CEF267F8A5100181FB9 /* SectionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CEE267F8A5100181FB9 /* SectionListCell.swift */; };
+		AE011CF1267F8A8300181FB9 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF0267F8A8300181FB9 /* FilterViewModel.swift */; };
 		AE6EFF51267E466C00C905FC /* IdentifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF50267E466C00C905FC /* IdentifierModel.swift */; };
 		AE6EFF53267E4C4B00C905FC /* MockIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */; };
 		AE7505312670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */; };
@@ -81,6 +84,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE011CEC267F8A3E00181FB9 /* FilterListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListCell.swift; sourceTree = "<group>"; };
+		AE011CEE267F8A5100181FB9 /* SectionListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionListCell.swift; sourceTree = "<group>"; };
+		AE011CF0267F8A8300181FB9 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		AE6EFF50267E466C00C905FC /* IdentifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModel.swift; sourceTree = "<group>"; };
 		AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIdentifier.swift; sourceTree = "<group>"; };
 		AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AddLineSpacing.swift"; sourceTree = "<group>"; };
@@ -166,6 +172,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE011CEA267F8A1100181FB9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AE011CF0267F8A8300181FB9 /* FilterViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AE011CEB267F8A1C00181FB9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AE011CEE267F8A5100181FB9 /* SectionListCell.swift */,
+				AE011CEC267F8A3E00181FB9 /* FilterListCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		AE6EFF54267E4C7000C905FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +260,8 @@
 			isa = PBXGroup;
 			children = (
 				AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */,
+				AE011CEA267F8A1100181FB9 /* ViewModel */,
+				AE011CEB267F8A1C00181FB9 /* View */,
 				AE6EFF54267E4C7000C905FC /* Model */,
 			);
 			path = IssueFilter;
@@ -590,6 +615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AED83A4B2677453A00C36CA4 /* NetworkComponents.swift in Sources */,
+				AE011CEF267F8A5100181FB9 /* SectionListCell.swift in Sources */,
 				AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */,
 				AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */,
 				FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */,
@@ -608,7 +634,9 @@
 				FF89A960266F0BD000983577 /* SceneDelegate.swift in Sources */,
 				AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */,
 				AE7D391B2671A91400BF9487 /* UINibCreatable.swift in Sources */,
+				AE011CED267F8A3E00181FB9 /* FilterListCell.swift in Sources */,
 				FF76F8B52677300300342633 /* UIBarButtonItem+setTitle.swift in Sources */,
+				AE011CF1267F8A8300181FB9 /* FilterViewModel.swift in Sources */,
 				FF89A999267077E800983577 /* User.swift in Sources */,
 				AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */,
 				AE6EFF53267E4C4B00C905FC /* MockIdentifier.swift in Sources */,

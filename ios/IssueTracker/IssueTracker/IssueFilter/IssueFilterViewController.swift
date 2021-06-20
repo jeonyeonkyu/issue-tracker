@@ -9,11 +9,11 @@ import UIKit
 
 extension IssueFilterViewController: ViewControllerIdentifierable {
     
-    static func create(_ viewModel: IssueViewModel?) -> IssueFilterViewController {
+    static func create(_ viewModel: FilterViewModel?) -> IssueFilterViewController {
         guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? IssueFilterViewController else {
             return IssueFilterViewController()
         }
-//        vc.viewModel = viewModel
+        vc.viewModel = viewModel
         return vc
     }
 
@@ -24,9 +24,12 @@ class IssueFilterViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Parent, DataItem>! = nil
     @IBOutlet private var collectionView: UICollectionView!
+    private var viewModel: FilterViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
         configureLayout()
         configureDataSource()
         applySnapShot()
@@ -48,14 +51,14 @@ extension IssueFilterViewController {
     }
     
     private func configureDataSource() {
-        let headerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Parent> { (cell, indexPath, item) in
+        let headerRegistration = UICollectionView.CellRegistration<SectionListCell, Parent> { (cell, indexPath, item) in
             var content = cell.defaultContentConfiguration()
             content.text = item.title
             cell.contentConfiguration = content
             
             if !item.isStatus { cell.accessories = [.outlineDisclosure()] }
         }
-        let childRegistration = UICollectionView.CellRegistration<UICollectionViewListCell,Child> { (cell, indexPath, item) in
+        let childRegistration = UICollectionView.CellRegistration<FilterListCell,Child> { (cell, indexPath, item) in
             var content = cell.defaultContentConfiguration()
             content.text = item.title
             cell.contentConfiguration = content
@@ -85,6 +88,25 @@ extension IssueFilterViewController {
             sectionSnapshot.expand([parentDataItem])
             dataSource.apply(sectionSnapshot, to: parent, animatingDifferences: true)
         }
+    }
+    
+}
+
+
+extension IssueFilterViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.indexPaths().forEach {
+            collectionView.deselectItem(at: $0, animated: false)
+        }
+        viewModel.select(index: indexPath)
+        viewModel.indexPaths().forEach {
+            collectionView.selectItem(at: $0, animated: false, scrollPosition: .left)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        viewModel.deselect(index: indexPath)
     }
     
 }
