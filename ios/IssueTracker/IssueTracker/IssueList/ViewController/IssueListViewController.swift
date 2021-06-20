@@ -229,6 +229,6 @@ extension IssueListViewController {
 
 extension IssueListViewController {
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        self.present(IssueFilterViewController.create(FilterViewModel(DefaultFilterUseCase(networkManager: NetworkManager()))), animated: true)
+        self.present(IssueFilterViewController.create(FilterViewModel(DefaultFetchFilterUseCase(networkManager: NetworkManager()))), animated: true)
     }
 }

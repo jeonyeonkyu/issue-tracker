@@ -8,12 +8,12 @@
 import Foundation
 import Combine
 
-protocol FilterUseCase {
+protocol FetchFilterUseCase {
     func excute(completion: @escaping (Result<FilterList, NetworkError>) -> Void)
 }
 
 
-final class DefaultFilterUseCase: FilterUseCase {
+final class DefaultFetchFilterUseCase: FetchFilterUseCase {
     
     private var networkManager: NetworkManageable
     private var cancelBag = Set<AnyCancellable>()
@@ -25,7 +25,7 @@ final class DefaultFilterUseCase: FilterUseCase {
 }
 
 
-extension DefaultFilterUseCase {
+extension DefaultFetchFilterUseCase {
     
     func excute(completion: @escaping (Result<FilterList, NetworkError>) -> Void) {
         let users = networkManager.get(path: "/users", type: [User].self)
@@ -48,16 +48,7 @@ extension DefaultFilterUseCase {
 }
 
 
-extension DefaultFilterUseCase {
-    
-    func filter(issues: [Issue]) {
-        
-    }
-    
-}
-
-
-final class MockFilterUseCase: FilterUseCase {
+final class MockFilterUseCase: FetchFilterUseCase {
     
     func excute(completion: @escaping (Result<FilterList, NetworkError>) -> Void) {
 //        completion(.success())
