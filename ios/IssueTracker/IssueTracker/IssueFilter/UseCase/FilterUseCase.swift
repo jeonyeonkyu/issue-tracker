@@ -79,19 +79,19 @@ extension FilterUseCase {
     
     func setFilter(dataSource: [Parent]) {
         if let statusIdx = filterIndex.status {
-            let status = dataSource[statusIdx.section].children[statusIdx.row].title
+            let status = dataSource[statusIdx.section].children[statusIdx.row - 1].title
             filter.status = Status(rawValue: status)
         }
         if let writerIdx = filterIndex.writer {
-            let writer = dataSource[writerIdx.section].children[writerIdx.row].title
+            let writer = dataSource[writerIdx.section].children[writerIdx.row - 1].title
             filter.writer = writer
         }
         if let labelIdx = filterIndex.label {
-            let label = dataSource[labelIdx.section].children[labelIdx.row].title
+            let label = dataSource[labelIdx.section].children[labelIdx.row - 1].title
             filter.label = label
         }
         if let milestoneIdx = filterIndex.milestone {
-            let milestone = dataSource[milestoneIdx.section].children[milestoneIdx.row].title
+            let milestone = dataSource[milestoneIdx.section].children[milestoneIdx.row - 1].title
             filter.milestone = milestone
         }
     }
@@ -107,7 +107,7 @@ extension FilterUseCase {
                 else { return false }
             }) ?? true }
         }
-        if let milestone = filter.writer {
+        if let milestone = filter.milestone {
             filteredIssues = filteredIssues.filter{ $0.milestone?.name == milestone }
         }
         return filteredIssues
@@ -138,4 +138,4 @@ extension FilterUseCase {
     
 }
 
-let logInUser = User(id: 0, email: "", name: "freddie", profileImage: "")
+let logInUser = User(id: 1, email: "", name: "freddie", profileImage: "")

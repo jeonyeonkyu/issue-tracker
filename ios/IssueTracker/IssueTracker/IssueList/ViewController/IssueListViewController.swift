@@ -96,9 +96,16 @@ extension IssueListViewController {
         return UITableView.automaticDimension
     }
     
+}
+
+
+extension IssueListViewController: IssueFilterViewControllerDelegate {
+    
     private func bind() {
         viewModel.fetchIssueList().receive(on: DispatchQueue.main)
+            .dropFirst()
             .sink { issues in
+                print("🤜🏻", issues)
                 self.dataSource = IssueDataSource(viewModel: self.viewModel)
                 self.issueTableView.dataSource = self.dataSource
                 self.issueTableView.reloadData()
@@ -110,6 +117,11 @@ extension IssueListViewController {
             .sink { error in
                 self.alertForNetwork(with: error)
             }.store(in: &cancelBag)
+    }
+    
+    func issueFilterViewControllerDidSave() {
+        viewModel.filter()
+        dismiss(animated: true, completion: nil)
     }
     
 }
@@ -229,6 +241,8 @@ extension IssueListViewController {
 
 extension IssueListViewController {
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        self.present(IssueFilterViewController.create(FilterViewModel(DefaultFetchFilterUseCase(networkManager: NetworkManager()))), animated: true)
+        let vc = IssueFilterViewController.create(FilterViewModel(DefaultFetchFilterUseCase(networkManager: NetworkManager()), viewModel.filterUseCase))
+        vc.delegate = self
+        self.present(vc, animated: true)
     }
 }

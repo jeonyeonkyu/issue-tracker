@@ -16,9 +16,9 @@ final class FilterViewModel {
     private var fetchFilterUseCase: FetchFilterUseCase
     private var filterUseCase: FilterUseCase
 
-    init(_ fetchIssueListUseCase: FetchFilterUseCase) {
+    init(_ fetchIssueListUseCase: FetchFilterUseCase, _ filterUseCase: FilterUseCase) {
         self.fetchFilterUseCase = fetchIssueListUseCase
-        self.filterUseCase = FilterUseCase()
+        self.filterUseCase = filterUseCase
         self.identifierFilter = MockIdentifier.parents
         self.error = ""
         loadFilters()

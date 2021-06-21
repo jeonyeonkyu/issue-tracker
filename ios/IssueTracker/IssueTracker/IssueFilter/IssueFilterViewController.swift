@@ -20,18 +20,43 @@ extension IssueFilterViewController: ViewControllerIdentifierable {
 
 }
 
+protocol IssueFilterViewControllerDelegate: AnyObject {
+    func issueFilterViewControllerDidSave()
+}
+
 
 class IssueFilterViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Parent, DataItem>! = nil
+    
     @IBOutlet private var collectionView: UICollectionView!
     private var viewModel: FilterViewModel!
     private var cancelBag = Set<AnyCancellable>()
+    weak var delegate: IssueFilterViewControllerDelegate?
+    
+    private lazy var nav: UINavigationBar = {
+        return UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
+    }()
+    
+    private lazy var cancelButton: UIBarButtonItem = {
+        let button = UIButton(type: .system)
+        button.setTitle("취소", for: .normal)
+        button.setImage(UIImage(systemName: "line.horizontal.3.decrease"), for: .normal)
+        button.addTarget(self, action: #selector(cancelButtonTouched(_:)), for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }()
+    private lazy var saveButton: UIBarButtonItem = {
+        let button = UIButton(type: .system)
+        button.setTitle("저장", for: .normal)
+        button.addTarget(self, action: #selector(saveButtonTouched(_:)), for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.allowsMultipleSelection = true
+        setNavigation()
         configureLayout()
         configureDataSource()
         bind()
@@ -45,7 +70,6 @@ extension IssueFilterViewController {
     private func bind() {
         viewModel.fetchFilterList().receive(on: DispatchQueue.main)
             .sink { parents in
-                print(parents)
                 self.applySnapShot(with: parents)
             }
             .store(in: &cancelBag)
@@ -133,6 +157,29 @@ extension IssueFilterViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.deselect(index: indexPath)
+    }
+    
+}
+
+
+extension IssueFilterViewController {
+    
+    private func setNavigation() {
+        view.addSubview(nav)
+        let navItem = UINavigationItem(title: "필터")
+        
+        navItem.leftBarButtonItem = cancelButton
+        navItem.rightBarButtonItem = saveButton
+        
+        nav.setItems([navItem], animated: false)
+    }
+    
+    @objc func cancelButtonTouched(_ sender: UIBarButtonItem) {
+    }
+    
+    @objc private func saveButtonTouched(_ sender: UIButton) {
+        viewModel.setFilter()
+        delegate?.issueFilterViewControllerDidSave()
     }
     
 }

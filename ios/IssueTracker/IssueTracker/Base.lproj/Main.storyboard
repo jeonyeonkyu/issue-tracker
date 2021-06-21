@@ -126,19 +126,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AwQ-MA-5hU">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <items>
-                                    <navigationItem title="필터" id="XSP-PN-pI7">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" id="T6T-AC-hl0"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Item" id="zP0-bV-vpf"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gds-gk-0SB">
-                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                                <rect key="frame" x="0.0" y="114" width="414" height="748"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ij7-fM-5m5">
                                     <size key="itemSize" width="128" height="128"/>
@@ -161,13 +150,10 @@
                         <viewLayoutGuide key="safeArea" id="UlH-dT-vFD"/>
                         <color key="backgroundColor" red="0.94933778049999995" green="0.94850987200000003" blue="0.96850043539999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="AwQ-MA-5hU" firstAttribute="trailing" secondItem="UlH-dT-vFD" secondAttribute="trailing" id="52k-lw-OR0"/>
                             <constraint firstItem="gds-gk-0SB" firstAttribute="leading" secondItem="UlH-dT-vFD" secondAttribute="leading" id="D0Q-BF-ZFr"/>
-                            <constraint firstItem="gds-gk-0SB" firstAttribute="top" secondItem="AwQ-MA-5hU" secondAttribute="bottom" constant="20" id="OIz-3l-gQ3"/>
+                            <constraint firstItem="gds-gk-0SB" firstAttribute="top" secondItem="UlH-dT-vFD" secondAttribute="top" constant="70" id="Nin-Kz-v6z"/>
                             <constraint firstItem="UlH-dT-vFD" firstAttribute="trailing" secondItem="gds-gk-0SB" secondAttribute="trailing" id="RMk-Ko-hER"/>
                             <constraint firstItem="UlH-dT-vFD" firstAttribute="bottom" secondItem="gds-gk-0SB" secondAttribute="bottom" id="Tc5-3Z-eTm"/>
-                            <constraint firstItem="AwQ-MA-5hU" firstAttribute="leading" secondItem="UlH-dT-vFD" secondAttribute="leading" id="uZ7-tF-5eg"/>
-                            <constraint firstItem="AwQ-MA-5hU" firstAttribute="top" secondItem="UlH-dT-vFD" secondAttribute="top" id="yjZ-iw-Bwz"/>
                         </constraints>
                     </view>
                     <connections>
