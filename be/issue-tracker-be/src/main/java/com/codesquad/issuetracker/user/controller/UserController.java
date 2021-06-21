@@ -9,6 +9,6 @@ public class UserController {
 
     @GetMapping("/users")
     public UserResponses readAll() {
-        return UserDummyData.usersResponse();
+        return UserDummyData.usersResponses();
     }
 }

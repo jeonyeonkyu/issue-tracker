@@ -94,7 +94,7 @@ class LabelServiceTest {
                                 .description("label for backend")
                                 .color("#1679CF")
                                 .build(),
-                        LabelDummyData.labelBe()
+                        LabelDummyData.labelResponseBe()
                 )
         );
     }
@@ -129,7 +129,7 @@ class LabelServiceTest {
                                 .description("label for backend")
                                 .color("#1679CF")
                                 .build(),
-                        LabelDummyData.labelBe()
+                        LabelDummyData.labelResponseBe()
                 )
         );
     }

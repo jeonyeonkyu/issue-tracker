@@ -1,6 +1,5 @@
 package com.codesquad.issuetracker.user.dto;
 
-import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.User;
 import lombok.Builder;
 import lombok.Data;

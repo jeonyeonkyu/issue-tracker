@@ -19,7 +19,7 @@ public class LabelController {
 
     @PostMapping("/labels")
     public LabelResponseWrapper create(@RequestBody @Valid LabelRequest labelRequest) {
-        return LabelResponseWrapper.from(LabelDummyData.labelBe());
+        return LabelResponseWrapper.from(LabelDummyData.labelResponseBe());
     }
 
     @PutMapping("/labels/{labelId}")

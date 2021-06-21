@@ -2,6 +2,7 @@ package com.codesquad.issuetracker.issue.domain;
 
 import com.codesquad.issuetracker.label.domain.Labels;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode(of = {"id"})
+@Builder
 public class Issue {
     private Long id;
     private long number;
