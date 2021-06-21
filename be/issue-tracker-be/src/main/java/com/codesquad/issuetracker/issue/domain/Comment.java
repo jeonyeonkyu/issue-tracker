@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.issue.domain;
 
+import com.codesquad.issuetracker.comment.vo.Emojis;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -16,4 +17,5 @@ public class Comment {
     private User author;
     private String contents;
     private LocalDateTime createDateTime;
+    private Emojis emojis;
 }
