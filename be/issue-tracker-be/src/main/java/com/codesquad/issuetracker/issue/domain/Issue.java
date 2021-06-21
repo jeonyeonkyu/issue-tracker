@@ -30,7 +30,7 @@ public class Issue {
     }
 
     public boolean hasSameAuthorComments(User user) {
-        return comments.stream()
-                .anyMatch(comment -> comment.getAuthor().equals(user));
+        return comments != null && comments.stream()
+                                           .anyMatch(comment -> comment.getAuthor().equals(user));
     }
 }
