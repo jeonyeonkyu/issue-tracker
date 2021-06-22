@@ -27,7 +27,7 @@ protocol IssueFilterViewControllerDelegate: AnyObject {
 }
 
 
-class IssueFilterViewController: UIViewController {
+final class IssueFilterViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Parent, DataItem>! = nil
     

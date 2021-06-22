@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FilterUseCase {
+final class FilterUseCase {
     
     struct FilterIndex {
         var status: IndexPath?

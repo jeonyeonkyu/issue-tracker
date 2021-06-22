@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SectionListCell: UICollectionViewListCell {
+final class SectionListCell: UICollectionViewListCell {
     
     override func updateConfiguration(using state: UICellConfigurationState) {
         var newBgConfiguration = UIBackgroundConfiguration.listGroupedCell()
