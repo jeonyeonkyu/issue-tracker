@@ -252,9 +252,11 @@ extension IssueListViewController {
 extension IssueListViewController {
     
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        let vc = IssueFilterViewController.create(FilterViewModel(DefaultFetchFilterUseCase(networkManager: NetworkManager()), viewModel.filterUseCase))
-        vc.delegate = self
-        self.present(vc, animated: true)
+        let fetchUseCase = DefaultFetchFilterUseCase(networkManager: NetworkManager())
+        let viewModel = FilterViewModel(fetchUseCase, viewModel.filterUseCase)
+        let filterVC = IssueFilterViewController.create(viewModel)
+        filterVC.delegate = self
+        self.present(filterVC, animated: true)
     }
     
 }

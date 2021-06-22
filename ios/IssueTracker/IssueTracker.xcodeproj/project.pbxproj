@@ -207,8 +207,8 @@
 		AE6EFF54267E4C7000C905FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AE6EFF50267E466C00C905FC /* IdentifierModel.swift */,
 				AEB514942681DA32007DC865 /* FilterList.swift */,
+				AE6EFF50267E466C00C905FC /* IdentifierModel.swift */,
 				AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */,
 			);
 			path = Model;
