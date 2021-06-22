@@ -36,7 +36,7 @@ class IssueFilterViewController: UIViewController {
     private var cancelBag = Set<AnyCancellable>()
     weak var delegate: IssueFilterViewControllerDelegate?
     
-    private lazy var nav: UINavigationBar = {
+    private lazy var navigationBar: UINavigationBar = {
         return UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
     }()
     
@@ -56,8 +56,7 @@ class IssueFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
-        collectionView.allowsMultipleSelection = true
+        setCollectionView()
         setNavigation()
         configureLayout()
         configureDataSource()
@@ -67,9 +66,7 @@ class IssueFilterViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presentationController?.delegate = self
-        viewModel.indexPaths().forEach {
-            collectionView.selectItem(at: $0, animated: false, scrollPosition: .left)
-        }
+        recoverChecks()
     }
     
 }
@@ -89,6 +86,26 @@ extension IssueFilterViewController {
             .sink { error in
                 print(error)
             }.store(in: &cancelBag)
+    }
+    
+}
+
+
+extension IssueFilterViewController {
+    
+    private func setCollectionView() {
+        collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
+    }
+    
+    private func setNavigation() {
+        view.addSubview(navigationBar)
+        let navigationItem = UINavigationItem(title: "필터")
+        
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = saveButton
+        
+        navigationBar.setItems([navigationItem], animated: false)
     }
     
 }
@@ -156,11 +173,11 @@ extension IssueFilterViewController {
 extension IssueFilterViewController: UICollectionViewDelegate, UIAdaptivePresentationControllerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.indexPaths().forEach {
+        viewModel.selectedIndexPaths().forEach {
             collectionView.deselectItem(at: $0, animated: false)
         }
         viewModel.select(index: indexPath)
-        viewModel.indexPaths().forEach {
+        viewModel.selectedIndexPaths().forEach {
             collectionView.selectItem(at: $0, animated: false, scrollPosition: .left)
         }
     }
@@ -170,40 +187,37 @@ extension IssueFilterViewController: UICollectionViewDelegate, UIAdaptivePresent
     }
 
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        viewModel.indexPaths().forEach {
-            collectionView.deselectItem(at: $0, animated: false)
-        }
-        viewModel.deselectAll()
-        viewModel.setFilter()
-        delegate?.issueFilterViewControllerDidDismiss()
-    }
-    
-}
-
-
-extension IssueFilterViewController {
-    
-    private func setNavigation() {
-        view.addSubview(nav)
-        let navItem = UINavigationItem(title: "필터")
-        
-        navItem.leftBarButtonItem = cancelButton
-        navItem.rightBarButtonItem = saveButton
-        
-        nav.setItems([navItem], animated: false)
+        eraseChecks()
     }
     
     @objc func cancelButtonTouched(_ sender: UIBarButtonItem) {
-        viewModel.indexPaths().forEach {
-            collectionView.deselectItem(at: $0, animated: false)
-        }
-        viewModel.setFilter()
-        delegate?.issueFilterViewControllerDidCancel()
+        eraseChecks()
     }
     
     @objc private func saveButtonTouched(_ sender: UIButton) {
+        viewModel.saveIndexPath()
         viewModel.setFilter()
         delegate?.issueFilterViewControllerDidSave()
     }
     
+    private func eraseChecks() {
+        viewModel.selectedIndexPaths().forEach {
+            collectionView.deselectItem(at: $0, animated: false)
+        }
+        viewModel.getSavedIndexPath().forEach {
+            collectionView.selectItem(at: $0, animated: false, scrollPosition: .left)
+        }
+        viewModel.deselectAll()
+        viewModel.setFilter()
+        delegate?.issueFilterViewControllerDidCancel()
+    }
+    
+    private func recoverChecks() {
+        viewModel.getSavedIndexPath().forEach {
+            collectionView.selectItem(at: $0, animated: false, scrollPosition: .left)
+        }
+        viewModel.resetSelectedIndexPath()
+    }
+    
 }
+

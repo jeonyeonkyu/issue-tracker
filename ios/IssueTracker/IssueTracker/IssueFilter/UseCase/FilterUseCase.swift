@@ -23,7 +23,8 @@ class FilterUseCase {
         var milestone: String?
     }
     
-    private var filterIndex = FilterIndex()
+    private var selectedIndex = FilterIndex()
+    private(set) var savedIndex = [IndexPath]()
     private var filter = Filter()
     
 }
@@ -34,24 +35,24 @@ extension FilterUseCase {
     func select(index: IndexPath) {
         switch index.section {
         case 0:
-            filterIndex.status = index
+            selectedIndex.status = index
         case 1:
-            filterIndex.writer = index
+            selectedIndex.writer = index
         case 2:
-            filterIndex.label = index
+            selectedIndex.label = index
         case 3:
-            filterIndex.milestone = index
+            selectedIndex.milestone = index
         default:
             break
         }
     }
     
-    func indexPaths() -> [IndexPath] {
+    func selectedIndexPaths() -> [IndexPath] {
         var indexPaths = [IndexPath]()
-        if let status = filterIndex.status { indexPaths.append(status) }
-        if let writer = filterIndex.writer { indexPaths.append(writer) }
-        if let label = filterIndex.label { indexPaths.append(label) }
-        if let milestone = filterIndex.milestone { indexPaths.append(milestone) }
+        if let status = selectedIndex.status { indexPaths.append(status) }
+        if let writer = selectedIndex.writer { indexPaths.append(writer) }
+        if let label = selectedIndex.label { indexPaths.append(label) }
+        if let milestone = selectedIndex.milestone { indexPaths.append(milestone) }
         
         return indexPaths
     }
@@ -59,20 +60,28 @@ extension FilterUseCase {
     func deselect(index: IndexPath) {
         switch index.section {
         case 0:
-            filterIndex.status = nil
+            selectedIndex.status = nil
         case 1:
-            filterIndex.writer = nil
+            selectedIndex.writer = nil
         case 2:
-            filterIndex.label = nil
+            selectedIndex.label = nil
         case 3:
-            filterIndex.milestone = nil
+            selectedIndex.milestone = nil
         default:
             break
         }
     }
     
     func deselectAll() {
-        filterIndex = FilterIndex()
+        selectedIndex = FilterIndex()
+    }
+    
+    func saveIndexPaths() {
+        savedIndex = selectedIndexPaths()
+    }
+    
+    func resetSelectedIndexPaths() {
+        savedIndex.forEach{ self.select(index: $0) }
     }
     
 }
@@ -83,19 +92,19 @@ extension FilterUseCase {
     
     func setFilter(dataSource: [Parent]) {
         filter = Filter()
-        if let statusIdx = filterIndex.status {
+        if let statusIdx = selectedIndex.status {
             let status = dataSource[statusIdx.section].children[statusIdx.row - 1].title
             filter.status = Status(rawValue: status)
         }
-        if let writerIdx = filterIndex.writer {
+        if let writerIdx = selectedIndex.writer {
             let writer = dataSource[writerIdx.section].children[writerIdx.row - 1].title
             filter.writer = writer
         }
-        if let labelIdx = filterIndex.label {
+        if let labelIdx = selectedIndex.label {
             let label = dataSource[labelIdx.section].children[labelIdx.row - 1].title
             filter.label = label
         }
-        if let milestoneIdx = filterIndex.milestone {
+        if let milestoneIdx = selectedIndex.milestone {
             let milestone = dataSource[milestoneIdx.section].children[milestoneIdx.row - 1].title
             filter.milestone = milestone
         }
@@ -124,11 +133,8 @@ extension FilterUseCase {
             return issues.filter{ $0.author.id == logInUser.id }
         case .assigned:
             return issues.filter { $0.assignees?.contains(where: { user in
-                if case logInUser.id = user.id {
-                    return true
-                } else {
-                    return false
-                }
+                if case logInUser.id = user.id { return true }
+                else {  return false }
             }) ?? true }
         case .commented:
             return issues.filter{ $0.hasSameAuthorComments }

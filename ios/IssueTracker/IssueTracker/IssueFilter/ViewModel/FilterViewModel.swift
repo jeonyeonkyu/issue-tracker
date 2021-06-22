@@ -86,8 +86,8 @@ extension FilterViewModel {
         filterUseCase.select(index: index)
     }
     
-    func indexPaths() -> [IndexPath] {
-        return filterUseCase.indexPaths()
+    func selectedIndexPaths() -> [IndexPath] {
+        return filterUseCase.selectedIndexPaths()
     }
     
     func deselect(index: IndexPath) {
@@ -96,6 +96,18 @@ extension FilterViewModel {
     
     func deselectAll() {
         filterUseCase.deselectAll()
+    }
+    
+    func saveIndexPath() {
+        filterUseCase.saveIndexPaths()
+    }
+    
+    func getSavedIndexPath() -> [IndexPath] {
+        return filterUseCase.savedIndex
+    }
+    
+    func resetSelectedIndexPath() {
+        filterUseCase.resetSelectedIndexPaths()
     }
     
     func setFilter() {
