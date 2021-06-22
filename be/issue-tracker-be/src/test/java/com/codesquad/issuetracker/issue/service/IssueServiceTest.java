@@ -2,6 +2,7 @@ package com.codesquad.issuetracker.issue.service;
 
 import com.codesquad.issuetracker.comment.dto.CommentResponse;
 import com.codesquad.issuetracker.comment.dto.CommentResponses;
+import com.codesquad.issuetracker.common.exception.EntityNotFoundException;
 import com.codesquad.issuetracker.issue.controller.IssueDummyData;
 import com.codesquad.issuetracker.issue.domain.Comments;
 import com.codesquad.issuetracker.issue.domain.Issue;
@@ -35,6 +36,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest(classes = {IssueService.class})
 class IssueServiceTest {
@@ -210,6 +212,27 @@ class IssueServiceTest {
                                         IssueDummyData.commentByFreddie()
                                 )))
                                 .build()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("readOneEntityNotFoundedProvider")
+    void readOneEntityNotFounded(long id) {
+        BDDMockito.given(issueRepository.readById(id))
+                .willReturn(Optional.empty());
+
+        assertThatExceptionOfType(EntityNotFoundException.class)
+                .isThrownBy(() -> {
+                    issueService.readOne(id);
+                });
+    }
+
+    @SuppressWarnings("unused")
+    static Stream<Arguments> readOneEntityNotFoundedProvider() {
+        return Stream.of(
+                Arguments.of(
+                        1L
                 )
         );
     }
