@@ -28,6 +28,7 @@
 		AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7D39422672033800BF9487 /* UIView+HiddenWithAnimation.swift */; };
 		AEB514952681DA32007DC865 /* FilterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB514942681DA32007DC865 /* FilterList.swift */; };
 		AEB5149826821C27007DC865 /* IssueFilterViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */; };
+		AEB5149A2682380A007DC865 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB514992682380A007DC865 /* LoginViewController.swift */; };
 		AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */; };
 		AECEA442266F38D000855F20 /* IssueDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA441266F38D000855F20 /* IssueDataSource.swift */; };
 		AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA443266F3AD900855F20 /* IssueCell.swift */; };
@@ -107,6 +108,7 @@
 		AE7D39422672033800BF9487 /* UIView+HiddenWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+HiddenWithAnimation.swift"; sourceTree = "<group>"; };
 		AEB514942681DA32007DC865 /* FilterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterList.swift; sourceTree = "<group>"; };
 		AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewControllerDelegate.swift; sourceTree = "<group>"; };
+		AEB514992682380A007DC865 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewController.swift; sourceTree = "<group>"; };
 		AECEA441266F38D000855F20 /* IssueDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDataSource.swift; sourceTree = "<group>"; };
 		AECEA443266F3AD900855F20 /* IssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
@@ -283,6 +285,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		AEB5149B26823810007DC865 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				AEB514992682380A007DC865 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		AEB5547B267B2B31003F631E /* IssueFilter */ = {
 			isa = PBXGroup;
 			children = (
@@ -368,6 +378,7 @@
 			children = (
 				FF89A963266F0BD000983577 /* Main.storyboard */,
 				FF76F8C226786FD000342633 /* Application */,
+				AEB5149B26823810007DC865 /* Login */,
 				FF89A98E266F116000983577 /* IssueList */,
 				AEB5547B267B2B31003F631E /* IssueFilter */,
 				AED83A4726772D1F00C36CA4 /* Network */,
@@ -672,6 +683,7 @@
 				AE6EFF53267E4C4B00C905FC /* MockIdentifier.swift in Sources */,
 				AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */,
 				AE7505332670EE0600BA14F7 /* UIColor+hexToUIColor.swift in Sources */,
+				AEB5149A2682380A007DC865 /* LoginViewController.swift in Sources */,
 				FF89A997267075CD00983577 /* Issue.swift in Sources */,
 				FF89A99D2670784200983577 /* Milestone.swift in Sources */,
 				AE011CF4267F8C7600181FB9 /* FetchFilterUseCase.swift in Sources */,
