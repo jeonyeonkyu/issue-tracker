@@ -11,6 +11,10 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     
     private let networkManager = NetworkManager()
     
+    private func makeLoginViewController() -> LoginViewController {
+        return LoginViewController.create()
+    }
+    
     private func makeFetchIssueListUseCase() -> FetchIssueListUseCase {
         return DefaultFetchIssueListUseCase(networkManager: networkManager)
     }
@@ -24,7 +28,8 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     }
     
     func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController {
-        return UINavigationController(rootViewController: makeIssueListViewController(action))
+        return UINavigationController(rootViewController: makeLoginViewController())
+        //makeIssueListViewController(action))
     }
     
     func makeIssueListTabBarController(_ viewControllers: [UIViewController]) -> UITabBarController {

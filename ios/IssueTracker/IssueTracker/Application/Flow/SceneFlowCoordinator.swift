@@ -27,7 +27,12 @@ final class SceneFlowCoordinator {
         let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView)
         issueListViewController = dependencies.makeIssueListNavigationController(issueListVCAction)
         guard let issueListViewController = issueListViewController else { return }
+        issueListViewController.setNavigationBarHidden(true, animated: false)
         let vc = dependencies.makeIssueListTabBarController([issueListViewController])
+        vc.tabBar.isHidden = true
+//        vc.tabBarController?.navigationController?.navigationBar.isHidden = true
+//        vc.tabBarController?.navigationController?.setNavigationBarHidden(true, animated: false)
+//        vc.navigationController?.navigationBar.isHidden = true
         rootVC?.setNavigationBarHidden(true, animated: false)
         rootVC?.pushViewController(vc, animated: true)
     }
