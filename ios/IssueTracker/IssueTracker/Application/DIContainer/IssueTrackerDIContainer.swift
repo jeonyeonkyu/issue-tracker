@@ -19,22 +19,21 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
         return IssueViewModel(makeFetchIssueListUseCase())
     }
     
-    private func makeIssueListViewController() -> IssueListViewController {
-        return IssueListViewController.create(makeIssueListViewModel())
+    private func makeIssueListViewController(_ action: IssueListViewControllerAction) -> IssueListViewController {
+        return IssueListViewController.create(makeIssueListViewModel(), action)
     }
     
-    private func makeIssueListNavigationController() -> UINavigationController {
-        return UINavigationController(rootViewController: makeIssueListViewController())
+    func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController {
+        return UINavigationController(rootViewController: makeIssueListViewController(action))
     }
     
-    func makeIssueListTabBarController() -> UITabBarController {
+    func makeIssueListTabBarController(_ viewControllers: [UIViewController]) -> UITabBarController {
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [makeIssueListNavigationController()]
+        tabBarController.viewControllers = viewControllers
         return tabBarController
     }
     
     func makeSceneFlowCoordinator(_ rootViewController: UINavigationController) -> SceneFlowCoordinator {
         return SceneFlowCoordinator(rootViewController, self)
     }
-    
 }
