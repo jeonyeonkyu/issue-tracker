@@ -55,9 +55,3 @@ final class MockFilterUseCase: FetchFilterUseCase {
     }
     
 }
-
-struct FilterList {
-    let users: [User]
-    let labels: [Label]
-    let mileStone: [Milestone]
-}
