@@ -64,7 +64,7 @@ public class IssueDummyData {
                        .id(1L)
                        .author(UserDummyData.userFreddie())
                        .contents("commentByFreddie")
-                       .createDateTime(LocalDateTime.now())
+                       .createDateTime(LocalDateTime.of(2021, 06, 22, 16, 01))
                        .emojis(Emojis.from(Arrays.asList(
                                Emoji.builder()
                                        .value("😀")
@@ -80,10 +80,10 @@ public class IssueDummyData {
 
     public static Comment commentByHiro() {
         return Comment.builder()
-                       .id(1L)
+                       .id(2L)
                        .author(UserDummyData.userHiro())
                        .contents("commentByHiro")
-                       .createDateTime(LocalDateTime.now())
+                       .createDateTime(LocalDateTime.of(2021, 06, 22, 16, 00))
                        .emojis(Emojis.from(Arrays.asList(
                                Emoji.builder()
                                        .value("😀")
