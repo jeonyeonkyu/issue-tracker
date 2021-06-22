@@ -13,4 +13,9 @@ protocol PostNewIssueUseCase {
 
 final class DefaultPostNewIssueUseCase: PostNewIssueUseCase {
     
+    private var networkManager: NetworkManageable
+    
+    init(_ networkManager: NetworkManageable) {
+        self.networkManager = networkManager
+    }
 }

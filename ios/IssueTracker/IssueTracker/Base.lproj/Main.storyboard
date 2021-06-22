@@ -200,9 +200,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="containerView" destination="MHz-XW-UnV" id="4VJ-ia-Nrl"/>
-                        <outlet property="filteringTableView" destination="2hJ-fB-XAx" id="5II-d2-tLh"/>
-                        <outlet property="titleTextFiled" destination="LkM-k2-snb" id="4KC-aI-5z2"/>
+                        <outlet property="containerView" destination="MHz-XW-UnV" id="310-lq-p4c"/>
+                        <outlet property="filteringTableView" destination="2hJ-fB-XAx" id="oDe-0K-Y6c"/>
+                        <outlet property="titleTextField" destination="tL3-Pe-1ke" id="lvi-zV-CBh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3rO-8X-2fK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -234,6 +234,9 @@
                             <constraint firstItem="eFi-se-PvF" firstAttribute="leading" secondItem="jpy-7i-GUv" secondAttribute="leading" id="dpg-Mi-dJI"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="eFi-se-PvF" id="GrB-sK-GDI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bo8-ea-7KT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -261,6 +264,9 @@
                             <constraint firstItem="IEV-rY-Cqn" firstAttribute="bottom" secondItem="Htv-VU-X7W" secondAttribute="bottom" id="mV9-nL-xS3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="markdownView" destination="Htv-VU-X7W" id="7cT-D8-oDf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pLm-9c-UVK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

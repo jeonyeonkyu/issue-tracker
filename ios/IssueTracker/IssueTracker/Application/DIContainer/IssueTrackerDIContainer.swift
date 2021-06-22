@@ -9,7 +9,7 @@ import UIKit
 
 final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     private let networkManager = NetworkManager()
-
+    
     private func makeFetchIssueListUseCase() -> FetchIssueListUseCase {
         return DefaultFetchIssueListUseCase(networkManager: networkManager)
     }
@@ -34,5 +34,38 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     
     func makeSceneFlowCoordinator(_ rootViewController: UINavigationController) -> SceneFlowCoordinator {
         return SceneFlowCoordinator(rootViewController, self)
+    }
+}
+
+//MARK: - NewIssue ViewController
+
+extension IssueTrackerDIContainer {
+    private func makePostNewIssueUseCase() -> PostNewIssueUseCase {
+        return DefaultPostNewIssueUseCase(networkManager)
+    }
+    
+    private func makeFetchFilterSectionsUseCase() -> FetchFilterSectionsUseCase {
+        return DefaultFetchFilterSectionsUseCase(networkManager)
+    }
+    
+    private func makePostImageFileUseCase() -> UploadImageUseCase {
+        return DefaultUploadImageUseCase(networkManager)
+    }
+    
+    private func makeNewIssueViewModel() -> NewIssueViewModel {
+        return NewIssueViewModel(makeFetchFilterSectionsUseCase() ,makePostNewIssueUseCase(), makePostImageFileUseCase())
+    }
+    
+    private func makeMarkdownViewController(_ viewModel: NewIssueViewModel) -> MarkdownViewController {
+        return MarkdownViewController.create(viewModel)
+    }
+    
+    private func makePreviewViewController() -> PreviewViewController {
+        return PreviewViewController.create()
+    }
+    
+    func makeNewIssueViewController() -> NewIssueViewController {
+        let viewModel = makeNewIssueViewModel()
+        return NewIssueViewController.create(viewModel, makeMarkdownViewController(viewModel), makePreviewViewController())
     }
 }
