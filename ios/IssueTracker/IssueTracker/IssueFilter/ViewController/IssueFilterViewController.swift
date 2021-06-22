@@ -65,25 +65,7 @@ final class IssueFilterViewController: UIViewController {
     
 }
 
-
-extension IssueFilterViewController {
-    
-    private func bind() {
-        viewModel.fetchFilterList().receive(on: DispatchQueue.main)
-            .sink { parents in
-                self.applySnapShot(with: parents)
-            }
-            .store(in: &cancelBag)
-        
-        viewModel.fetchError().receive(on: DispatchQueue.main)
-            .dropFirst()
-            .sink { error in
-                print(error)
-            }.store(in: &cancelBag)
-    }
-    
-}
-
+//MARK:- Setting
 
 extension IssueFilterViewController {
     
@@ -104,6 +86,26 @@ extension IssueFilterViewController {
     
 }
 
+
+extension IssueFilterViewController {
+    
+    private func bind() {
+        viewModel.fetchFilterList().receive(on: DispatchQueue.main)
+            .sink { parents in
+                self.applySnapShot(with: parents)
+            }
+            .store(in: &cancelBag)
+        
+        viewModel.fetchError().receive(on: DispatchQueue.main)
+            .dropFirst()
+            .sink { error in
+                print(error)
+            }.store(in: &cancelBag)
+    }
+    
+}
+
+//MARK:- Configure CollectionView
 
 extension IssueFilterViewController {
 
@@ -163,6 +165,7 @@ extension IssueFilterViewController {
     
 }
 
+//MARK:- Selection
 
 extension IssueFilterViewController: UICollectionViewDelegate, UIAdaptivePresentationControllerDelegate {
     
