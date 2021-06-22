@@ -23,7 +23,6 @@ extension IssueFilterViewController: ViewControllerIdentifierable {
 protocol IssueFilterViewControllerDelegate: AnyObject {
     func issueFilterViewControllerDidCancel()
     func issueFilterViewControllerDidSave()
-    func issueFilterViewControllerDidDismiss()
 }
 
 

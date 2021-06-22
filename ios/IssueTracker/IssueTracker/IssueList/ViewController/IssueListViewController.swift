@@ -129,10 +129,6 @@ extension IssueListViewController: IssueFilterViewControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func issueFilterViewControllerDidDismiss() {
-        viewModel.filter()
-    }
-    
 }
 
 //MARK:- NetworkError Handling
