@@ -41,8 +41,8 @@ final class IssueFilterViewController: UIViewController {
     
     private lazy var cancelButton: UIBarButtonItem = {
         let button = UIButton(type: .system)
-        button.setTitle("취소", for: .normal)
-        button.setImage(UIImage(systemName: "line.horizontal.3.decrease"), for: .normal)
+        button.setTitle(" 취소", for: .normal)
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
         button.addTarget(self, action: #selector(cancelButtonTouched(_:)), for: .touchUpInside)
         return UIBarButtonItem(customView: button)
     }()
