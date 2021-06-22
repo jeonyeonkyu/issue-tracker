@@ -130,10 +130,10 @@ extension FilterUseCase {
     private func filterStatus(with issues: [Issue]) -> [Issue] {
         switch filter.status {
         case .written:
-            return issues.filter{ $0.author.id == logInUser.id }
+            return issues.filter{ $0.author.id == UserMock.freddie.id }
         case .assigned:
             return issues.filter { $0.assignees?.contains(where: { user in
-                if case logInUser.id = user.id { return true }
+                if case UserMock.freddie.id = user.id { return true }
                 else {  return false }
             }) ?? true }
         case .commented:
@@ -148,5 +148,3 @@ extension FilterUseCase {
     }
     
 }
-
-let logInUser = User(id: 1, email: "", name: "freddie", profileImage: "")

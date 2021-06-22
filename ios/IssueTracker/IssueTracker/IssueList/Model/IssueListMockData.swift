@@ -46,7 +46,7 @@ struct UserMock {
     }
 
     static var freddie: User {
-        .init(id: 5, email: "Freddie@email.com", name: "Freddie", profileImage: "https://avatars.githubusercontent.com/u/24666330?v=4")
+        .init(id: 1, email: "Freddie@email.com", name: "freddie", profileImage: "https://avatars.githubusercontent.com/u/24666330?v=4")
     }
 }
 
