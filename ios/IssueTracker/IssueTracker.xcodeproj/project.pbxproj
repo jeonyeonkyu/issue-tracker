@@ -27,6 +27,7 @@
 		AE7D393D2671BC9400BF9487 /* UIColor+hexToUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7505322670EE0600BA14F7 /* UIColor+hexToUIColor.swift */; };
 		AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7D39422672033800BF9487 /* UIView+HiddenWithAnimation.swift */; };
 		AEB514952681DA32007DC865 /* FilterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB514942681DA32007DC865 /* FilterList.swift */; };
+		AEB5149826821C27007DC865 /* IssueFilterViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */; };
 		AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */; };
 		AECEA442266F38D000855F20 /* IssueDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA441266F38D000855F20 /* IssueDataSource.swift */; };
 		AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA443266F3AD900855F20 /* IssueCell.swift */; };
@@ -105,6 +106,7 @@
 		AE7D39372671BC7200BF9487 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE7D39422672033800BF9487 /* UIView+HiddenWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+HiddenWithAnimation.swift"; sourceTree = "<group>"; };
 		AEB514942681DA32007DC865 /* FilterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterList.swift; sourceTree = "<group>"; };
+		AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewController.swift; sourceTree = "<group>"; };
 		AECEA441266F38D000855F20 /* IssueDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDataSource.swift; sourceTree = "<group>"; };
 		AECEA443266F3AD900855F20 /* IssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
@@ -272,10 +274,19 @@
 			path = UtilityTests;
 			sourceTree = "<group>";
 		};
-		AEB5547B267B2B31003F631E /* IssueFilter */ = {
+		AEB5149626821C08007DC865 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */,
+				AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		AEB5547B267B2B31003F631E /* IssueFilter */ = {
+			isa = PBXGroup;
+			children = (
+				AEB5149626821C08007DC865 /* ViewController */,
 				AE011CEA267F8A1100181FB9 /* ViewModel */,
 				AE011CEB267F8A1C00181FB9 /* View */,
 				AE011CF2267F8C5A00181FB9 /* UseCase */,
@@ -642,6 +653,7 @@
 				AED83A4926772D6600C36CA4 /* NetworkService.swift in Sources */,
 				FF76F8D12678772000342633 /* FetchIssueListUseCase.swift in Sources */,
 				AE6EFF51267E466C00C905FC /* IdentifierModel.swift in Sources */,
+				AEB5149826821C27007DC865 /* IssueFilterViewControllerDelegate.swift in Sources */,
 				AEE2A4D32670A00300FA6274 /* IssueViewModel.swift in Sources */,
 				FF89A99B2670780F00983577 /* Label.swift in Sources */,
 				AEB514952681DA32007DC865 /* FilterList.swift in Sources */,
