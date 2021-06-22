@@ -67,6 +67,11 @@ extension IssueViewModel {
     func fetchError() -> AnyPublisher<String, Never> {
         return $error.eraseToAnyPublisher()
     }
+    
+}
+
+
+extension IssueViewModel {
 
     func deleteIssue(at index: Int) {
         issues.remove(at: index)
