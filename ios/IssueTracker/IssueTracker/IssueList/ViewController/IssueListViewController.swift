@@ -105,7 +105,6 @@ extension IssueListViewController: IssueFilterViewControllerDelegate {
         viewModel.fetchIssueList().receive(on: DispatchQueue.main)
             .dropFirst()
             .sink { issues in
-                print("🤜🏻", issues)
                 self.dataSource = IssueDataSource(viewModel: self.viewModel)
                 self.issueTableView.dataSource = self.dataSource
                 self.issueTableView.reloadData()
@@ -119,9 +118,18 @@ extension IssueListViewController: IssueFilterViewControllerDelegate {
             }.store(in: &cancelBag)
     }
     
+    func issueFilterViewControllerDidCancel() {
+        viewModel.filter()
+        dismiss(animated: true, completion: nil)
+    }
+    
     func issueFilterViewControllerDidSave() {
         viewModel.filter()
         dismiss(animated: true, completion: nil)
+    }
+    
+    func issueFilterViewControllerDidDismiss() {
+        viewModel.filter()
     }
     
 }
@@ -235,14 +243,17 @@ extension IssueListViewController {
             issueNumLabel.textColor = .label
         }
     }
+    
 }
 
 //MARK: - Filtering Mode
 
 extension IssueListViewController {
+    
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
         let vc = IssueFilterViewController.create(FilterViewModel(DefaultFetchFilterUseCase(networkManager: NetworkManager()), viewModel.filterUseCase))
         vc.delegate = self
         self.present(vc, animated: true)
     }
+    
 }

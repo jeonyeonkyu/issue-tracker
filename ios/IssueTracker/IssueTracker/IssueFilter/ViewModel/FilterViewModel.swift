@@ -19,7 +19,7 @@ final class FilterViewModel {
     init(_ fetchIssueListUseCase: FetchFilterUseCase, _ filterUseCase: FilterUseCase) {
         self.fetchFilterUseCase = fetchIssueListUseCase
         self.filterUseCase = filterUseCase
-        self.identifierFilter = MockIdentifier.parents
+        self.identifierFilter = []
         self.error = ""
         loadFilters()
     }
@@ -92,6 +92,10 @@ extension FilterViewModel {
     
     func deselect(index: IndexPath) {
         filterUseCase.deselect(index: index)
+    }
+    
+    func deselectAll() {
+        filterUseCase.deselectAll()
     }
     
     func setFilter() {

@@ -71,6 +71,10 @@ extension FilterUseCase {
         }
     }
     
+    func deselectAll() {
+        filterIndex = FilterIndex()
+    }
+    
 }
 
 
@@ -78,6 +82,7 @@ extension FilterUseCase {
 extension FilterUseCase {
     
     func setFilter(dataSource: [Parent]) {
+        filter = Filter()
         if let statusIdx = filterIndex.status {
             let status = dataSource[statusIdx.section].children[statusIdx.row - 1].title
             filter.status = Status(rawValue: status)

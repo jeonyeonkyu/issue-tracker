@@ -21,7 +21,9 @@ extension IssueFilterViewController: ViewControllerIdentifierable {
 }
 
 protocol IssueFilterViewControllerDelegate: AnyObject {
+    func issueFilterViewControllerDidCancel()
     func issueFilterViewControllerDidSave()
+    func issueFilterViewControllerDidDismiss()
 }
 
 
@@ -60,6 +62,14 @@ class IssueFilterViewController: UIViewController {
         configureLayout()
         configureDataSource()
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presentationController?.delegate = self
+        viewModel.indexPaths().forEach {
+            collectionView.selectItem(at: $0, animated: false, scrollPosition: .left)
+        }
     }
     
 }
@@ -143,7 +153,7 @@ extension IssueFilterViewController {
 }
 
 
-extension IssueFilterViewController: UICollectionViewDelegate {
+extension IssueFilterViewController: UICollectionViewDelegate, UIAdaptivePresentationControllerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.indexPaths().forEach {
@@ -157,6 +167,15 @@ extension IssueFilterViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         viewModel.deselect(index: indexPath)
+    }
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        viewModel.indexPaths().forEach {
+            collectionView.deselectItem(at: $0, animated: false)
+        }
+        viewModel.deselectAll()
+        viewModel.setFilter()
+        delegate?.issueFilterViewControllerDidDismiss()
     }
     
 }
@@ -175,6 +194,11 @@ extension IssueFilterViewController {
     }
     
     @objc func cancelButtonTouched(_ sender: UIBarButtonItem) {
+        viewModel.indexPaths().forEach {
+            collectionView.deselectItem(at: $0, animated: false)
+        }
+        viewModel.setFilter()
+        delegate?.issueFilterViewControllerDidCancel()
     }
     
     @objc private func saveButtonTouched(_ sender: UIButton) {
