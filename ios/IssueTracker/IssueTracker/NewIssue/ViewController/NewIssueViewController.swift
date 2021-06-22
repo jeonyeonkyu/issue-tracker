@@ -53,19 +53,10 @@ extension NewIssueViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         setSegmentControl()
+        setRightBarButtonItem()
         navigationItem.titleView = segmentControl
     }
-
-    private func setImagePicker() {
-        imagePicker.delegate = self
-    }
-
-    private func setTableView() {
-        filteringTableView.backgroundColor = view.backgroundColor
-        filteringTableView.setEditing(true, animated: true)
-        filteringTableView.allowsMultipleSelectionDuringEditing = true
-    }
-
+    
     private func setSegmentControl() {
         let titles = ["Markdown", "Preview"]
         segmentControl = UISegmentedControl(items: titles)
@@ -80,6 +71,24 @@ extension NewIssueViewController {
         segmentControl.selectedSegmentIndex = 0
         segmentControl.sendActions(for: .valueChanged)
     }
+    
+    private func setRightBarButtonItem() {
+        let button = UIButton(type: .system)
+        button.setTitle("Save", for: .normal)
+        button.addTarget(self, action: #selector(saveButtonTouched(_:)), for: .touchUpInside)
+        button.tintColor = #colorLiteral(red: 0.6313168406, green: 0.6274867654, blue: 0.611690104, alpha: 1)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    }
+
+    private func setImagePicker() {
+        imagePicker.delegate = self
+    }
+
+    private func setTableView() {
+        filteringTableView.backgroundColor = view.backgroundColor
+        filteringTableView.setEditing(true, animated: true)
+        filteringTableView.allowsMultipleSelectionDuringEditing = true
+    }
 
     private func bind() {
         viewModel.fetchFilteringSections().receive(on: DispatchQueue.main)
@@ -91,6 +100,10 @@ extension NewIssueViewController {
 
     @objc func segmentChanged(_ sender: UISegmentedControl) {
         updateView()
+    }
+    
+    @objc func saveButtonTouched(_ sender: UIButton) {
+        
     }
 }
 

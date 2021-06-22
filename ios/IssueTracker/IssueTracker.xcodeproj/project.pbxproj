@@ -56,6 +56,9 @@
 		FF89A99B2670780F00983577 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A99A2670780F00983577 /* Label.swift */; };
 		FF89A99D2670784200983577 /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A99C2670784200983577 /* Milestone.swift */; };
 		FF89A99F2670793B00983577 /* IssueListMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF89A99E2670793B00983577 /* IssueListMockData.swift */; };
+		FFAC0E3F268182BA00E88E90 /* NewIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAC0E3E268182BA00E88E90 /* NewIssue.swift */; };
+		FFAC0E452681B0A900E88E90 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAC0E442681B0A900E88E90 /* Comment.swift */; };
+		FFAC0E472681B0F100E88E90 /* DetailIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAC0E462681B0F100E88E90 /* DetailIssue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +145,9 @@
 		FF89A99A2670780F00983577 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		FF89A99C2670784200983577 /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
 		FF89A99E2670793B00983577 /* IssueListMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListMockData.swift; sourceTree = "<group>"; };
+		FFAC0E3E268182BA00E88E90 /* NewIssue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssue.swift; sourceTree = "<group>"; };
+		FFAC0E442681B0A900E88E90 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		FFAC0E462681B0F100E88E90 /* DetailIssue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIssue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +354,7 @@
 			children = (
 				FF79E03326801F450088D2C7 /* FilterItem.swift */,
 				FF79E03926806CCE0088D2C7 /* ImageFile.swift */,
+				FFAC0E3E268182BA00E88E90 /* NewIssue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -379,6 +386,7 @@
 		FF89A95C266F0BD000983577 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				FFAC0E422681B09A00E88E90 /* DetailIssue */,
 				FF79E01E267C74AA0088D2C7 /* NewIssue */,
 				FF89A963266F0BD000983577 /* Main.storyboard */,
 				FF76F8C226786FD000342633 /* Application */,
@@ -438,6 +446,23 @@
 				FF89A99A2670780F00983577 /* Label.swift */,
 				FF89A99C2670784200983577 /* Milestone.swift */,
 				FF89A99E2670793B00983577 /* IssueListMockData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FFAC0E422681B09A00E88E90 /* DetailIssue */ = {
+			isa = PBXGroup;
+			children = (
+				FFAC0E432681B0A100E88E90 /* Model */,
+			);
+			path = DetailIssue;
+			sourceTree = "<group>";
+		};
+		FFAC0E432681B0A100E88E90 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FFAC0E442681B0A900E88E90 /* Comment.swift */,
+				FFAC0E462681B0F100E88E90 /* DetailIssue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -669,6 +694,7 @@
 				AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */,
 				FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */,
 				AECEA442266F38D000855F20 /* IssueDataSource.swift in Sources */,
+				FFAC0E472681B0F100E88E90 /* DetailIssue.swift in Sources */,
 				FF89A962266F0BD000983577 /* IssueListViewController.swift in Sources */,
 				FF89A95E266F0BD000983577 /* AppDelegate.swift in Sources */,
 				AED83A4926772D6600C36CA4 /* NetworkService.swift in Sources */,
@@ -685,7 +711,9 @@
 				FF89A99F2670793B00983577 /* IssueListMockData.swift in Sources */,
 				FF79E03126801F250088D2C7 /* FetchFilterSectionsUseCase.swift in Sources */,
 				FF76F8CE2678739B00342633 /* ViewControllerIdentifierable.swift in Sources */,
+				FFAC0E452681B0A900E88E90 /* Comment.swift in Sources */,
 				FF76F8C82678701000342633 /* IssueTrackerDIContainer.swift in Sources */,
+				FFAC0E3F268182BA00E88E90 /* NewIssue.swift in Sources */,
 				FF89A960266F0BD000983577 /* SceneDelegate.swift in Sources */,
 				AE7D391B2671A91400BF9487 /* UINibCreatable.swift in Sources */,
 				FF76F8B52677300300342633 /* UIBarButtonItem+setTitle.swift in Sources */,

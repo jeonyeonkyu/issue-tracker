@@ -47,7 +47,6 @@ extension NetworkManager: NetworkManageable {
         guard let url = EndPoint.url(path: path) else {
             return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
         }
-        print(url.absoluteURL)
         guard let data = data else { return Fail(error: NetworkError.BadRequest).eraseToAnyPublisher() }
         let boundary = generateBoundaryString()
         let bodyData = buildBody(boundary: boundary,
@@ -139,7 +138,6 @@ extension NetworkManager {
                            "Content-Type: \(mimType)",
                            "\r\n"
         ]
-        let testString = headerLines.joined(separator: "\r\n") + "\r\n--\(boundary)--"
         var bodyData = headerLines.joined(separator: "\r\n").data(using: .utf8)!
         bodyData.append(data)
         bodyData.append(contentsOf: "\r\n--\(boundary)--\r\n".data(using:.utf8)!)
