@@ -29,7 +29,9 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     }
     
     private func makeIssueListViewController(_ action: IssueListViewControllerAction) -> IssueListViewController {
-        return IssueListViewController.create(makeIssueListViewModel(), action)
+        let viewModel = makeIssueListViewModel()
+        let dataSource = IssueDataSource(viewModel: viewModel)
+        return IssueListViewController.create(viewModel, dataSource, action)
     }
     
     func makeIssueFilterViewController() -> IssueFilterViewController {

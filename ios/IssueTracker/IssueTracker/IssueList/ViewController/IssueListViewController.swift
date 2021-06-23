@@ -15,11 +15,12 @@ struct IssueListViewControllerAction {
 
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
     
-    static func create(_ viewModel: IssueViewModel, _ action: IssueListViewControllerAction) -> IssueListViewController {
+    static func create(_ viewModel: IssueViewModel, _ dataSource: IssueDataSource, _ action: IssueListViewControllerAction) -> IssueListViewController {
         guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? IssueListViewController else {
             return IssueListViewController()
         }
         vc.viewModel = viewModel
+        vc.dataSource = dataSource
         vc.action = action
         return vc
     }
@@ -47,8 +48,8 @@ final class IssueListViewController: UIViewController, ViewControllerIdentifiera
     private var isCheckAll: Bool!
     private var action: IssueListViewControllerAction?
     private var viewModel: IssueViewModel!
+    private var dataSource: IssueDataSource!
     private var cancelBag = Set<AnyCancellable>()
-    private lazy var dataSource = IssueDataSource(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,10 +113,9 @@ extension IssueListViewController: IssueFilterViewControllerDelegate {
     private func bind() {
         viewModel.fetchIssueList().receive(on: DispatchQueue.main)
             .dropFirst()
-            .sink { issues in
-                self.dataSource = IssueDataSource(viewModel: self.viewModel)
-                self.issueTableView.dataSource = self.dataSource
-                self.issueTableView.reloadData()
+            .sink { [weak self] issues in
+                self?.issueTableView.dataSource = self?.dataSource
+                self?.issueTableView.reloadData()
             }
             .store(in: &cancelBag)
         
