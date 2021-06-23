@@ -9,11 +9,11 @@ import Foundation
 
 final class FilterUseCase {
     
-    struct FilterIndex {
-        var status: IndexPath?
-        var writer: IndexPath?
-        var label: IndexPath?
-        var milestone: IndexPath?
+    enum FilteringList: Int, CaseIterable {
+        case status
+        case writer
+        case label
+        case milestone
     }
     
     struct Filter {
@@ -23,9 +23,24 @@ final class FilterUseCase {
         var milestone: String?
     }
     
-    private var selectedIndex = FilterIndex()
-    private(set) var savedIndex = [IndexPath]()
-    private var filter = Filter()
+    private var selectedIndex: [IndexPath?]
+    private(set) var savedIndex: [IndexPath]
+    private var filter: Filter
+    
+    init() {
+        self.selectedIndex = []
+        self.savedIndex = []
+        self.filter = Filter()
+        
+        setSelectedIndex()
+    }
+    
+    // Filter 항목만큼 배열 길이 초기화
+    private func setSelectedIndex() {
+        FilteringList.allCases.forEach { _ in
+            selectedIndex.append(nil)
+        }
+    }
     
 }
 
@@ -33,47 +48,26 @@ final class FilterUseCase {
 extension FilterUseCase {
     
     func select(index: IndexPath) {
-        switch index.section {
-        case 0:
-            selectedIndex.status = index
-        case 1:
-            selectedIndex.writer = index
-        case 2:
-            selectedIndex.label = index
-        case 3:
-            selectedIndex.milestone = index
-        default:
-            break
-        }
+        print(FilteringList.status.rawValue)
+        FilteringList.allCases
+            .filter { $0.rawValue == index.section }
+            .forEach { selectedIndex[$0.rawValue] = index }
     }
     
     func selectedIndexPaths() -> [IndexPath] {
-        var indexPaths = [IndexPath]()
-        if let status = selectedIndex.status { indexPaths.append(status) }
-        if let writer = selectedIndex.writer { indexPaths.append(writer) }
-        if let label = selectedIndex.label { indexPaths.append(label) }
-        if let milestone = selectedIndex.milestone { indexPaths.append(milestone) }
-        
-        return indexPaths
+        return selectedIndex.compactMap{$0}
     }
     
     func deselect(index: IndexPath) {
-        switch index.section {
-        case 0:
-            selectedIndex.status = nil
-        case 1:
-            selectedIndex.writer = nil
-        case 2:
-            selectedIndex.label = nil
-        case 3:
-            selectedIndex.milestone = nil
-        default:
-            break
-        }
+        FilteringList.allCases
+            .filter { $0.rawValue == index.section }
+            .forEach { selectedIndex[$0.rawValue] = nil }
     }
     
     func deselectAll() {
-        selectedIndex = FilterIndex()
+        FilteringList.allCases.forEach {
+            selectedIndex[$0.rawValue] = nil
+        }
     }
     
     func saveIndexPaths() {
@@ -91,23 +85,19 @@ extension FilterUseCase {
 extension FilterUseCase {
     
     func setFilter(dataSource: [Parent]) {
-        filter = Filter()
-        if let statusIdx = selectedIndex.status {
-            let status = dataSource[statusIdx.section].children[statusIdx.row - 1].title
-            filter.status = Status(rawValue: status)
+        var newFilter = Filter()
+        
+        func selectedTitle(_ list: FilteringList) -> String? {
+            guard let indexPath = selectedIndex[list.rawValue] else { return nil }
+            return dataSource[indexPath.section].children[indexPath.row - 1].title
         }
-        if let writerIdx = selectedIndex.writer {
-            let writer = dataSource[writerIdx.section].children[writerIdx.row - 1].title
-            filter.writer = writer
-        }
-        if let labelIdx = selectedIndex.label {
-            let label = dataSource[labelIdx.section].children[labelIdx.row - 1].title
-            filter.label = label
-        }
-        if let milestoneIdx = selectedIndex.milestone {
-            let milestone = dataSource[milestoneIdx.section].children[milestoneIdx.row - 1].title
-            filter.milestone = milestone
-        }
+        
+        newFilter.status = Status(rawValue: selectedTitle(.status) ?? "")
+        newFilter.writer = selectedTitle(.writer)
+        newFilter.label = selectedTitle(.label)
+        newFilter.milestone = selectedTitle(.milestone)
+        
+        self.filter = newFilter
     }
     
     func filterIssue(with issues: [Issue]) -> [Issue] {
