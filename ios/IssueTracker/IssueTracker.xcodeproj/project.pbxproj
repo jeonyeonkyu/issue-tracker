@@ -13,7 +13,7 @@
 		AE011CF4267F8C7600181FB9 /* FetchFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */; };
 		AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */; };
 		AE6EFF51267E466C00C905FC /* IdentifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF50267E466C00C905FC /* IdentifierModel.swift */; };
-		AE6EFF53267E4C4B00C905FC /* MockIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */; };
+		AE6EFF53267E4C4B00C905FC /* FilterListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF52267E4C4B00C905FC /* FilterListMock.swift */; };
 		AE7505312670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */; };
 		AE7505332670EE0600BA14F7 /* UIColor+hexToUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7505322670EE0600BA14F7 /* UIColor+hexToUIColor.swift */; };
 		AE7D391B2671A91400BF9487 /* UINibCreatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7D391A2671A91400BF9487 /* UINibCreatable.swift */; };
@@ -94,7 +94,7 @@
 		AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFilterUseCase.swift; sourceTree = "<group>"; };
 		AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterUseCase.swift; sourceTree = "<group>"; };
 		AE6EFF50267E466C00C905FC /* IdentifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModel.swift; sourceTree = "<group>"; };
-		AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIdentifier.swift; sourceTree = "<group>"; };
+		AE6EFF52267E4C4B00C905FC /* FilterListMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListMock.swift; sourceTree = "<group>"; };
 		AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AddLineSpacing.swift"; sourceTree = "<group>"; };
 		AE7505322670EE0600BA14F7 /* UIColor+hexToUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+hexToUIColor.swift"; sourceTree = "<group>"; };
 		AE7D391A2671A91400BF9487 /* UINibCreatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINibCreatable.swift; sourceTree = "<group>"; };
@@ -209,9 +209,9 @@
 		AE6EFF54267E4C7000C905FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AEB514942681DA32007DC865 /* FilterList.swift */,
 				AE6EFF50267E466C00C905FC /* IdentifierModel.swift */,
-				AE6EFF52267E4C4B00C905FC /* MockIdentifier.swift */,
+				AEB514942681DA32007DC865 /* FilterList.swift */,
+				AE6EFF52267E4C4B00C905FC /* FilterListMock.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -669,7 +669,7 @@
 				AE011CF1267F8A8300181FB9 /* FilterViewModel.swift in Sources */,
 				FF89A999267077E800983577 /* User.swift in Sources */,
 				AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */,
-				AE6EFF53267E4C4B00C905FC /* MockIdentifier.swift in Sources */,
+				AE6EFF53267E4C4B00C905FC /* FilterListMock.swift in Sources */,
 				AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */,
 				AE7505332670EE0600BA14F7 /* UIColor+hexToUIColor.swift in Sources */,
 				FF89A997267075CD00983577 /* Issue.swift in Sources */,

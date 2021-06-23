@@ -51,7 +51,7 @@ extension DefaultFetchFilterUseCase {
 final class MockFilterUseCase: FetchFilterUseCase {
     
     func excute(completion: @escaping (Result<FilterList, NetworkError>) -> Void) {
-//        completion(.success())
+        completion(.success(FilterListMock.data))
     }
     
 }
