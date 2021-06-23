@@ -30,18 +30,25 @@ public class IssueDetailResponse {
     private CommentResponses comments;
 
     public static IssueDetailResponse from(Issue issue) {
-        return IssueDetailResponse.builder()
-                       .id(issue.getId())
-                       .number(issue.getNumber())
-                       .title(issue.getTitle())
-                       .isClosed(issue.isClosed())
-                       .createDateTime(issue.getCreateDateTime())
-                       .author(UserResponse.from(issue.getAuthor()))
-                       .assignees(UserResponses.from(issue.getAssignees()))
-                       .labels(LabelResponses.from(issue.getLabels()))
-                       .milestone(MilestoneResponse.from(issue.getMilestone()))
-                       .mainComment(CommentResponse.from(issue.getMainComment()))
-                       .comments(CommentResponses.from(issue.getComments()))
-                       .build();
+        IssueDetailResponseBuilder issueDetailResponseBuilder = IssueDetailResponse.builder()
+                                                                        .id(issue.getId())
+                                                                        .number(issue.getNumber())
+                                                                        .title(issue.getTitle())
+                                                                        .isClosed(issue.isClosed())
+                                                                        .createDateTime(issue.getCreateDateTime())
+                                                                        .author(UserResponse.from(issue.getAuthor()))
+                                                                        .assignees(UserResponses.from(issue.getAssignees()))
+                                                                        .labels(LabelResponses.from(issue.getLabels()))
+                                                                        .mainComment(CommentResponse.from(issue.getMainComment()));
+
+        if (issue.hasComments()) {
+            issueDetailResponseBuilder.comments(CommentResponses.from(issue.getComments()));
+        }
+
+        if (issue.hasMilestone()) {
+            issueDetailResponseBuilder.milestone(MilestoneResponse.from(issue.getMilestone()));
+        }
+
+        return issueDetailResponseBuilder.build();
     }
 }

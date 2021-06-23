@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,10 +21,14 @@ public class UserResponses {
     }
 
     public static UserResponses from(Users users) {
+        if (users == null || users.isEmpty()) {
+            return UserResponses.from(Collections.emptySet());
+        }
+
         Set<UserResponse> userResponses = users.stream()
                                                   .map(UserResponse::from)
                                                   .collect(Collectors.toSet());
 
-        return new UserResponses(userResponses);
+        return UserResponses.from(userResponses);
     }
 }

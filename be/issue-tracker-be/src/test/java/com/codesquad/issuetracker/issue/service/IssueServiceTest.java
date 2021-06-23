@@ -9,10 +9,12 @@ import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.Issues;
 import com.codesquad.issuetracker.issue.domain.User;
 import com.codesquad.issuetracker.issue.dto.IssueDetailResponse;
+import com.codesquad.issuetracker.issue.dto.IssueRequest;
 import com.codesquad.issuetracker.issue.dto.IssueResponse;
 import com.codesquad.issuetracker.issue.dto.IssueResponses;
 import com.codesquad.issuetracker.issue.repository.IssueRepository;
 import com.codesquad.issuetracker.label.controller.LabelDummyData;
+import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.dto.LabelResponse;
 import com.codesquad.issuetracker.label.dto.LabelResponses;
 import com.codesquad.issuetracker.milestone.controller.MilestoneDummyData;
@@ -29,10 +31,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -237,6 +237,217 @@ class IssueServiceTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("createProvider")
+    void create(String 테스트케이스설명, Issue givenParam, Issue given, IssueRequest issueRequest, IssueDetailResponse expected) {
+        BDDMockito.given(issueRepository.save(givenParam))
+                .willReturn(given);
+
+        IssueDetailResponse actual = issueService.create(issueRequest);
+
+        thenVerifyIssue(actual, expected);
+    }
+
+    @SuppressWarnings("unused")
+    static Stream<Arguments> createProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "옵션 모두 존재",
+                        Issue.builder()
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        Issue.builder()
+                                .id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        IssueRequest.builder()
+                                .title("title")
+                                .mainCommentContents(IssueDummyData.commentByFreddie().getContents())
+                                .authorId(UserDummyData.userFreddie().getId())
+                                .assigneeIds(UserDummyData.users().stream().map(User::getId).collect(Collectors.toSet()))
+                                .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
+                                .milestoneId(MilestoneDummyData.openedMilestone().getId())
+                                .build(),
+                        IssueDetailResponse.builder().id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserResponse.from(UserDummyData.userFreddie()))
+                                .assignees(UserResponses.from(UserDummyData.users()))
+                                .labels(LabelResponses.from(LabelDummyData.labels()))
+                                .milestone(MilestoneResponse.from(MilestoneDummyData.openedMilestone()))
+                                .mainComment(CommentResponse.from(IssueDummyData.commentByFreddie()))
+                                .build()
+                ), Arguments.of(
+                        "마일스톤 제외",
+                        Issue.builder()
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        Issue.builder()
+                                .id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        IssueRequest.builder()
+                                .title("title")
+                                .mainCommentContents(IssueDummyData.commentByFreddie().getContents())
+                                .authorId(UserDummyData.userFreddie().getId())
+                                .assigneeIds(UserDummyData.users().stream().map(User::getId).collect(Collectors.toSet()))
+                                .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
+                                .build(),
+                        IssueDetailResponse.builder().id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserResponse.from(UserDummyData.userFreddie()))
+                                .assignees(UserResponses.from(UserDummyData.users()))
+                                .labels(LabelResponses.from(LabelDummyData.labels()))
+                                .mainComment(CommentResponse.from(IssueDummyData.commentByFreddie()))
+                                .build()
+                ), Arguments.of(
+                        "라벨 제외",
+                        Issue.builder()
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        Issue.builder()
+                                .id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        IssueRequest.builder()
+                                .title("title")
+                                .mainCommentContents(IssueDummyData.commentByFreddie().getContents())
+                                .authorId(UserDummyData.userFreddie().getId())
+                                .assigneeIds(UserDummyData.users().stream().map(User::getId).collect(Collectors.toSet()))
+                                .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
+                                .milestoneId(MilestoneDummyData.openedMilestone().getId())
+                                .build(),
+                        IssueDetailResponse.builder().id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserResponse.from(UserDummyData.userFreddie()))
+                                .assignees(UserResponses.from(UserDummyData.users()))
+                                .labels(LabelResponses.from(LabelDummyData.labels()))
+                                .milestone(MilestoneResponse.from(MilestoneDummyData.openedMilestone()))
+                                .mainComment(CommentResponse.from(IssueDummyData.commentByFreddie()))
+                                .build()
+                ), Arguments.of(
+                        "assignee 제외",
+                        Issue.builder()
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        Issue.builder()
+                                .id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        IssueRequest.builder()
+                                .title("title")
+                                .mainCommentContents(IssueDummyData.commentByFreddie().getContents())
+                                .authorId(UserDummyData.userFreddie().getId())
+                                .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
+                                .milestoneId(MilestoneDummyData.openedMilestone().getId())
+                                .build(),
+                        IssueDetailResponse.builder().id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserResponse.from(UserDummyData.userFreddie()))
+                                .labels(LabelResponses.from(LabelDummyData.labels()))
+                                .milestone(MilestoneResponse.from(MilestoneDummyData.openedMilestone()))
+                                .mainComment(CommentResponse.from(IssueDummyData.commentByFreddie()))
+                                .build()
+                ), Arguments.of(
+                        "커멘트 제외",
+                        Issue.builder()
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .build(),
+                        Issue.builder()
+                                .id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .build(),
+                        IssueRequest.builder()
+                                .title("title")
+                                .authorId(UserDummyData.userFreddie().getId())
+                                .assigneeIds(UserDummyData.users().stream().map(User::getId).collect(Collectors.toSet()))
+                                .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
+                                .milestoneId(MilestoneDummyData.openedMilestone().getId())
+                                .build(),
+                        IssueDetailResponse.builder().id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserResponse.from(UserDummyData.userFreddie()))
+                                .assignees(UserResponses.from(UserDummyData.users()))
+                                .labels(LabelResponses.from(LabelDummyData.labels()))
+                                .milestone(MilestoneResponse.from(MilestoneDummyData.openedMilestone()))
+                                .build()
+                )
+        );
+    }
+
     private void thenVerifyIssue(IssueResponse actual, IssueResponse expected) {
         assertThat(actual.getId()).isEqualTo(expected.getId());
         assertThat(actual.getNumber()).isEqualTo(expected.getNumber());
@@ -270,10 +481,12 @@ class IssueServiceTest {
         assertThat(actual.getNumber()).isEqualTo(expected.getNumber());
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
 
-        verifyComment(actual.getMainComment(), expected.getMainComment());
+        if (actual.getMainComment() != null && expected.getMainComment() != null) {
+            verifyComment(actual.getMainComment(), expected.getMainComment());
+        }
 
-        List<CommentResponse> actualCommentResponse = actual.getComments().getCommentResponses();
-        List<CommentResponse> expectedCommentResponse = expected.getComments().getCommentResponses();
+        List<CommentResponse> actualCommentResponse = actual.getComments() != null ? actual.getComments().getCommentResponses() : Collections.emptyList();
+        List<CommentResponse> expectedCommentResponse = expected.getComments() != null ? expected.getComments().getCommentResponses() : Collections.emptyList();
 
         for (int i = 0; i < actualCommentResponse.size(); i++) {
             verifyComment(actualCommentResponse.get(i), expectedCommentResponse.get(i));
@@ -284,8 +497,8 @@ class IssueServiceTest {
 
         verifyUser(actual.getAuthor(), expected.getAuthor());
 
-        List<UserResponse> actualUserResponses = new ArrayList<>(actual.getAssignees().getUserResponses());
-        List<UserResponse> expectedUserResponses = new ArrayList<>(expected.getAssignees().getUserResponses());
+        List<UserResponse> actualUserResponses = new ArrayList<>(actual.getAssignees() != null ? actual.getAssignees().getUserResponses() : Collections.emptyList());
+        List<UserResponse> expectedUserResponses = new ArrayList<>(expected.getAssignees() != null ? expected.getAssignees().getUserResponses() : Collections.emptyList());
 
         for (int i = 0; i < actualUserResponses.size(); i++) {
             verifyUser(actualUserResponses.get(i), expectedUserResponses.get(i));
@@ -298,7 +511,9 @@ class IssueServiceTest {
             verifyLabel(actualLabelResponses.get(i), expectedLabelResponses.get(i));
         }
 
-        verifyMilestone(actual.getMilestone(), expected.getMilestone());
+        if (actual.getMilestone() != null && expected.getMilestone() != null) {
+            verifyMilestone(actual.getMilestone(), expected.getMilestone());
+        }
     }
 
     private void verifyUser(UserResponse actual, UserResponse expected) {

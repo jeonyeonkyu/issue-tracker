@@ -23,6 +23,10 @@ public class CommentResponse {
     private Emojis emojis;
 
     public static CommentResponse from(Comment comment) {
+        if (comment == null) {
+            return CommentResponse.builder().build();
+        }
+
         return CommentResponse.builder()
                        .id(comment.getId())
                        .author(UserResponse.from(comment.getAuthor()))

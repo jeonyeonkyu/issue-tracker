@@ -1,5 +1,6 @@
 package com.codesquad.issuetracker.issue.domain;
 
+import com.codesquad.issuetracker.issue.dto.IssueRequest;
 import com.codesquad.issuetracker.label.domain.Labels;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,17 @@ public class Issue {
     private Comment mainComment;
     private Comments comments;
 
+    public static Issue from(IssueRequest issueRequest) {
+        return Issue.builder()
+                       .title(issueRequest.getTitle())
+                       .author(issueRequest.author())
+                       .mainComment(Comment.from(issueRequest))
+                       .assignees(issueRequest.assignees())
+                       .labels(issueRequest.labels())
+                       .milestone(issueRequest.milestone())
+                       .build();
+    }
+
     public String description() {
         return getMainComment().getContents();
     }
@@ -32,5 +44,17 @@ public class Issue {
     public boolean hasSameAuthorComments(User user) {
         return comments != null && comments.stream()
                                            .anyMatch(comment -> comment.getAuthor().equals(user));
+    }
+
+    public boolean hasComments() {
+        return comments != null && !comments.isEmpty();
+    }
+
+    public boolean hasAssignee() {
+        return assignees != null && !assignees.isEmpty();
+    }
+
+    public boolean hasMilestone() {
+        return milestone != null;
     }
 }

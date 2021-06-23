@@ -17,4 +17,9 @@ public class IssueDummyRepository implements IssueRepository {
     public Optional<Issue> readById(long id) {
         return null;
     }
+
+    @Override
+    public Issue save(Issue issue) {
+        return null;
+    }
 }
