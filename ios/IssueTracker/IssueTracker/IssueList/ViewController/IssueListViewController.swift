@@ -121,8 +121,8 @@ extension IssueListViewController: IssueFilterViewControllerDelegate {
         
         viewModel.fetchError().receive(on: DispatchQueue.main)
             .dropFirst()
-            .sink { error in
-                self.alertForNetwork(with: error)
+            .sink { [weak self]  error in
+                self?.alertForNetwork(with: error)
             }.store(in: &cancelBag)
     }
     
@@ -158,9 +158,9 @@ extension IssueListViewController: UITableViewDelegate {
     private func alertForDelete(with index: IndexPath) {
         let alert = UIAlertController(title: "정말로 이 이슈를 삭제하시겠습니까?", message: "", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "취소", style: .default, handler: nil)
-        let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
-            self.viewModel.deleteIssue(at: index.row)
-            self.issueTableView.deleteRows(at: [index], with: UITableView.RowAnimation.automatic)
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { [weak self] action in
+            self?.viewModel.deleteIssue(at: index.row)
+            self?.issueTableView.deleteRows(at: [index], with: UITableView.RowAnimation.automatic)
         }
         alert.addAction(cancel)
         alert.addAction(delete)
@@ -171,8 +171,8 @@ extension IssueListViewController: UITableViewDelegate {
         let close = UIContextualAction(style: .normal, title: "Close") { action, view, completion in
             completion(true)
         }
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { action, view, completion in
-            self.alertForDelete(with: indexPath)
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { [weak self] action, view, completion in
+            self?.alertForDelete(with: indexPath)
             completion(true)
         }
         close.image = UIImage(systemName: "archivebox")

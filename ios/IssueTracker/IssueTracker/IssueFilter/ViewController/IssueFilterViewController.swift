@@ -91,8 +91,8 @@ extension IssueFilterViewController {
     
     private func bind() {
         viewModel.fetchFilterList().receive(on: DispatchQueue.main)
-            .sink { parents in
-                self.applySnapShot(with: parents)
+            .sink { [weak self] parents in
+                self?.applySnapShot(with: parents)
             }
             .store(in: &cancelBag)
         
