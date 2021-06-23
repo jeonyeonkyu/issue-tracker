@@ -10,6 +10,7 @@ import Combine
 
 struct IssueListViewControllerAction {
     let showNewIssueView: () -> ()
+    let showFilterView: () -> ()
 }
 
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
@@ -254,11 +255,7 @@ extension IssueListViewController {
 extension IssueListViewController {
     
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        let fetchUseCase = DefaultFetchFilterUseCase(networkManager: NetworkManager())
-        let viewModel = FilterViewModel(fetchUseCase, viewModel.filterUseCase)
-        let filterVC = IssueFilterViewController.create(viewModel)
-        filterVC.delegate = self
-        self.present(filterVC, animated: true)
+        action?.showFilterView()
     }
     
 }

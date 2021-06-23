@@ -17,9 +17,9 @@ final class IssueViewModel {
     var filterUseCase: FilterUseCase
     private var cancelBag: AnyCancellable!
 
-    init(_ fetchIssueListUseCase: FetchIssueListUseCase) {
+    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ filterUseCase: FilterUseCase) {
         self.fetchIssueListUseCase = fetchIssueListUseCase
-        self.filterUseCase = FilterUseCase()
+        self.filterUseCase = filterUseCase
         self.issues = []
         self.error = ""
         loadIssues()
