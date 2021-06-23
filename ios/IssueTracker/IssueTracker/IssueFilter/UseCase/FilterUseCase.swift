@@ -48,7 +48,6 @@ final class FilterUseCase {
 extension FilterUseCase {
     
     func select(index: IndexPath) {
-        print(FilteringList.status.rawValue)
         FilteringList.allCases
             .filter { $0.rawValue == index.section }
             .forEach { selectedIndex[$0.rawValue] = index }
