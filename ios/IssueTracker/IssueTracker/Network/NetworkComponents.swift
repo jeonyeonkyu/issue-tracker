@@ -29,12 +29,16 @@ enum EndPoint {
     static let scheme = "https"
     static let host   = "issue-tracker-swagger.herokuapp.com"
     
-    static func url(path: String) -> URL? {
+    static func url(path: String, _ code: String?) -> URL? {
         var components = URLComponents()
         
         components.scheme = EndPoint.scheme
         components.host = EndPoint.host
         components.path = "\(path)"
+        components.queryItems = [
+            URLQueryItem(name: "client", value: "ios"),
+            URLQueryItem(name: "code", value: code)
+        ]
         
         return components.url
     }

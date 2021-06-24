@@ -37,8 +37,8 @@ extension LoginManager {
     
     func requestJWT(with code: URL) {
         let code = abstractCode(with: code)
-        let url = "http://15.164.68.136:80/api/login/auth?client=ios&code=\(code)"
-        NetworkManager().get(path: url, type: JWT.self)
+        
+        networkManager.get(path: "/login/auth", code, type: JWT.self)
             .receive(on: DispatchQueue.main)
             .sink { error in
                 switch error {
@@ -51,12 +51,9 @@ extension LoginManager {
     }
     
     private func abstractCode(with url: URL) -> String {
-        if url.absoluteString.starts(with: "issueTracker://") {
-            if let code = url.absoluteString.split(separator: "=").last.map({ String($0) }) {
-                return code
-            }
-        }
-        return ""
+        if !url.absoluteString.starts(with: "issueTracker://") { return "" }
+        guard let code = url.absoluteString.split(separator: "=").last.map({ String($0) }) else { return "" }
+        return code
     }
     
 }

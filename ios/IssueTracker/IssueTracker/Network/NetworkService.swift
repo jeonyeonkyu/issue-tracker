@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol NetworkManageable {
-    func get<T: Decodable>(path: String, type: T.Type) -> AnyPublisher<T, NetworkError>
+    func get<T: Decodable>(path: String, _ code: String?, type: T.Type) -> AnyPublisher<T, NetworkError>
     func post<T: Encodable, R: Decodable>(path: String, data: T, result: R.Type) -> AnyPublisher<R, NetworkError>
 }
 
@@ -27,8 +27,8 @@ class NetworkManager {
 
 extension NetworkManager: NetworkManageable {
     
-    func get<T: Decodable>(path: String, type: T.Type) -> AnyPublisher<T, NetworkError> {
-        guard let url = EndPoint.url(path: path) else {
+    func get<T: Decodable>(path: String, _ code: String?, type: T.Type) -> AnyPublisher<T, NetworkError> {
+        guard let url = EndPoint.url(path: path, nil) else {
             return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
         }
         let urlRequest = URLRequest(url: url)
@@ -36,7 +36,7 @@ extension NetworkManager: NetworkManageable {
     }
     
     func post<T: Encodable, R: Decodable>(path: String, data: T, result: R.Type) -> AnyPublisher<R, NetworkError> {
-        guard let url = EndPoint.url(path: path) else {
+        guard let url = EndPoint.url(path: path, nil) else {
             return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
         }
         return request(url: url, data: data, result: result)
