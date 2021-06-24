@@ -30,12 +30,12 @@ final class FilterViewModel {
 extension FilterViewModel {
     
     private func loadFilters() {
-        fetchFilterUseCase.excute { result in
+        fetchFilterUseCase.excute { [weak self] result in
             switch result {
             case .success(let filterList):
-                self.loadFilterList(with: filterList)
+                self?.loadFilterList(with: filterList)
             case .failure(let error):
-                self.handleError(error)
+                self?.handleError(error)
             }
         }
     }

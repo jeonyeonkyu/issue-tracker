@@ -17,9 +17,9 @@ final class IssueViewModel {
     var filterUseCase: FilterUseCase
     private var cancelBag: AnyCancellable!
 
-    init(_ fetchIssueListUseCase: FetchIssueListUseCase) {
+    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ filterUseCase: FilterUseCase) {
         self.fetchIssueListUseCase = fetchIssueListUseCase
-        self.filterUseCase = FilterUseCase()
+        self.filterUseCase = filterUseCase
         self.issues = []
         self.error = ""
         loadIssues()
@@ -31,12 +31,12 @@ final class IssueViewModel {
 extension IssueViewModel {
     
     private func loadIssues() {
-        fetchIssueListUseCase.excute { result in
+        fetchIssueListUseCase.excute { [weak self] result in
             switch result {
             case .success(let issues):
-                self.issues = issues
+                self?.issues = issues
             case .failure(let error):
-                self.handleError(error)
+                self?.handleError(error)
             }
         }
     }
@@ -78,12 +78,12 @@ extension IssueViewModel {
     }
     
     func filter() {
-        fetchIssueListUseCase.excute { result in
+        fetchIssueListUseCase.excute { [weak self] result in
             switch result {
             case .success(let issues):
-                self.issues = self.filterUseCase.filterIssue(with: issues)
+                self?.issues = self?.filterUseCase.filterIssue(with: issues) ?? []
             case .failure(let error):
-                self.handleError(error)
+                self?.handleError(error)
             }
         }
     }
