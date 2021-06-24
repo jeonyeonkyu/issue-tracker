@@ -28,6 +28,7 @@
 		AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7D39422672033800BF9487 /* UIView+HiddenWithAnimation.swift */; };
 		AE90D87F2684F1C8004719C5 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE90D87E2684F1C8004719C5 /* Alertable.swift */; };
 		AE90D8812684F30E004719C5 /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE90D8802684F30E004719C5 /* MyAccountViewController.swift */; };
+		AE90D883268502A4004719C5 /* MyAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE90D882268502A4004719C5 /* MyAccountViewModel.swift */; };
 		AEB514952681DA32007DC865 /* FilterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB514942681DA32007DC865 /* FilterList.swift */; };
 		AEB5149826821C27007DC865 /* IssueFilterViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */; };
 		AEB5149A2682380A007DC865 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB514992682380A007DC865 /* LoginViewController.swift */; };
@@ -117,6 +118,7 @@
 		AE7D39422672033800BF9487 /* UIView+HiddenWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+HiddenWithAnimation.swift"; sourceTree = "<group>"; };
 		AE90D87E2684F1C8004719C5 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		AE90D8802684F30E004719C5 /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
+		AE90D882268502A4004719C5 /* MyAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewModel.swift; sourceTree = "<group>"; };
 		AEB514942681DA32007DC865 /* FilterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterList.swift; sourceTree = "<group>"; };
 		AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AEB514992682380A007DC865 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				AEFD8EB426846F7A00F46832 /* LoginViewModel.swift */,
+				AE90D882268502A4004719C5 /* MyAccountViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -721,6 +724,7 @@
 				AE011CEF267F8A5100181FB9 /* SectionListCell.swift in Sources */,
 				AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */,
 				AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */,
+				AE90D883268502A4004719C5 /* MyAccountViewModel.swift in Sources */,
 				FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */,
 				AECEA442266F38D000855F20 /* IssueDataSource.swift in Sources */,
 				FF89A962266F0BD000983577 /* IssueListViewController.swift in Sources */,

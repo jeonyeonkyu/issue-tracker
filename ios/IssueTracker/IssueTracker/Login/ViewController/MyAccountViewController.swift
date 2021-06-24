@@ -9,10 +9,11 @@ import UIKit
 
 extension MyAccountViewController: ViewControllerIdentifierable {
     
-    static func create() -> LoginViewController {
-        guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? LoginViewController else {
-            return LoginViewController()
+    static func create(_ viewModel: MyAccountViewModel) -> MyAccountViewController {
+        guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? MyAccountViewController else {
+            return MyAccountViewController()
         }
+        vc.viewModel = viewModel
         return vc
     }
     
@@ -25,6 +26,8 @@ class MyAccountViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
+    var viewModel: MyAccountViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,8 +38,16 @@ class MyAccountViewController: UIViewController {
 
 extension MyAccountViewController {
     
+    private func fillUI() {
+        viewModel.fillUI { profileImage, name, email in
+            self.profileImageView.image = profileImage
+            self.nameLabel.text = name
+            self.emailLabel.text = email
+        }
+    }
+    
     @IBAction func logoutButtonTouched(_ sender: UIButton) {
-        
+        viewModel.logout()
     }
     
 }
