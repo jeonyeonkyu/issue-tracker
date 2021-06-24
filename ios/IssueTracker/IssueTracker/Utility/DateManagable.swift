@@ -39,7 +39,7 @@ extension DateManagable {
         return timeLogic(intervalTime: Int(Date().timeIntervalSince(time)))
     }
     
-    func timeLogic(intervalTime: Int) -> String{
+    private func timeLogic(intervalTime: Int) -> String{
         if intervalTime < 60 {
             return "\(intervalTime)초 전"
         } else if intervalTime < 3600 {

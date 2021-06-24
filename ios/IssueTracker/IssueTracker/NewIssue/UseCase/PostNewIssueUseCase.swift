@@ -36,4 +36,5 @@ final class DefaultPostNewIssueUseCase: PostNewIssueUseCase {
             .store(in: &cancelBag)
 
     }
+    
 }

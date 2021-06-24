@@ -57,6 +57,7 @@ final class MarkdownViewController: UIViewController, ViewControllerIdentifierab
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
     }
+    
 }
 
 extension MarkdownViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {

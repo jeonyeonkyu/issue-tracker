@@ -111,4 +111,5 @@ final class NewIssueViewModel {
     func filter() {
         filteringSections = filterUseCase.filteringSection()
     }
+    
 }

@@ -47,6 +47,7 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
 //MARK:- Set Inital Condition
 
 extension NewIssueViewController {
+    
     private func setting() {
         setNavigation()
         setFilterView()
@@ -103,11 +104,13 @@ extension NewIssueViewController {
     @objc func filterViewTouched(_ sender: UITapGestureRecognizer) {
         action?.showFilterView(false, self)
     }
+    
 }
 
 //MARK: - Segment Action
 
 extension NewIssueViewController {
+    
     private func add(asChildViewController viewController: UIViewController) {
         addChild(viewController)
         containerView.addSubview(viewController.view)
@@ -133,6 +136,7 @@ extension NewIssueViewController {
             add(asChildViewController: previewViewController)
         }
     }
+    
 }
 
 extension NewIssueViewController: IssueFilterViewControllerDelegate {
@@ -145,6 +149,5 @@ extension NewIssueViewController: IssueFilterViewControllerDelegate {
         viewModel.filter()
         dismiss(animated: true, completion: nil)
     }
-    
     
 }

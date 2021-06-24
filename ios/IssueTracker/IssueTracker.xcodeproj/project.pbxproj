@@ -11,7 +11,7 @@
 		AE011CEF267F8A5100181FB9 /* SectionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CEE267F8A5100181FB9 /* SectionListCell.swift */; };
 		AE011CF1267F8A8300181FB9 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF0267F8A8300181FB9 /* FilterViewModel.swift */; };
 		AE011CF4267F8C7600181FB9 /* FetchFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */; };
-		AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */; };
+		AE011CF6267FAA1000181FB9 /* IssueFilterableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE011CF5267FAA1000181FB9 /* IssueFilterableUseCase.swift */; };
 		AE6EFF51267E466C00C905FC /* IdentifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF50267E466C00C905FC /* IdentifierModel.swift */; };
 		AE6EFF53267E4C4B00C905FC /* FilterListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EFF52267E4C4B00C905FC /* FilterListMock.swift */; };
 		AE7505312670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */; };
@@ -69,6 +69,7 @@
 		FFCDAC5C268318CC00D4ABFF /* DateManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC5B268318CC00D4ABFF /* DateManagable.swift */; };
 		FFCDAC63268322C100D4ABFF /* OpenCloseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC62268322C000D4ABFF /* OpenCloseLabel.swift */; };
 		FFCDAC65268434B800D4ABFF /* NewIssueFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC64268434B800D4ABFF /* NewIssueFilterUseCase.swift */; };
+		FFCDAC672685479E00D4ABFF /* FilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC662685479E00D4ABFF /* FilterUseCase.swift */; };
 		FFE2AA122681B4D10026EBD5 /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2AA112681B4D10026EBD5 /* IssueDetailViewController.swift */; };
 		FFE2AA152681BB0F0026EBD5 /* IssueDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2AA142681BB0F0026EBD5 /* IssueDetailViewModel.swift */; };
 		FFE2AA172681C6510026EBD5 /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2AA162681C6510026EBD5 /* Emoji.swift */; };
@@ -112,7 +113,7 @@
 		AE011CEE267F8A5100181FB9 /* SectionListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionListCell.swift; sourceTree = "<group>"; };
 		AE011CF0267F8A8300181FB9 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFilterUseCase.swift; sourceTree = "<group>"; };
-		AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterUseCase.swift; sourceTree = "<group>"; };
+		AE011CF5267FAA1000181FB9 /* IssueFilterableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterableUseCase.swift; sourceTree = "<group>"; };
 		AE6EFF50267E466C00C905FC /* IdentifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModel.swift; sourceTree = "<group>"; };
 		AE6EFF52267E4C4B00C905FC /* FilterListMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListMock.swift; sourceTree = "<group>"; };
 		AE7505302670ED1F00BA14F7 /* UILabel+AddLineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+AddLineSpacing.swift"; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 		FFCDAC5B268318CC00D4ABFF /* DateManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManagable.swift; sourceTree = "<group>"; };
 		FFCDAC62268322C000D4ABFF /* OpenCloseLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCloseLabel.swift; sourceTree = "<group>"; };
 		FFCDAC64268434B800D4ABFF /* NewIssueFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueFilterUseCase.swift; sourceTree = "<group>"; };
+		FFCDAC662685479E00D4ABFF /* FilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterUseCase.swift; sourceTree = "<group>"; };
 		FFE2AA112681B4D10026EBD5 /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
 		FFE2AA142681BB0F0026EBD5 /* IssueDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewModel.swift; sourceTree = "<group>"; };
 		FFE2AA162681C6510026EBD5 /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
@@ -241,7 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				AE011CF3267F8C7600181FB9 /* FetchFilterUseCase.swift */,
-				AE011CF5267FAA1000181FB9 /* FilterUseCase.swift */,
+				AE011CF5267FAA1000181FB9 /* IssueFilterableUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -293,6 +295,7 @@
 				FF76F8B42677300300342633 /* UIBarButtonItem+setTitle.swift */,
 				FF76F8CD2678739B00342633 /* ViewControllerIdentifierable.swift */,
 				FFCDAC5B268318CC00D4ABFF /* DateManagable.swift */,
+				FFCDAC662685479E00D4ABFF /* FilterUseCase.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -837,6 +840,7 @@
 				FFCDAC65268434B800D4ABFF /* NewIssueFilterUseCase.swift in Sources */,
 				FF76F8B52677300300342633 /* UIBarButtonItem+setTitle.swift in Sources */,
 				FFE2AA122681B4D10026EBD5 /* IssueDetailViewController.swift in Sources */,
+				FFCDAC672685479E00D4ABFF /* FilterUseCase.swift in Sources */,
 				FF89A999267077E800983577 /* User.swift in Sources */,
 				AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */,
 				FFCDAC63268322C100D4ABFF /* OpenCloseLabel.swift in Sources */,
@@ -844,7 +848,7 @@
 				FF89A999267077E800983577 /* User.swift in Sources */,
 				AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */,
 				AE6EFF53267E4C4B00C905FC /* FilterListMock.swift in Sources */,
-				AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */,
+				AE011CF6267FAA1000181FB9 /* IssueFilterableUseCase.swift in Sources */,
 				AE7505332670EE0600BA14F7 /* UIColor+hexToUIColor.swift in Sources */,
 				FF89A997267075CD00983577 /* Issue.swift in Sources */,
 				FF89A99D2670784200983577 /* Milestone.swift in Sources */,

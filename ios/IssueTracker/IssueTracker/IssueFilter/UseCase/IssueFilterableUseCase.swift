@@ -1,5 +1,5 @@
 //
-//  FilterUseCase.swift
+//  IssueFilterableUseCase.swift
 //  IssueTracker
 //
 //  Created by Lia on 2021/06/21.
@@ -7,16 +7,6 @@
 
 import Foundation
 
-protocol FilterUseCase {
-    var savedIndex: [IndexPath] { get }
-    func select(index: IndexPath)
-    func selectedIndexPaths() -> [IndexPath]
-    func deselect(index: IndexPath)
-    func deselectAll()
-    func saveIndexPaths()
-    func resetSelectedIndexPaths()
-    func setFilter(dataSource: [Parent])
-}
 
 protocol IssueFilterableUseCase: FilterUseCase {
     func filterIssue(with issues: [Issue]) -> [Issue]
