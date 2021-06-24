@@ -274,9 +274,3 @@ extension IssueListViewController {
         action?.showNewIssueView()
     }
 }
-
-//MARK: - Move Issue Detail
-
-extension IssueListViewController {
-    
-}

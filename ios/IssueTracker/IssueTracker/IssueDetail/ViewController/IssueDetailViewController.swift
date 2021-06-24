@@ -34,6 +34,12 @@ final class IssueDetailViewController: UIViewController, ViewControllerIdentifie
         bind()
     }
     
+}
+
+//MARK:- Set Inital Condition
+
+extension IssueDetailViewController {
+    
     private func setting() {
         setUI()
         setTableView()
@@ -82,6 +88,7 @@ final class IssueDetailViewController: UIViewController, ViewControllerIdentifie
     @objc func backButtonTapped(_ sender: UIBarButtonItem) {
         navigationController?.popToRootViewController(animated: true)
     }
+    
 }
 
 extension IssueDetailViewController: UITableViewDataSource {

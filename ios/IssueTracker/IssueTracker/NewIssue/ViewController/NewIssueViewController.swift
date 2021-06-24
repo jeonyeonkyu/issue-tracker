@@ -139,6 +139,8 @@ extension NewIssueViewController {
     
 }
 
+//MARK: - Filtering Handling
+
 extension NewIssueViewController: IssueFilterViewControllerDelegate {
     
     func issueFilterViewControllerDidCancel() {

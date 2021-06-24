@@ -31,6 +31,12 @@ final class MarkdownViewController: UIViewController, ViewControllerIdentifierab
         bind()
     }
     
+}
+
+//MARK:- Set Inital Condition
+
+extension MarkdownViewController {
+    
     private func setting() {
         setImagePicker()
         setTextView()
@@ -59,6 +65,8 @@ final class MarkdownViewController: UIViewController, ViewControllerIdentifierab
     }
     
 }
+
+//MARK: - Image Picker
 
 extension MarkdownViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
