@@ -1,5 +1,5 @@
 //
-//  IssueFilterableUseCase.swift
+//  IssueListFilterUseCase.swift
 //  IssueTracker
 //
 //  Created by Lia on 2021/06/21.

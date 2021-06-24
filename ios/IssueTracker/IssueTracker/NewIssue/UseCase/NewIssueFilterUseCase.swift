@@ -51,7 +51,11 @@ extension NewIssueFilterUseCase {
         FilteringList.allCases
             .filter { $0.rawValue == index.section }
             .forEach {
-                selectedIndex[$0.rawValue].append(index)
+                if index.section == FilteringList.milestone.rawValue {
+                    selectedIndex[$0.rawValue] = [index]
+                } else {
+                 selectedIndex[$0.rawValue].append(index)
+                }
             }
     }
     
