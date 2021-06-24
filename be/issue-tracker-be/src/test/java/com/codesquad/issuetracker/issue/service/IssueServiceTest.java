@@ -5,10 +5,7 @@ import com.codesquad.issuetracker.comment.dto.CommentResponses;
 import com.codesquad.issuetracker.common.exception.EntityNotFoundException;
 import com.codesquad.issuetracker.issue.controller.IssueDummyData;
 import com.codesquad.issuetracker.issue.domain.*;
-import com.codesquad.issuetracker.issue.dto.IssueDetailResponse;
-import com.codesquad.issuetracker.issue.dto.IssueRequest;
-import com.codesquad.issuetracker.issue.dto.IssueResponse;
-import com.codesquad.issuetracker.issue.dto.IssueResponses;
+import com.codesquad.issuetracker.issue.dto.*;
 import com.codesquad.issuetracker.issue.repository.IssueRepository;
 import com.codesquad.issuetracker.label.controller.LabelDummyData;
 import com.codesquad.issuetracker.label.domain.Label;
@@ -283,7 +280,8 @@ class IssueServiceTest {
                                 .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
                                 .milestoneId(MilestoneDummyData.openedMilestone().getId())
                                 .build(),
-                        IssueDetailResponse.builder().id(1L)
+                        IssueDetailResponse.builder()
+                                .id(1L)
                                 .number(1L)
                                 .title("title")
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
@@ -321,7 +319,8 @@ class IssueServiceTest {
                                 .assigneeIds(UserDummyData.users().stream().map(User::getId).collect(Collectors.toSet()))
                                 .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
                                 .build(),
-                        IssueDetailResponse.builder().id(1L)
+                        IssueDetailResponse.builder()
+                                .id(1L)
                                 .number(1L)
                                 .title("title")
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
@@ -361,7 +360,8 @@ class IssueServiceTest {
                                 .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
                                 .milestoneId(MilestoneDummyData.openedMilestone().getId())
                                 .build(),
-                        IssueDetailResponse.builder().id(1L)
+                        IssueDetailResponse.builder()
+                                .id(1L)
                                 .number(1L)
                                 .title("title")
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
@@ -399,7 +399,8 @@ class IssueServiceTest {
                                 .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
                                 .milestoneId(MilestoneDummyData.openedMilestone().getId())
                                 .build(),
-                        IssueDetailResponse.builder().id(1L)
+                        IssueDetailResponse.builder()
+                                .id(1L)
                                 .number(1L)
                                 .title("title")
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
@@ -436,7 +437,8 @@ class IssueServiceTest {
                                 .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
                                 .milestoneId(MilestoneDummyData.openedMilestone().getId())
                                 .build(),
-                        IssueDetailResponse.builder().id(1L)
+                        IssueDetailResponse.builder()
+                                .id(1L)
                                 .number(1L)
                                 .title("title")
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
@@ -451,14 +453,14 @@ class IssueServiceTest {
 
     @ParameterizedTest
     @MethodSource
-    void update(String 테스트케이스설명, Issue givenForReadById, Issue givenForSave, IssueRequest issueRequest, IssueDetailResponse expected) {
+    void update(String 테스트케이스설명, Issue givenForReadById, Issue givenForSave, IssueUpdateRequest issueUpdateRequest, IssueDetailResponse expected) {
         BDDMockito.given(issueRepository.readById(givenForReadById.getId()))
                 .willReturn(Optional.of(givenForReadById));
 
         BDDMockito.given(issueRepository.save(givenForSave))
                 .willReturn(givenForSave);
 
-        IssueDetailResponse actual = issueService.update(givenForReadById.getId(), issueRequest);
+        IssueDetailResponse actual = issueService.update(givenForReadById.getId(), issueUpdateRequest);
 
         IssueTestValidator.thenVerifyIssue(actual, expected);
     }
@@ -483,6 +485,7 @@ class IssueServiceTest {
                                 .id(1L)
                                 .number(1L)
                                 .title("title updated")
+                                .isClosed(true)
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
                                 .author(UserDummyData.userFreddie())
                                 .assignees(Users.of(UserDummyData.userFreddie()))
@@ -490,17 +493,18 @@ class IssueServiceTest {
                                 .milestone(MilestoneDummyData.closedMilestone())
                                 .mainComment(IssueDummyData.commentByFreddie())
                                 .build(),
-                        IssueRequest.builder()
+                        IssueUpdateRequest.builder()
                                 .title("title updated")
-                                .mainCommentContents(IssueDummyData.commentByFreddie().getContents())
-                                .authorId(UserDummyData.userFreddie().getId())
+                                .isClosed(true)
                                 .assigneeIds(new HashSet<>(Arrays.asList(UserDummyData.userFreddie().getId())))
                                 .labelIds(new HashSet<>(Arrays.asList(LabelDummyData.labelBe().getId())))
                                 .milestoneId(MilestoneDummyData.closedMilestone().getId())
                                 .build(),
-                        IssueDetailResponse.builder().id(1L)
+                        IssueDetailResponse.builder()
+                                .id(1L)
                                 .number(1L)
                                 .title("title updated")
+                                .isClosed(true)
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
                                 .author(UserResponse.from(UserDummyData.userFreddie()))
                                 .assignees(UserResponses.from(Users.of(UserDummyData.userFreddie())))

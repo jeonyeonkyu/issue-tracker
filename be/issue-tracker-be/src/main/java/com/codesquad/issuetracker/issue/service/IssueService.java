@@ -7,6 +7,7 @@ import com.codesquad.issuetracker.issue.domain.User;
 import com.codesquad.issuetracker.issue.dto.IssueDetailResponse;
 import com.codesquad.issuetracker.issue.dto.IssueRequest;
 import com.codesquad.issuetracker.issue.dto.IssueResponses;
+import com.codesquad.issuetracker.issue.dto.IssueUpdateRequest;
 import com.codesquad.issuetracker.issue.mapper.IssueDtoMapper;
 import com.codesquad.issuetracker.issue.repository.IssueRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,16 @@ public class IssueService {
                               .orElseThrow(() -> new EntityNotFoundException());
 
         issue.update(IssueDtoMapper.toEntity(issueRequest));
+
+        return IssueDetailResponse.from(issueRepository.save(issue));
+
+    }
+
+    public IssueDetailResponse update(long issueId, IssueUpdateRequest issueUpdateRequest) {
+        Issue issue = issueRepository.readById(issueId)
+                              .orElseThrow(() -> new EntityNotFoundException());
+
+        issue.update(IssueDtoMapper.toEntity(issueUpdateRequest));
 
         return IssueDetailResponse.from(issueRepository.save(issue));
 

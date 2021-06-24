@@ -6,6 +6,7 @@ import com.codesquad.issuetracker.issue.domain.User;
 import com.codesquad.issuetracker.issue.dto.IssueRequest;
 import com.codesquad.issuetracker.issue.dto.IssueResponse;
 import com.codesquad.issuetracker.issue.dto.IssueResponses;
+import com.codesquad.issuetracker.issue.dto.IssueUpdateRequest;
 import com.codesquad.issuetracker.label.dto.LabelResponses;
 import com.codesquad.issuetracker.milestone.dto.MilestoneResponse;
 import com.codesquad.issuetracker.user.dto.UserResponse;
@@ -26,6 +27,16 @@ public class IssueDtoMapper {
                        .assignees(issueRequest.assignees())
                        .labels(issueRequest.labels())
                        .milestone(issueRequest.milestone())
+                       .build();
+    }
+
+    public static Issue toEntity(IssueUpdateRequest issueUpdateRequest) {
+        return Issue.builder()
+                       .title(issueUpdateRequest.getTitle())
+                       .isClosed(issueUpdateRequest.isClosed())
+                       .assignees(issueUpdateRequest.assignees())
+                       .labels(issueUpdateRequest.labels())
+                       .milestone(issueUpdateRequest.milestone())
                        .build();
     }
 
