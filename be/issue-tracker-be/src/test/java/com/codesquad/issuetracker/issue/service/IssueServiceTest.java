@@ -51,7 +51,7 @@ class IssueServiceTest {
 
     @ParameterizedTest
     @MethodSource("readAllProvider")
-    void readAll(User user, Issues given, IssueResponses expected) {
+    void readAll(String 테스트케이스설명, User user, Issues given, IssueResponses expected) {
 
         BDDMockito.given(issueRepository.readAll())
                 .willReturn(given);
@@ -67,6 +67,7 @@ class IssueServiceTest {
     static Stream<Arguments> readAllProvider() {
         return Stream.of(
                 Arguments.of(
+                        "커멘트 존재하지 않음",
                         UserDummyData.userFreddie(),
                         Issues.of(
                                 Issue.builder()
@@ -97,6 +98,7 @@ class IssueServiceTest {
                         ))
                 ),
                 Arguments.of(
+                        "커멘트 존재",
                         UserDummyData.userFreddie(),
                         Issues.of(
                                 Issue.builder()
@@ -131,6 +133,7 @@ class IssueServiceTest {
                         ))
                 ),
                 Arguments.of(
+                        "다른 사용자가 작성한 커멘트 존재",
                         UserDummyData.userFreddie(),
                         Issues.of(
                                 Issue.builder()
