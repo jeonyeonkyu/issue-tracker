@@ -78,7 +78,9 @@ extension IssueViewModel {
         issues.remove(at: index)
     }
     
-    func selectIssue(at id: Int, completion: @escaping (IssueDetail) -> Void ) {
+    func selectIssue(at index: Int, completion: @escaping (IssueDetail) -> Void ) {
+        let id = issues[index].id
+        
         fetchIssueDetailUseCase.excute(id: id) { result in
             switch result {
             case .success(let issueDetail):
@@ -88,6 +90,7 @@ extension IssueViewModel {
             }
         }
     }
+    
     func filter() {
         fetchIssueListUseCase.excute { [weak self] result in
             switch result {
