@@ -14,9 +14,11 @@ final class IssueViewModel {
     @Published private(set) var error: String
     
     private var fetchIssueListUseCase: FetchIssueListUseCase
-
-    init(_ fetchIssueListUseCase: FetchIssueListUseCase) {
+    private var fetchIssueDetailUseCase: FetchIssueDetailUseCase
+    
+    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ fetchIssueDetailUseCase: FetchIssueDetailUseCase) {
         self.fetchIssueListUseCase = fetchIssueListUseCase
+        self.fetchIssueDetailUseCase = fetchIssueDetailUseCase
         self.issues = []
         self.error = ""
         loadIssues()
@@ -67,6 +69,17 @@ extension IssueViewModel {
 
     func deleteIssue(at index: Int) {
         issues.remove(at: index)
+    }
+    
+    func selectIssue(at id: Int, completion: @escaping (IssueDetail) -> Void ) {
+        fetchIssueDetailUseCase.excute(id: id) { result in
+            switch result {
+            case .success(let issueDetail):
+                completion(issueDetail)
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
     }
     
 }

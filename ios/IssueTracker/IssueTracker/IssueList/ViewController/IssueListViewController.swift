@@ -10,6 +10,7 @@ import Combine
 
 struct IssueListViewControllerAction {
     let showNewIssueView: () -> ()
+    let showIssueDetailView: (IssueDetail) -> Void
 }
 
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
@@ -200,8 +201,14 @@ extension IssueListViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        fillCheckButton(tableView)
-        changeIssueNumLabel(tableView)
+        if tableView.isEditing {
+            fillCheckButton(tableView)
+            changeIssueNumLabel(tableView)
+        } else {
+            viewModel.selectIssue(at: indexPath.row) { [weak self] issueDetail in
+                self?.action?.showIssueDetailView(issueDetail)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -245,4 +252,10 @@ extension IssueListViewController {
     @IBAction func plusButtonTouched(_ sender: Any) {
         action?.showNewIssueView()
     }
+}
+
+//MARK: - Move Issue Detail
+
+extension IssueListViewController {
+    
 }
