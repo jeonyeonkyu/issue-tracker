@@ -21,8 +21,21 @@ extension MyAccountViewController: ViewControllerIdentifierable {
 
 class MyAccountViewController: UIViewController {
     
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+}
+
+
+extension MyAccountViewController {
+    
+    @IBAction func logoutButtonTouched(_ sender: UIButton) {
         
     }
     
