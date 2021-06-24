@@ -65,9 +65,9 @@ final class IssueDetailViewController: UIViewController, ViewControllerIdentifie
     
     private func bind() {
         viewModel.fetchIssue().receive(on: DispatchQueue.main)
-            .sink { issue in
-                self.setUI(issue)
-                self.commentsTableView.reloadData()
+            .sink { [weak self] issue in
+                self?.setUI(issue)
+                self?.commentsTableView.reloadData()
             }
             .store(in: &cancelBag)
     }

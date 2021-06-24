@@ -47,8 +47,8 @@ final class MarkdownViewController: UIViewController, ViewControllerIdentifierab
     
     private func bind() {
         viewModel.fetchImagePath().receive(on: DispatchQueue.main)
-            .sink { imagePath in
-                self.textView.text += imagePath
+            .sink { [weak self] imagePath in
+                self?.textView.text += imagePath
             }
             .store(in: &cancelBag)
     }

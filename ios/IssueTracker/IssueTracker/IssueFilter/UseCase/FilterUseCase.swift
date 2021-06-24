@@ -7,7 +7,22 @@
 
 import Foundation
 
-final class FilterUseCase {
+protocol FilterUseCase {
+    var savedIndex: [IndexPath] { get }
+    func select(index: IndexPath)
+    func selectedIndexPaths() -> [IndexPath]
+    func deselect(index: IndexPath)
+    func deselectAll()
+    func saveIndexPaths()
+    func resetSelectedIndexPaths()
+    func setFilter(dataSource: [Parent])
+}
+
+protocol IssueFilterableUseCase: FilterUseCase {
+    func filterIssue(with issues: [Issue]) -> [Issue]
+}
+
+final class IssueListFilterUseCase: IssueFilterableUseCase {
     
     enum FilteringList: Int, CaseIterable {
         case status
@@ -35,7 +50,6 @@ final class FilterUseCase {
         setSelectedIndex()
     }
     
-    // Filter 항목만큼 배열 길이 초기화
     private func setSelectedIndex() {
         FilteringList.allCases.forEach { _ in
             selectedIndex.append(nil)
@@ -45,7 +59,7 @@ final class FilterUseCase {
 }
 
 
-extension FilterUseCase {
+extension IssueListFilterUseCase {
     
     func select(index: IndexPath) {
         FilteringList.allCases
@@ -81,7 +95,7 @@ extension FilterUseCase {
 
 
 
-extension FilterUseCase {
+extension IssueListFilterUseCase {
     
     func setFilter(dataSource: [Parent]) {
         var newFilter = Filter()

@@ -8,48 +8,39 @@
 import Foundation
 import Combine
 
-struct FilteringSection {
-    var name: String
-    var items: [FilterItem]
-    var collapsed: Bool
-    
-    init(name: String, items: [FilterItem], collapsed: Bool = true) {
-        self.name = name
-        self.items = items
-        self.collapsed = collapsed
-      }
-}
-
 
 final class NewIssueViewModel {
     
+    enum FilteringSection: Int, CaseIterable {
+        case label
+        case milestone
+        case assignees
+    }
+    
     @Published private(set) var error: String
-    @Published private(set) var filteringSections: [FilteringSection] = []
+    @Published private(set) var filteringSections: [[Child?]]
     @Published private(set) var imagePath: String
     
-    private var fetchFilterSectionsUseCase: FetchFilterSectionsUseCase
     private var postNewIssueUseCase: PostNewIssueUseCase
     private var uploadImageUseCase: UploadImageUseCase
+    private var filterUseCase: NewIssueFilterUseCase
     
     var bodyText: String?
     
-    init(_ fetchFilterSectionsUseCase: FetchFilterSectionsUseCase, _ postNewIssueUseCase: PostNewIssueUseCase, _ postImageFileUseCase: UploadImageUseCase) {
-        self.fetchFilterSectionsUseCase = fetchFilterSectionsUseCase
+    init(_ postNewIssueUseCase: PostNewIssueUseCase, _ postImageFileUseCase: UploadImageUseCase, _ filterUseCase: NewIssueFilterUseCase) {
         self.postNewIssueUseCase = postNewIssueUseCase
         self.uploadImageUseCase = postImageFileUseCase
         self.error = ""
         self.imagePath = ""
-        load()
+        self.filteringSections = []
+        self.filterUseCase = filterUseCase
+        
+        setFilteringSections()
     }
     
-    private func load() {
-        fetchFilterSectionsUseCase.excute { result in
-            switch result {
-            case .success(let filteringSection):
-                self.filteringSections.append(filteringSection)
-            case .failure(let error):
-                self.handleError(error)
-            }
+    private func setFilteringSections() {
+        FilteringSection.allCases.forEach { _ in
+            filteringSections.append([])
         }
     }
     
@@ -72,10 +63,6 @@ final class NewIssueViewModel {
         }
     }
     
-    func fetchFilteringSections() -> AnyPublisher<[FilteringSection], Never> {
-        return $filteringSections.eraseToAnyPublisher()
-    }
-    
     func fetchError() -> AnyPublisher<String, Never> {
         return $error.eraseToAnyPublisher()
     }
@@ -84,36 +71,44 @@ final class NewIssueViewModel {
         return $imagePath.eraseToAnyPublisher()
     }
     
-    func changeCollapsed(with section: Int) {
-        let collapsed = filteringSections[section].collapsed
-        filteringSections[section].collapsed = !collapsed
-    }
-    
     func requestUploadImage(_ data: Data?) {
-        uploadImageUseCase.excute(data: data) { result in
+        uploadImageUseCase.excute(data: data) { [weak self] result in
             switch result {
             case .success(let imageFile):
-                self.imagePath = imageFile.markdownImagePath()
+                self?.imagePath = imageFile.markdownImagePath()
             case .failure(let error):
-                self.handleError(error)
+                self?.handleError(error)
             }
         }
     }
     
     func saveNewIssue(_ title: String, _ comments: String, completion: @escaping (IssueDetail) -> Void ) {
+        let assigneeIds: [Int]? = filteringSections[FilteringSection.assignees.rawValue].map { $0?.id }.compactMap { $0 }
+        let labelIds = filteringSections[FilteringSection.label.rawValue].map { $0?.id }.compactMap { $0 }
+        let milestoneIds = filteringSections[FilteringSection.milestone.rawValue].map { $0?.id }.compactMap { $0 }
+        var milestoneId: Int? = nil
+        
+        if !milestoneIds.isEmpty {
+            milestoneId = milestoneIds[0]
+        }
+        
         postNewIssueUseCase.execute(title: title,
                                     mainComments: comments,
                                     authorId: 0,
-                                    assigneeIds: [0],
-                                    labelIds: [0],
-                                    milestoneId: 0)
-        { result in
+                                    assigneeIds: assigneeIds,
+                                    labelIds: labelIds,
+                                    milestoneId: milestoneId)
+        { [weak self] result in
             switch result {
             case .success(let issueDetail):
                 completion(issueDetail)
             case .failure(let error):
-                self.handleError(error)
+                self?.handleError(error)
             }
         }
+    }
+    
+    func filter() {
+        filteringSections = filterUseCase.filteringSection()
     }
 }

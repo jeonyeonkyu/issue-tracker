@@ -11,7 +11,7 @@ import Combine
 struct IssueListViewControllerAction {
     let showNewIssueView: () -> ()
     let showIssueDetailView: (IssueDetail) -> ()
-    let showFilterView: (IssueFilterViewControllerDelegate) -> ()
+    let showFilterView: (Bool, IssueFilterViewControllerDelegate) -> ()
 }
 
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
@@ -262,7 +262,7 @@ extension IssueListViewController {
 extension IssueListViewController {
     
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        action?.showFilterView(self)
+        action?.showFilterView(true, self)
     }
     
 }

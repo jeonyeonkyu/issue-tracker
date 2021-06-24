@@ -5,7 +5,7 @@ protocol SceneFlowCoordinatorDependencies {
     func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController
     func makeNewIssueViewController(_ action: NewIssueViewControllerAction) -> NewIssueViewController
     func makeIssueDetailViewController(_ issue: IssueDetail) -> IssueDetailViewController
-    func makeIssueFilterViewController() -> IssueFilterViewController
+    func makeIssueFilterViewController(_ isIssueListDelegate: Bool) -> IssueFilterViewController
 }
 
 
@@ -20,7 +20,7 @@ class SceneFlowCoordinator {
     }
     
     func start() {
-        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView, showIssueDetailView: showIssueDetailView(_:), showFilterView: showFilterView(_:))
+        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView, showIssueDetailView: showIssueDetailView(_:), showFilterView: showFilterView(_:_:))
         issueListViewController = dependencies.makeIssueListNavigationController(issueListVCAction)
         guard let issueListViewController = issueListViewController else { return }
         let vc = dependencies.makeIssueListTabBarController([issueListViewController])
@@ -30,7 +30,7 @@ class SceneFlowCoordinator {
     
     func showNewIssueView() {
         guard let issueListViewController = issueListViewController else { return }
-        let action = NewIssueViewControllerAction(showFilterView: showFilterView(_:), showIssueDetailView: showIssueDetailView(_:))
+        let action = NewIssueViewControllerAction(showFilterView: showFilterView(_:_:), showIssueDetailView: showIssueDetailView(_:))
         let vc = dependencies.makeNewIssueViewController(action)
         issueListViewController.pushViewController(vc, animated: true)
     }
@@ -46,9 +46,9 @@ class SceneFlowCoordinator {
         issueListViewController?.popToRootViewController(animated: true)
     }
     
-    func showFilterView(_ delegate: IssueFilterViewControllerDelegate) {
+    func showFilterView(_ isIssueListDelegate: Bool, _ delegate: IssueFilterViewControllerDelegate) {
         guard let issueListViewController = issueListViewController else { return }
-        let vc = dependencies.makeIssueFilterViewController()
+        let vc = dependencies.makeIssueFilterViewController(isIssueListDelegate)
         vc.delegate = delegate
         issueListViewController.present(vc, animated: true, completion: nil)
     }

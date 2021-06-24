@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 struct NewIssueViewControllerAction {
-    let showFilterView: (IssueFilterViewControllerDelegate) -> ()
+    let showFilterView: (Bool, IssueFilterViewControllerDelegate) -> ()
     let showIssueDetailView: (IssueDetail) -> Void
 }
 
@@ -28,6 +28,7 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
     
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var filterView: UIView!
     
     private var viewModel: NewIssueViewModel!
     private var action: NewIssueViewControllerAction?
@@ -39,7 +40,6 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
-        bind()
     }
     
 }
@@ -49,6 +49,7 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
 extension NewIssueViewController {
     private func setting() {
         setNavigation()
+        setFilterView()
     }
 
     private func setNavigation() {
@@ -58,6 +59,11 @@ extension NewIssueViewController {
         setSegmentControl()
         setRightBarButtonItem()
         navigationItem.titleView = segmentControl
+    }
+    
+    private func setFilterView() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(filterViewTouched(_:)))
+        filterView.addGestureRecognizer(gesture)
     }
     
     private func setSegmentControl() {
@@ -83,13 +89,6 @@ extension NewIssueViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
 
-    private func bind() {
-        viewModel.fetchFilteringSections().receive(on: DispatchQueue.main)
-            .sink { issues in
-            }
-            .store(in: &cancelBag)
-    }
-
     @objc func segmentChanged(_ sender: UISegmentedControl) {
         updateView()
     }
@@ -99,6 +98,10 @@ extension NewIssueViewController {
         viewModel.saveNewIssue(title, comments) { [weak self] issueDetail in
             self?.action?.showIssueDetailView(issueDetail)
         }
+    }
+    
+    @objc func filterViewTouched(_ sender: UITapGestureRecognizer) {
+        action?.showFilterView(false, self)
     }
 }
 
@@ -130,4 +133,18 @@ extension NewIssueViewController {
             add(asChildViewController: previewViewController)
         }
     }
+}
+
+extension NewIssueViewController: IssueFilterViewControllerDelegate {
+    
+    func issueFilterViewControllerDidCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func issueFilterViewControllerDidSave() {
+        viewModel.filter()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
 }

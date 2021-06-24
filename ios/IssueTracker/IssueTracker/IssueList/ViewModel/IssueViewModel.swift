@@ -15,10 +15,10 @@ final class IssueViewModel {
     
     private var fetchIssueListUseCase: FetchIssueListUseCase
     private var fetchIssueDetailUseCase: FetchIssueDetailUseCase
-    var filterUseCase: FilterUseCase
+    var filterUseCase: IssueListFilterUseCase
     private var cancelBag: AnyCancellable!
     
-    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ filterUseCase: FilterUseCase, _ fetchIssueDetailUseCase: FetchIssueDetailUseCase) {
+    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ filterUseCase: IssueListFilterUseCase, _ fetchIssueDetailUseCase: FetchIssueDetailUseCase) {
         self.fetchIssueListUseCase = fetchIssueListUseCase
         self.fetchIssueDetailUseCase = fetchIssueDetailUseCase
         self.filterUseCase = filterUseCase

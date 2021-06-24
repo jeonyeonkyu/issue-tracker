@@ -10,7 +10,8 @@ import UIKit
 final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     
     private let networkManager = NetworkManager()
-    private let filterUseCase = FilterUseCase()
+    private let issueListFilterUseCase = IssueListFilterUseCase()
+    private let newIssueFilterUseCase = NewIssueFilterUseCase()
     
     private func makeFetchIssueListUseCase() -> FetchIssueListUseCase {
         return DefaultFetchIssueListUseCase(networkManager: networkManager)
@@ -25,11 +26,12 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     }
     
     private func makeIssueListViewModel() -> IssueViewModel {
-        return IssueViewModel(makeFetchIssueListUseCase(), filterUseCase, makeFetchIssueDetailUseCase())
+        return IssueViewModel(makeFetchIssueListUseCase(), issueListFilterUseCase, makeFetchIssueDetailUseCase())
     }
     
-    private func makeFilterViewModel() -> FilterViewModel {
-        return FilterViewModel(makeFetchFilterUseCase(), filterUseCase)
+    private func makeFilterViewModel(_ isIssueListDelegate: Bool) -> FilterViewModel {
+        let usecase: FilterUseCase = isIssueListDelegate ? issueListFilterUseCase : newIssueFilterUseCase
+        return FilterViewModel(makeFetchFilterUseCase(), usecase, isIssueListDelegate)
     }
     
     private func makeIssueListViewController(_ action: IssueListViewControllerAction) -> IssueListViewController {
@@ -38,8 +40,8 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
         return IssueListViewController.create(viewModel, dataSource, action)
     }
     
-    func makeIssueFilterViewController() -> IssueFilterViewController {
-        return IssueFilterViewController.create(makeFilterViewModel())
+    func makeIssueFilterViewController(_ isIssueListDelegate: Bool) -> IssueFilterViewController {
+        return IssueFilterViewController.create(makeFilterViewModel(isIssueListDelegate))
     }
     
     func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController {
@@ -64,16 +66,12 @@ extension IssueTrackerDIContainer {
         return DefaultPostNewIssueUseCase(networkManager)
     }
     
-    private func makeFetchFilterSectionsUseCase() -> FetchFilterSectionsUseCase {
-        return DefaultFetchFilterSectionsUseCase(networkManager)
-    }
-    
     private func makePostImageFileUseCase() -> UploadImageUseCase {
         return DefaultUploadImageUseCase(networkManager)
     }
     
     private func makeNewIssueViewModel() -> NewIssueViewModel {
-        return NewIssueViewModel(makeFetchFilterSectionsUseCase() ,makePostNewIssueUseCase(), makePostImageFileUseCase())
+        return NewIssueViewModel(makePostNewIssueUseCase(), makePostImageFileUseCase(), newIssueFilterUseCase)
     }
     
     private func makeMarkdownViewController(_ viewModel: NewIssueViewModel) -> MarkdownViewController {

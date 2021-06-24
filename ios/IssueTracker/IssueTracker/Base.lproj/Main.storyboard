@@ -274,6 +274,7 @@
                     </view>
                     <connections>
                         <outlet property="containerView" destination="MHz-XW-UnV" id="310-lq-p4c"/>
+                        <outlet property="filterView" destination="eIK-HG-cWw" id="z8c-eq-dHK"/>
                         <outlet property="titleTextField" destination="LkM-k2-snb" id="k56-XG-nQH"/>
                     </connections>
                 </viewController>
