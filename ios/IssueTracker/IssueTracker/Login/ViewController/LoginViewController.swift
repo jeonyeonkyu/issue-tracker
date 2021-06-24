@@ -31,6 +31,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureWebAuthSession()
+        bind()
     }
     
 }
@@ -40,6 +41,7 @@ extension LoginViewController: ASWebAuthenticationPresentationContextProviding, 
     
     private func bind() {
         viewModel.fetchError()
+            .dropFirst(3)
             .receive(on: DispatchQueue.main)
             .sink { error in
                 self.showAlert(message: error)
