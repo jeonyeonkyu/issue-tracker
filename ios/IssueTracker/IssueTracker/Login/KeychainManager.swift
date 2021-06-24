@@ -10,7 +10,7 @@ import JWTDecode
 
 class KeychainManager {
     
-    class func save(jwt: String) -> Bool {
+    @discardableResult class func save(jwt: String) -> Bool {
         guard let idData = jwt.data(using: String.Encoding.utf8) else { return false }
         return Keychain.save(key: "jwt", data: idData)
     }
@@ -28,7 +28,7 @@ class KeychainManager {
         return user
     }
     
-    class func delete() -> Bool {
+    @discardableResult class func delete() -> Bool {
         return Keychain.delete(key: "jwt")
     }
     
