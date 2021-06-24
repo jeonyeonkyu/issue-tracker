@@ -12,8 +12,20 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     private let networkManager = NetworkManager()
     private let filterUseCase = FilterUseCase()
     
+    private func makeLoginManager() -> LoginManager {
+        return LoginManager(networkManager: networkManager)
+    }
+    
+    private func makeLoginUseCase() -> LoginUseCase {
+        return LoginUseCase(loginManager: makeLoginManager())
+    }
+    
+    private func makeLoginViewModel() -> LoginViewModel {
+        return LoginViewModel(loginUseCase: makeLoginUseCase())
+    }
+    
     private func makeLoginViewController() -> LoginViewController {
-        return LoginViewController.create()
+        return LoginViewController.create(makeLoginViewModel())
     }
     
     private func makeFetchIssueListUseCase() -> FetchIssueListUseCase {
