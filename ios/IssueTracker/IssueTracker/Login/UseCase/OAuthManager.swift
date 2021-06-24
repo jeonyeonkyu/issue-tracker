@@ -12,7 +12,7 @@ struct JWT: Decodable {
     let jwt: String
 }
 
-class LoginManager {
+class OAuthManager {
     
     @Published private var jwt: JWT
     @Published private var error: NetworkError
@@ -28,7 +28,7 @@ class LoginManager {
     
 }
 
-extension LoginManager {
+extension OAuthManager {
     
     func requestCode(handler: @escaping (URL, String)->()) {
         let url = LoginURL.url()!

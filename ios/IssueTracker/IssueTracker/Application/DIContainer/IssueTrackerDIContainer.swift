@@ -12,8 +12,8 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     private let networkManager = NetworkManager()
     private let filterUseCase = FilterUseCase()
     
-    private func makeLoginManager() -> LoginManager {
-        return LoginManager(networkManager: networkManager)
+    private func makeLoginManager() -> OAuthManager {
+        return OAuthManager(networkManager: networkManager)
     }
     
     private func makeLoginUseCase() -> LoginUseCase {

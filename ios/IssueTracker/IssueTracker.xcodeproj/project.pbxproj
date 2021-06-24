@@ -32,7 +32,7 @@
 		AEB514952681DA32007DC865 /* FilterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB514942681DA32007DC865 /* FilterList.swift */; };
 		AEB5149826821C27007DC865 /* IssueFilterViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */; };
 		AEB5149A2682380A007DC865 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB514992682380A007DC865 /* LoginViewController.swift */; };
-		AEB5149D26825A99007DC865 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB5149C26825A99007DC865 /* LoginManager.swift */; };
+		AEB5149D26825A99007DC865 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB5149C26825A99007DC865 /* OAuthManager.swift */; };
 		AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */; };
 		AECEA442266F38D000855F20 /* IssueDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA441266F38D000855F20 /* IssueDataSource.swift */; };
 		AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA443266F3AD900855F20 /* IssueCell.swift */; };
@@ -122,7 +122,7 @@
 		AEB514942681DA32007DC865 /* FilterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterList.swift; sourceTree = "<group>"; };
 		AEB5149726821C27007DC865 /* IssueFilterViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AEB514992682380A007DC865 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		AEB5149C26825A99007DC865 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		AEB5149C26825A99007DC865 /* OAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthManager.swift; sourceTree = "<group>"; };
 		AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewController.swift; sourceTree = "<group>"; };
 		AECEA441266F38D000855F20 /* IssueDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDataSource.swift; sourceTree = "<group>"; };
 		AECEA443266F3AD900855F20 /* IssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
@@ -360,7 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				AEFD8EB22684632500F46832 /* LoginUseCase.swift */,
-				AEB5149C26825A99007DC865 /* LoginManager.swift */,
+				AEB5149C26825A99007DC865 /* OAuthManager.swift */,
 				AEFD8EB02684596C00F46832 /* KeychainManager.swift */,
 			);
 			path = UseCase;
@@ -757,7 +757,7 @@
 				AE6EFF53267E4C4B00C905FC /* FilterListMock.swift in Sources */,
 				AE011CF6267FAA1000181FB9 /* FilterUseCase.swift in Sources */,
 				AE7505332670EE0600BA14F7 /* UIColor+hexToUIColor.swift in Sources */,
-				AEB5149D26825A99007DC865 /* LoginManager.swift in Sources */,
+				AEB5149D26825A99007DC865 /* OAuthManager.swift in Sources */,
 				AEB5149A2682380A007DC865 /* LoginViewController.swift in Sources */,
 				AE90D8812684F30E004719C5 /* MyAccountViewController.swift in Sources */,
 				FF89A997267075CD00983577 /* Issue.swift in Sources */,
