@@ -10,6 +10,10 @@ import Combine
 
 class LoginManager {
     
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 134662a
 }
 
 extension LoginManager {

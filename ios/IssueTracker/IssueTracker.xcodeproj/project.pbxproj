@@ -40,6 +40,7 @@
 		AED83A4B2677453A00C36CA4 /* NetworkComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED83A4A2677453A00C36CA4 /* NetworkComponents.swift */; };
 		AEE2A4D32670A00300FA6274 /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE2A4D22670A00300FA6274 /* IssueViewModel.swift */; };
 		AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE2A4D42670A8C000FA6274 /* IssueLabel.swift */; };
+		AEFD8EA926842BF800F46832 /* LoginURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EA826842BF800F46832 /* LoginURL.swift */; };
 		FF76F8B52677300300342633 /* UIBarButtonItem+setTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8B42677300300342633 /* UIBarButtonItem+setTitle.swift */; };
 		FF76F8C82678701000342633 /* IssueTrackerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8C72678701000342633 /* IssueTrackerDIContainer.swift */; };
 		FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8CB2678704200342633 /* SceneFlowCoordinator.swift */; };
@@ -123,6 +124,7 @@
 		AED83A4A2677453A00C36CA4 /* NetworkComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkComponents.swift; sourceTree = "<group>"; };
 		AEE2A4D22670A00300FA6274 /* IssueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
 		AEE2A4D42670A8C000FA6274 /* IssueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabel.swift; sourceTree = "<group>"; };
+		AEFD8EA826842BF800F46832 /* LoginURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginURL.swift; sourceTree = "<group>"; };
 		FF76F8B42677300300342633 /* UIBarButtonItem+setTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+setTitle.swift"; sourceTree = "<group>"; };
 		FF76F8C72678701000342633 /* IssueTrackerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerDIContainer.swift; sourceTree = "<group>"; };
 		FF76F8CB2678704200342633 /* SceneFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -317,8 +319,7 @@
 				AED83A4826772D6600C36CA4 /* NetworkService.swift */,
 				AED83A4A2677453A00C36CA4 /* NetworkComponents.swift */,
 				AEB5149C26825A99007DC865 /* LoginManager.swift */,
-				AE5775D72682D6FE006AE1FB /* LoginURL.swift */,
-				AE5775D92682D87C006AE1FB /* ClientID.swift */,
+				AEFD8EA826842BF800F46832 /* LoginURL.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -684,7 +685,7 @@
 				FF76F8C82678701000342633 /* IssueTrackerDIContainer.swift in Sources */,
 				FF89A960266F0BD000983577 /* SceneDelegate.swift in Sources */,
 				AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */,
-				AE5775D82682D6FE006AE1FB /* LoginURL.swift in Sources */,
+				AEFD8EA926842BF800F46832 /* LoginURL.swift in Sources */,
 				AE7D391B2671A91400BF9487 /* UINibCreatable.swift in Sources */,
 				AE011CED267F8A3E00181FB9 /* FilterListCell.swift in Sources */,
 				FF76F8B52677300300342633 /* UIBarButtonItem+setTitle.swift in Sources */,
