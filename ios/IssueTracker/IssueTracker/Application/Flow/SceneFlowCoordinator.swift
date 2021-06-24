@@ -20,7 +20,7 @@ class SceneFlowCoordinator {
     }
     
     func start() {
-        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView, showIssueDetailView: showIssueDetailView(_:), showFilterView: showFilterView)
+        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView, showIssueDetailView: showIssueDetailView(_:), showFilterView: showFilterView(_:))
         issueListViewController = dependencies.makeIssueListNavigationController(issueListVCAction)
         guard let issueListViewController = issueListViewController else { return }
         let vc = dependencies.makeIssueListTabBarController([issueListViewController])
@@ -30,7 +30,7 @@ class SceneFlowCoordinator {
     
     func showNewIssueView() {
         guard let issueListViewController = issueListViewController else { return }
-        let action = NewIssueViewControllerAction(showIssueDetailView: showIssueDetailView(_:))
+        let action = NewIssueViewControllerAction(showFilterView: showFilterView(_:), showIssueDetailView: showIssueDetailView(_:))
         let vc = dependencies.makeNewIssueViewController(action)
         issueListViewController.pushViewController(vc, animated: true)
     }
@@ -46,10 +46,10 @@ class SceneFlowCoordinator {
         issueListViewController?.popToRootViewController(animated: true)
     }
     
-    func showFilterView() {
+    func showFilterView(_ delegate: IssueFilterViewControllerDelegate) {
         guard let issueListViewController = issueListViewController else { return }
         let vc = dependencies.makeIssueFilterViewController()
-        vc.delegate = issueListViewController.topViewController as? IssueListViewController
+        vc.delegate = delegate
         issueListViewController.present(vc, animated: true, completion: nil)
     }
 }

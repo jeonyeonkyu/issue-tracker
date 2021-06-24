@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 struct NewIssueViewControllerAction {
+    let showFilterView: (IssueFilterViewControllerDelegate) -> ()
     let showIssueDetailView: (IssueDetail) -> Void
 }
 
@@ -27,7 +28,6 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
     
     @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private weak var containerView: UIView!
-    @IBOutlet private weak var filteringTableView: UITableView!
     
     private var viewModel: NewIssueViewModel!
     private var action: NewIssueViewControllerAction?
@@ -49,7 +49,6 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
 extension NewIssueViewController {
     private func setting() {
         setNavigation()
-        setTableView()
     }
 
     private func setNavigation() {
@@ -84,16 +83,9 @@ extension NewIssueViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
 
-    private func setTableView() {
-        filteringTableView.backgroundColor = view.backgroundColor
-        filteringTableView.setEditing(true, animated: true)
-        filteringTableView.allowsMultipleSelectionDuringEditing = true
-    }
-
     private func bind() {
         viewModel.fetchFilteringSections().receive(on: DispatchQueue.main)
             .sink { issues in
-                self.filteringTableView.reloadData()
             }
             .store(in: &cancelBag)
     }
@@ -136,70 +128,6 @@ extension NewIssueViewController {
             remove(asChildViewController: markdownViewController)
             previewViewController.load(markdownViewController.textView.text)
             add(asChildViewController: previewViewController)
-        }
-    }
-}
-
-extension NewIssueViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.filteringSections.count
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if viewModel.filteringSections[section].collapsed {
-            return 0
-        }
-        return viewModel.filteringSections[section].items.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = indexPath.section
-        let row = indexPath.row
-        let cell = UITableViewCell()
-        var content = cell.defaultContentConfiguration()
-        
-        content.text = viewModel.filteringSections[section].items[row].name
-        cell.contentConfiguration = content
-        cell.selectedBackgroundView = UIView()
-        
-        return cell
-    }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let button = FilteringHeader(title: viewModel.filteringSections[section].name)
-        button.tag = section
-        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: view.frame.width - 50, bottom: 0, right: 0)
-        button.addTarget(self, action: #selector(handleExpandClose(_:)), for: .touchUpInside)
-        
-        return button
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        42
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        1
-    }
-    
-    @objc func handleExpandClose(_ sender: UIButton) {
-        let section = sender.tag
-        var indexPaths = [IndexPath]()
-        for row in viewModel.filteringSections[section].items.indices {
-            let indexPath = IndexPath(row: row, section: section)
-            indexPaths.append(indexPath)
-        }
-        
-        let collapsed = viewModel.filteringSections[section].collapsed
-        viewModel.changeCollapsed(with: section)
-        
-        if !collapsed {
-            filteringTableView.deleteRows(at: indexPaths, with: .fade)
-        } else {
-            filteringTableView.insertRows(at: indexPaths, with: .fade)
-            filteringTableView.scrollToRow(at: indexPaths[0], at: .top, animated: true)
-        }
-        
-        UIView.animate(withDuration: 0.2) {
-            sender.imageView?.transform = CGAffineTransform(rotationAngle: !collapsed ? 0.0 : .pi / 2)
         }
     }
 }
