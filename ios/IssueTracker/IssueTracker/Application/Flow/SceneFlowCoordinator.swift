@@ -5,6 +5,7 @@ protocol SceneFlowCoordinatorDependencies {
     func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController
     func makeNewIssueViewController(_ action: NewIssueViewControllerAction) -> NewIssueViewController
     func makeIssueDetailViewController(_ issue: IssueDetail) -> IssueDetailViewController
+    func makeIssueFilterViewController() -> IssueFilterViewController
 }
 
 
@@ -19,7 +20,7 @@ class SceneFlowCoordinator {
     }
     
     func start() {
-        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView, showIssueDetailView: showIssueDetailView(_:))
+        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView, showIssueDetailView: showIssueDetailView(_:), showFilterView: showFilterView)
         issueListViewController = dependencies.makeIssueListNavigationController(issueListVCAction)
         guard let issueListViewController = issueListViewController else { return }
         let vc = dependencies.makeIssueListTabBarController([issueListViewController])
@@ -43,5 +44,12 @@ class SceneFlowCoordinator {
     
     func showIssueListView() {
         issueListViewController?.popToRootViewController(animated: true)
+    }
+    
+    func showFilterView() {
+        guard let issueListViewController = issueListViewController else { return }
+        let vc = dependencies.makeIssueFilterViewController()
+        vc.delegate = issueListViewController.topViewController as? IssueListViewController
+        issueListViewController.present(vc, animated: true, completion: nil)
     }
 }

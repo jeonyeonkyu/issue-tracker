@@ -15,27 +15,29 @@ final class IssueViewModel {
     
     private var fetchIssueListUseCase: FetchIssueListUseCase
     private var fetchIssueDetailUseCase: FetchIssueDetailUseCase
+    var filterUseCase: FilterUseCase
+    private var cancelBag: AnyCancellable!
     
-    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ fetchIssueDetailUseCase: FetchIssueDetailUseCase) {
+    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ filterUseCase: FilterUseCase, _ fetchIssueDetailUseCase: FetchIssueDetailUseCase) {
         self.fetchIssueListUseCase = fetchIssueListUseCase
         self.fetchIssueDetailUseCase = fetchIssueDetailUseCase
+        self.filterUseCase = filterUseCase
         self.issues = []
         self.error = ""
         loadIssues()
     }
-
 }
 
 
 extension IssueViewModel {
     
     private func loadIssues() {
-        fetchIssueListUseCase.excute { result in
+        fetchIssueListUseCase.excute { [weak self] result in
             switch result {
             case .success(let issues):
-                self.issues = issues
+                self?.issues = issues
             case .failure(let error):
-                self.handleError(error)
+                self?.handleError(error)
             }
         }
     }
@@ -66,6 +68,11 @@ extension IssueViewModel {
     func fetchError() -> AnyPublisher<String, Never> {
         return $error.eraseToAnyPublisher()
     }
+    
+}
+
+
+extension IssueViewModel {
 
     func deleteIssue(at index: Int) {
         issues.remove(at: index)
@@ -78,6 +85,16 @@ extension IssueViewModel {
                 completion(issueDetail)
             case .failure(let error):
                 self.handleError(error)
+            }
+        }
+    }
+    func filter() {
+        fetchIssueListUseCase.excute { [weak self] result in
+            switch result {
+            case .success(let issues):
+                self?.issues = self?.filterUseCase.filterIssue(with: issues) ?? []
+            case .failure(let error):
+                self?.handleError(error)
             }
         }
     }
