@@ -1,0 +1,59 @@
+//
+//  LoginUseCase.swift
+//  IssueTracker
+//
+//  Created by Lia on 2021/06/24.
+//
+
+import Foundation
+import AuthenticationServices
+import Combine
+
+class LoginUseCase {
+    
+    private var loginManager: LoginManager
+    
+    @Published private var error: NetworkError
+    private var cancelBag = Set<AnyCancellable>()
+    
+    init(loginManager: LoginManager) {
+        self.loginManager = loginManager
+        self.error = .Unknown
+        bindJWT()
+    }
+    
+}
+
+extension LoginUseCase {
+    
+    func initAuthSession(completion: @escaping (ASWebAuthenticationSession) -> ()) {
+        loginManager.requestCode { url, callBackUrlScheme in
+            completion(ASWebAuthenticationSession.init(url: url, callbackURLScheme: callBackUrlScheme) { (callBack: URL?, error: Error?) in
+                guard error == nil, let successURL = callBack else {
+                    self.error = NetworkError.OAuthError(error!)
+                    return
+                }
+                self.loginManager.requestJWT(with: successURL)
+            })
+        }
+    }
+    
+    private func bindJWT() {
+        loginManager.fetchJWT()
+            .receive(on: DispatchQueue.main)
+            .sink { jwt in
+                KeychainManager.save(jwt: jwt.jwt)
+            }.store(in: &cancelBag)
+        
+        loginManager.fetchError()
+            .receive(on: DispatchQueue.main)
+            .sink { error in
+                self.error = error
+            }.store(in: &cancelBag)
+    }
+    
+    func fetchError() -> AnyPublisher<NetworkError, Never> {
+        return $error.eraseToAnyPublisher()
+    }
+    
+}

@@ -8,14 +8,14 @@
 import Foundation
 import Combine
 
+struct JWT: Decodable {
+    let jwt: String
+}
+
 class LoginManager {
     
-    struct JWT: Decodable {
-        let jwt: String
-    }
-    
-    @Published private var jwt: JWT!
-    @Published private var error: NetworkError?
+    @Published private var jwt: JWT
+    @Published private var error: NetworkError
     
     private var networkManager: NetworkManageable!
     private var cancelBag = Set<AnyCancellable>()
@@ -23,7 +23,7 @@ class LoginManager {
     init(networkManager: NetworkManageable) {
         self.networkManager = networkManager
         self.jwt = JWT(jwt: "")
-        self.error = nil
+        self.error = .Unknown
     }
     
 }
@@ -54,6 +54,14 @@ extension LoginManager {
         if !url.absoluteString.starts(with: "issueTracker://") { return "" }
         guard let code = url.absoluteString.split(separator: "=").last.map({ String($0) }) else { return "" }
         return code
+    }
+    
+    func fetchJWT() -> AnyPublisher<JWT, Never> {
+        return $jwt.eraseToAnyPublisher()
+    }
+    
+    func fetchError() -> AnyPublisher<NetworkError, Never> {
+        return $error.eraseToAnyPublisher()
     }
     
 }

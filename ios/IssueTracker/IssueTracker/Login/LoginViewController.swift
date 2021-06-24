@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import Combine
 import AuthenticationServices
 
 extension LoginViewController: ViewControllerIdentifierable {
     
-    static func create(_ loginManager: LoginManager) -> LoginViewController {
+    static func create(_ viewModel: LoginViewModel) -> LoginViewController {
         guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? LoginViewController else {
             return LoginViewController()
         }
-        vc.loginManager = loginManager
+        vc.viewModel = viewModel
         return vc
     }
     
@@ -24,7 +25,8 @@ extension LoginViewController: ViewControllerIdentifierable {
 class LoginViewController: UIViewController {
     
     private var webAuthSession: ASWebAuthenticationSession?
-    private var loginManager: LoginManager!
+    private var viewModel: LoginViewModel!
+    private var cancelBag = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,22 +36,24 @@ class LoginViewController: UIViewController {
 }
 
 
-extension LoginViewController: ASWebAuthenticationPresentationContextProviding {
+extension LoginViewController: ASWebAuthenticationPresentationContextProviding, Alertable {
+    
+    private func bind() {
+        viewModel.fetchError()
+            .receive(on: DispatchQueue.main)
+            .sink { error in
+                self.showAlert(message: error)
+            }.store(in: &cancelBag)
+    }
     
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return self.view.window ?? ASPresentationAnchor()
     }
     
     private func configureWebAuthSession() {
-        loginManager.requestCode(handler: { url, callBackUrlScheme in
-            self.webAuthSession = ASWebAuthenticationSession.init(url: url, callbackURLScheme: callBackUrlScheme, completionHandler: { (callBack:URL?, error:Error?) in
-                guard error == nil, let successURL = callBack else {
-                    print("error") /// error message 사용자에게 띄우기
-                    return
-                }
-                print("success", successURL)
-            })
-        })
+        viewModel.initAuthSession { authenticationSession in
+            self.webAuthSession = authenticationSession
+        }
         webAuthSession?.presentationContextProvider = self
     }
 
@@ -57,4 +61,22 @@ extension LoginViewController: ASWebAuthenticationPresentationContextProviding {
         webAuthSession?.start()
     }
     
+}
+
+protocol Alertable { }
+
+extension Alertable where Self: UIViewController {
+    func showAlert(title: String = "", message: String, preferredStyle: UIAlertController.Style = .alert, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: completion)
+    }
+    
+    func showAlertWithDimiss(title: String = "", message: String, preferredStyle: UIAlertController.Style = .alert, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: completion)
+    }
 }
