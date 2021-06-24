@@ -8,24 +8,29 @@
 import UIKit
 import Combine
 
-final class NewIssueViewController: UIViewController, ViewControllerIdentifierable, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+struct NewIssueViewControllerAction {
+    let showIssueDetailView: (IssueDetail) -> Void
+}
+
+final class NewIssueViewController: UIViewController, ViewControllerIdentifierable {
     
-    static func create(_ viewModel: NewIssueViewModel, _ markdownViewController: MarkdownViewController, _ previewViewController: PreviewViewController) -> NewIssueViewController {
+    static func create(_ viewModel: NewIssueViewModel, _ markdownViewController: MarkdownViewController, _ previewViewController: PreviewViewController, _ action: NewIssueViewControllerAction) -> NewIssueViewController {
         guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? NewIssueViewController else {
             return NewIssueViewController()
         }
         vc.viewModel = viewModel
+        vc.action = action
         vc.markdownViewController = markdownViewController
         vc.previewViewController = previewViewController
         return vc
     }
     
-    @IBOutlet private var titleTextField: UIView!
+    @IBOutlet private var titleTextField: UITextField!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var filteringTableView: UITableView!
     
-    private let imagePicker = UIImagePickerController()
     private var viewModel: NewIssueViewModel!
+    private var action: NewIssueViewControllerAction?
     private var markdownViewController: MarkdownViewController?
     private var previewViewController: PreviewViewController?
     private var cancelBag = Set<AnyCancellable>()
@@ -44,7 +49,6 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
 extension NewIssueViewController {
     private func setting() {
         setNavigation()
-        setImagePicker()
         setTableView()
     }
 
@@ -80,10 +84,6 @@ extension NewIssueViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
 
-    private func setImagePicker() {
-        imagePicker.delegate = self
-    }
-
     private func setTableView() {
         filteringTableView.backgroundColor = view.backgroundColor
         filteringTableView.setEditing(true, animated: true)
@@ -103,7 +103,10 @@ extension NewIssueViewController {
     }
     
     @objc func saveButtonTouched(_ sender: UIButton) {
-        
+        guard let title = titleTextField.text, let comments = markdownViewController?.textView.text else { return }
+        viewModel.saveNewIssue(title, comments) { [weak self] issueDetail in
+            self?.action?.showIssueDetailView(issueDetail)
+        }
     }
 }
 

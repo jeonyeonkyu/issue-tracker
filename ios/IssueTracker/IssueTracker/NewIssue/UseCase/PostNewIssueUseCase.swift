@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol PostNewIssueUseCase {
-    
+    func execute(title: String, mainComments:String, authorId: Int, assigneeIds: [Int]?, labelIds: [Int]?, milestoneId: Int?, completion: @escaping (Result<IssueDetail, NetworkError>) -> Void )
 }
 
 final class DefaultPostNewIssueUseCase: PostNewIssueUseCase {
@@ -21,17 +21,17 @@ final class DefaultPostNewIssueUseCase: PostNewIssueUseCase {
         self.networkManager = networkManager
     }
     
-    func execute(title: String, mainComments:String, authorId: Int, assigneeIds: [Int]?, labelIds: [Int]?, milestoneId: Int?, completion: @escaping (Result<DetailIssue, NetworkError>) -> Void ) {
+    func execute(title: String, mainComments:String, authorId: Int, assigneeIds: [Int]?, labelIds: [Int]?, milestoneId: Int?, completion: @escaping (Result<IssueDetail, NetworkError>) -> Void ) {
         let newIssue = NewIssue.init(title: title, mainCommentContents: mainComments, authorId: authorId, assigneeIds: assigneeIds, labelIds: labelIds, milestoneId: milestoneId)
-        networkManager.post(path: "/issues", data: newIssue, result: DetailIssue.self)
+        networkManager.post(path: "/issues", data: newIssue, result: IssueDetail.self)
             .receive(on: DispatchQueue.main)
             .sink { error in
                 switch error {
                 case .failure(let error): completion(.failure(error))
                 case .finished: break
                 }
-            } receiveValue: { detailIssue in
-                completion(.success(detailIssue))
+            } receiveValue: { issueDetail in
+                completion(.success(issueDetail))
             }
             .store(in: &cancelBag)
 

@@ -99,4 +99,21 @@ final class NewIssueViewModel {
             }
         }
     }
+    
+    func saveNewIssue(_ title: String, _ comments: String, completion: @escaping (IssueDetail) -> Void ) {
+        postNewIssueUseCase.execute(title: title,
+                                    mainComments: comments,
+                                    authorId: 0,
+                                    assigneeIds: [0],
+                                    labelIds: [0],
+                                    milestoneId: 0)
+        { result in
+            switch result {
+            case .success(let issueDetail):
+                completion(issueDetail)
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
+    }
 }
