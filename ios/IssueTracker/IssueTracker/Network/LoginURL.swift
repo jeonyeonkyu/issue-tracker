@@ -8,7 +8,7 @@
 import Foundation
 
 enum LoginURL {
-    static let callbackUrlScheme = "issueTracker"
+    static let callbackUrlScheme = "issuetracker"
     static let scheme = "https"
     static let host = "github.com"
     static let path = "/login/oauth/authorize"

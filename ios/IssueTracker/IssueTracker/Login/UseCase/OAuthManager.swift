@@ -51,7 +51,7 @@ extension OAuthManager {
     }
     
     private func abstractCode(with url: URL) -> String {
-        if !url.absoluteString.starts(with: "issueTracker://") { return "" }
+        if !url.absoluteString.starts(with: LoginURL.callbackUrlScheme) { return "" }
         guard let code = url.absoluteString.split(separator: "=").last.map({ String($0) }) else { return "" }
         return code
     }
