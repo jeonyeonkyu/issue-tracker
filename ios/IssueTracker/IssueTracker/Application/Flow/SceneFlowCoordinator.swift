@@ -3,7 +3,8 @@ import UIKit
 protocol SceneFlowCoordinatorDependencies {
     func makeIssueListTabBarController(_ viewControllers: [UIViewController]) -> UITabBarController
     func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController
-    func makeNewIssueViewController() -> NewIssueViewController
+    func makeNewIssueViewController(_ action: NewIssueViewControllerAction) -> NewIssueViewController
+    func makeIssueDetailViewController(_ issue: IssueDetail) -> IssueDetailViewController
 }
 
 
@@ -18,7 +19,7 @@ class SceneFlowCoordinator {
     }
     
     func start() {
-        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView)
+        let issueListVCAction = IssueListViewControllerAction(showNewIssueView: showNewIssueView, showIssueDetailView: showIssueDetailView(_:))
         issueListViewController = dependencies.makeIssueListNavigationController(issueListVCAction)
         guard let issueListViewController = issueListViewController else { return }
         let vc = dependencies.makeIssueListTabBarController([issueListViewController])
@@ -28,7 +29,19 @@ class SceneFlowCoordinator {
     
     func showNewIssueView() {
         guard let issueListViewController = issueListViewController else { return }
-        let vc = dependencies.makeNewIssueViewController()
+        let action = NewIssueViewControllerAction(showIssueDetailView: showIssueDetailView(_:))
+        let vc = dependencies.makeNewIssueViewController(action)
         issueListViewController.pushViewController(vc, animated: true)
+    }
+    
+    func showIssueDetailView(_ issue: IssueDetail) {
+        guard let issueListViewController = issueListViewController else { return }
+        let vc = dependencies.makeIssueDetailViewController(issue)
+        vc.hidesBottomBarWhenPushed = true
+        issueListViewController.pushViewController(vc, animated: true)
+    }
+    
+    func showIssueListView() {
+        issueListViewController?.popToRootViewController(animated: true)
     }
 }

@@ -14,8 +14,12 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
         return DefaultFetchIssueListUseCase(networkManager: networkManager)
     }
     
+    private func makeFetchIssueDetailUseCase() -> FetchIssueDetailUseCase {
+        return DefaultFetchIssueDetailUseCase(networkManager: networkManager)
+    }
+    
     private func makeIssueListViewModel() -> IssueViewModel {
-        return IssueViewModel(makeFetchIssueListUseCase())
+        return IssueViewModel(makeFetchIssueListUseCase(), makeFetchIssueDetailUseCase())
     }
     
     private func makeIssueListViewController(_ action: IssueListViewControllerAction) -> IssueListViewController {
@@ -64,8 +68,21 @@ extension IssueTrackerDIContainer {
         return PreviewViewController.create()
     }
     
-    func makeNewIssueViewController() -> NewIssueViewController {
+    func makeNewIssueViewController(_ action: NewIssueViewControllerAction) -> NewIssueViewController {
         let viewModel = makeNewIssueViewModel()
-        return NewIssueViewController.create(viewModel, makeMarkdownViewController(viewModel), makePreviewViewController())
+        return NewIssueViewController.create(viewModel, makeMarkdownViewController(viewModel), makePreviewViewController(), action)
+    }
+}
+
+//MARK: - IssueDetail ViewController
+
+extension IssueTrackerDIContainer {
+    
+    private func makeIssueDetailViewModel(_ issue: IssueDetail) -> IssueDetailViewModel {
+        return IssueDetailViewModel.init(issue: issue)
+    }
+    
+    func makeIssueDetailViewController(_ issue: IssueDetail) -> IssueDetailViewController {
+        return IssueDetailViewController.create(makeIssueDetailViewModel(issue))
     }
 }
