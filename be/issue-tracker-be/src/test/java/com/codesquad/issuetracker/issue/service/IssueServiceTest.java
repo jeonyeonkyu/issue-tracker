@@ -4,10 +4,7 @@ import com.codesquad.issuetracker.comment.dto.CommentResponse;
 import com.codesquad.issuetracker.comment.dto.CommentResponses;
 import com.codesquad.issuetracker.common.exception.EntityNotFoundException;
 import com.codesquad.issuetracker.issue.controller.IssueDummyData;
-import com.codesquad.issuetracker.issue.domain.Comments;
-import com.codesquad.issuetracker.issue.domain.Issue;
-import com.codesquad.issuetracker.issue.domain.Issues;
-import com.codesquad.issuetracker.issue.domain.User;
+import com.codesquad.issuetracker.issue.domain.*;
 import com.codesquad.issuetracker.issue.dto.IssueDetailResponse;
 import com.codesquad.issuetracker.issue.dto.IssueRequest;
 import com.codesquad.issuetracker.issue.dto.IssueResponse;
@@ -15,6 +12,7 @@ import com.codesquad.issuetracker.issue.dto.IssueResponses;
 import com.codesquad.issuetracker.issue.repository.IssueRepository;
 import com.codesquad.issuetracker.label.controller.LabelDummyData;
 import com.codesquad.issuetracker.label.domain.Label;
+import com.codesquad.issuetracker.label.domain.Labels;
 import com.codesquad.issuetracker.label.dto.LabelResponse;
 import com.codesquad.issuetracker.label.dto.LabelResponses;
 import com.codesquad.issuetracker.milestone.controller.MilestoneDummyData;
@@ -448,6 +446,7 @@ class IssueServiceTest {
         );
     }
 
+
     private void thenVerifyIssue(IssueResponse actual, IssueResponse expected) {
         assertThat(actual.getId()).isEqualTo(expected.getId());
         assertThat(actual.getNumber()).isEqualTo(expected.getNumber());
@@ -549,5 +548,68 @@ class IssueServiceTest {
         assertThat(actual.getCreateDateTime()).isEqualTo(expected.getCreateDateTime());
 
         assertThat(actual.getEmojis()).isEqualTo(expected.getEmojis());
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void update(String 테스트케이스설명, Issue givenForReadById, Issue givenForSave, IssueRequest issueRequest, IssueDetailResponse expected) {
+        BDDMockito.given(issueRepository.readById(givenForReadById.getId()))
+                .willReturn(Optional.of(givenForReadById));
+
+        BDDMockito.given(issueRepository.save(givenForSave))
+                .willReturn(givenForSave);
+
+        IssueDetailResponse actual = issueService.update(givenForReadById.getId(), issueRequest);
+
+        thenVerifyIssue(actual, expected);
+    }
+
+    @SuppressWarnings("unused")
+    static Stream<Arguments> update() {
+        return Stream.of(
+                Arguments.of(
+                        "옵션 모두 존재",
+                        Issue.builder()
+                                .id(1L)
+                                .number(1L)
+                                .title("title")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(UserDummyData.users())
+                                .labels(LabelDummyData.labels())
+                                .milestone(MilestoneDummyData.openedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        Issue.builder()
+                                .id(1L)
+                                .number(1L)
+                                .title("title updated")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserDummyData.userFreddie())
+                                .assignees(Users.of(UserDummyData.userFreddie()))
+                                .labels(Labels.of(LabelDummyData.labelBe()))
+                                .milestone(MilestoneDummyData.closedMilestone())
+                                .mainComment(IssueDummyData.commentByFreddie())
+                                .build(),
+                        IssueRequest.builder()
+                                .title("title updated")
+                                .mainCommentContents(IssueDummyData.commentByFreddie().getContents())
+                                .authorId(UserDummyData.userFreddie().getId())
+                                .assigneeIds(new HashSet<>(Arrays.asList(UserDummyData.userFreddie().getId())))
+                                .labelIds(new HashSet<>(Arrays.asList(LabelDummyData.labelBe().getId())))
+                                .milestoneId(MilestoneDummyData.closedMilestone().getId())
+                                .build(),
+                        IssueDetailResponse.builder().id(1L)
+                                .number(1L)
+                                .title("title updated")
+                                .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .author(UserResponse.from(UserDummyData.userFreddie()))
+                                .assignees(UserResponses.from(Users.of(UserDummyData.userFreddie())))
+                                .labels(LabelResponses.from(Labels.of(LabelDummyData.labelBe())))
+                                .milestone(MilestoneResponse.from(MilestoneDummyData.closedMilestone()))
+                                .mainComment(CommentResponse.from(IssueDummyData.commentByFreddie()))
+                                .build()
+                )
+        );
     }
 }

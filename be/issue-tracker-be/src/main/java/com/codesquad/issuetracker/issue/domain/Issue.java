@@ -27,9 +27,11 @@ public class Issue {
     private Comments comments;
 
     public static Issue from(IssueRequest issueRequest) {
+        // FIXME: IssueRequest에서 변환하도록 수정하는게 좋을 듯(엔티티가 DTO를 알고 있음)
         return Issue.builder()
                        .title(issueRequest.getTitle())
                        .author(issueRequest.author())
+                       // TODO: comment도 issueRequest에서 뽑아내는게 좋지 않나?
                        .mainComment(Comment.from(issueRequest))
                        .assignees(issueRequest.assignees())
                        .labels(issueRequest.labels())
@@ -56,5 +58,15 @@ public class Issue {
 
     public boolean hasMilestone() {
         return milestone != null;
+    }
+
+    public Issue update(IssueRequest issueRequest) {
+        title = issueRequest.getTitle();
+        author = issueRequest.author();
+        assignees = issueRequest.assignees();
+        labels = issueRequest.labels();
+        milestone = issueRequest.milestone();
+
+        return this;
     }
 }

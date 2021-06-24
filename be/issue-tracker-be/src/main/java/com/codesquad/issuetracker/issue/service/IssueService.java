@@ -35,4 +35,14 @@ public class IssueService {
 
         return IssueDetailResponse.from(issueRepository.save(issueForSave));
     }
+
+    public IssueDetailResponse update(long issueId, IssueRequest issueRequest) {
+        Issue issue = issueRepository.readById(issueId)
+                              .orElseThrow(() -> new EntityNotFoundException());
+
+        issue.update(issueRequest);
+
+        return IssueDetailResponse.from(issueRepository.save(issue));
+
+    }
 }
