@@ -15,11 +15,15 @@ class LoginManager {
     }
     
     @Published private var jwt: JWT!
-    @Published private var error: NetworkError!
+    @Published private var error: NetworkError?
+    
+    private var networkManager: NetworkManageable!
     private var cancelBag = Set<AnyCancellable>()
     
-    init() {
+    init(networkManager: NetworkManageable) {
+        self.networkManager = networkManager
         self.jwt = JWT(jwt: "")
+        self.error = nil
     }
     
 }
