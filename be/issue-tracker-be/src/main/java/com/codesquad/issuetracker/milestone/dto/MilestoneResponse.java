@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.milestone.dto;
 
 import com.codesquad.issuetracker.issue.domain.Milestone;
+import com.codesquad.issuetracker.milestone.mapper.MilestoneDtoMapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,14 +21,6 @@ public class MilestoneResponse {
     private int closedIssueCount;
 
     public static MilestoneResponse from(Milestone milestone) {
-        return MilestoneResponse.builder()
-                       .id(milestone.getId())
-                       .name(milestone.getName())
-                       .description(milestone.getDescription())
-                       .dueDate(milestone.getDueDate())
-                       .isClosed(milestone.isClosed())
-                       .openedIssueCount(milestone.getOpenedIssueCount())
-                       .closedIssueCount(milestone.getClosedIssueCount())
-                       .build();
+        return MilestoneDtoMapper.toResponse(milestone);
     }
 }

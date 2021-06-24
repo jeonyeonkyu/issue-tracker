@@ -2,7 +2,6 @@ package com.codesquad.issuetracker.issue.repository;
 
 import com.codesquad.issuetracker.issue.domain.Issue;
 import com.codesquad.issuetracker.issue.domain.Issues;
-import com.codesquad.issuetracker.issue.dto.IssueResponse;
 
 import java.util.Optional;
 

@@ -1,10 +1,13 @@
 package com.codesquad.issuetracker.issue.dto;
 
+import com.codesquad.issuetracker.issue.domain.Comment;
 import com.codesquad.issuetracker.issue.domain.Milestone;
 import com.codesquad.issuetracker.issue.domain.User;
 import com.codesquad.issuetracker.issue.domain.Users;
-import com.codesquad.issuetracker.label.domain.Label;
 import com.codesquad.issuetracker.label.domain.Labels;
+import com.codesquad.issuetracker.label.mapper.LabelDtoMapper;
+import com.codesquad.issuetracker.milestone.mapper.MilestoneDtoMapper;
+import com.codesquad.issuetracker.user.mapper.UserDtoMapper;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +15,8 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -34,31 +35,28 @@ public class IssueRequest {
     private Set<Long> labelIds;
     private Long milestoneId;
 
+    public Comment mainComment() {
+        return Comment.builder()
+                       .author(author())
+                       .contents(mainCommentContents != null ? mainCommentContents : "")
+                       .createDateTime(LocalDateTime.now())
+                       .build();
+    }
+
     public User author() {
-        return User.builder().id(authorId).build();
+        return UserDtoMapper.toEntity(authorId);
     }
 
     public Users assignees() {
-        List<User> assignees = assigneeIds != null ?
-                                       assigneeIds.stream()
-                                               .map(assigneeId -> User.builder().id(assigneeId).build())
-                                               .collect(Collectors.toList()) :
-                                       Collections.emptyList();
+        return UserDtoMapper.toEntities(assigneeIds);
 
-        return Users.from(assignees);
     }
 
     public Labels labels() {
-        List<Label> labels = labelIds != null ?
-                                     labelIds.stream()
-                                             .map(labelId -> Label.builder().id(labelId).build())
-                                             .collect(Collectors.toList()) :
-                                     Collections.emptyList();
-
-        return Labels.from(labels);
+        return LabelDtoMapper.toEntities(labelIds);
     }
 
     public Milestone milestone() {
-        return Milestone.builder().id(milestoneId).build();
+        return MilestoneDtoMapper.toEntity(milestoneId);
     }
 }

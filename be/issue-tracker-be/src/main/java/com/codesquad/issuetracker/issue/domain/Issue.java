@@ -1,6 +1,5 @@
 package com.codesquad.issuetracker.issue.domain;
 
-import com.codesquad.issuetracker.issue.dto.IssueRequest;
 import com.codesquad.issuetracker.label.domain.Labels;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,19 +25,6 @@ public class Issue {
     private Comment mainComment;
     private Comments comments;
 
-    public static Issue from(IssueRequest issueRequest) {
-        // FIXME: IssueRequest에서 변환하도록 수정하는게 좋을 듯(엔티티가 DTO를 알고 있음)
-        return Issue.builder()
-                       .title(issueRequest.getTitle())
-                       .author(issueRequest.author())
-                       // TODO: comment도 issueRequest에서 뽑아내는게 좋지 않나?
-                       .mainComment(Comment.from(issueRequest))
-                       .assignees(issueRequest.assignees())
-                       .labels(issueRequest.labels())
-                       .milestone(issueRequest.milestone())
-                       .build();
-    }
-
     public String description() {
         return getMainComment().getContents();
     }
@@ -60,12 +46,12 @@ public class Issue {
         return milestone != null;
     }
 
-    public Issue update(IssueRequest issueRequest) {
-        title = issueRequest.getTitle();
-        author = issueRequest.author();
-        assignees = issueRequest.assignees();
-        labels = issueRequest.labels();
-        milestone = issueRequest.milestone();
+    public Issue update(Issue issue) {
+        this.title = issue.title;
+        this.author = issue.author;
+        this.assignees = issue.assignees;
+        this.labels = issue.labels;
+        this.milestone = issue.milestone;
 
         return this;
     }

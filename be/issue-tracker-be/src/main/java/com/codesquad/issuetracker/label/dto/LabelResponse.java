@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.label.dto;
 
 import com.codesquad.issuetracker.label.domain.Label;
+import com.codesquad.issuetracker.label.mapper.LabelDtoMapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,11 +16,6 @@ public class LabelResponse {
     private String color;
 
     public static LabelResponse from(Label label) {
-        return LabelResponse.builder()
-                       .id(label.getId())
-                       .name(label.getName())
-                       .description(label.getDescription())
-                       .color(label.getColor())
-                       .build();
+        return LabelDtoMapper.toResponse(label);
     }
 }

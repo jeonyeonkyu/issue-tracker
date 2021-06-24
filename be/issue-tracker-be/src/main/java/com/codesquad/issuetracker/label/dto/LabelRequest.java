@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.label.dto;
 
 import com.codesquad.issuetracker.label.domain.Label;
+import com.codesquad.issuetracker.label.mapper.LabelDtoMapper;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -27,18 +28,6 @@ public class LabelRequest {
     }
 
     public Label toEntity() {
-        return Label.builder()
-                       .name(name)
-                       .description(description)
-                       .color(color)
-                       .build();
-    }
-
-    public Label toEntity(long id) {
-        return Label.builder()
-                       .name(name)
-                       .description(description)
-                       .color(color)
-                       .build();
+        return LabelDtoMapper.toEntity(this);
     }
 }

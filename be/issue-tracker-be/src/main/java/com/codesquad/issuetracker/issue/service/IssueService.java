@@ -7,6 +7,7 @@ import com.codesquad.issuetracker.issue.domain.User;
 import com.codesquad.issuetracker.issue.dto.IssueDetailResponse;
 import com.codesquad.issuetracker.issue.dto.IssueRequest;
 import com.codesquad.issuetracker.issue.dto.IssueResponses;
+import com.codesquad.issuetracker.issue.mapper.IssueDtoMapper;
 import com.codesquad.issuetracker.issue.repository.IssueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class IssueService {
     }
 
     public IssueDetailResponse create(IssueRequest issueRequest) {
-        Issue issueForSave = Issue.from(issueRequest);
+        Issue issueForSave = IssueDtoMapper.toEntity(issueRequest);
 
         return IssueDetailResponse.from(issueRepository.save(issueForSave));
     }
@@ -40,7 +41,7 @@ public class IssueService {
         Issue issue = issueRepository.readById(issueId)
                               .orElseThrow(() -> new EntityNotFoundException());
 
-        issue.update(issueRequest);
+        issue.update(IssueDtoMapper.toEntity(issueRequest));
 
         return IssueDetailResponse.from(issueRepository.save(issue));
 

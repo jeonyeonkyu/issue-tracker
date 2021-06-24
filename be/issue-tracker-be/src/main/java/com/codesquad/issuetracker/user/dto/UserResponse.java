@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.user.dto;
 
 import com.codesquad.issuetracker.issue.domain.User;
+import com.codesquad.issuetracker.user.mapper.UserDtoMapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,11 +16,6 @@ public class UserResponse {
     private String profileImage;
 
     public static UserResponse from(User user) {
-        return UserResponse.builder()
-                       .id(user.getId())
-                       .email(user.getEmail())
-                       .name(user.getName())
-                       .profileImage(user.getProfileImage())
-                       .build();
+        return UserDtoMapper.toResponse(user);
     }
 }
