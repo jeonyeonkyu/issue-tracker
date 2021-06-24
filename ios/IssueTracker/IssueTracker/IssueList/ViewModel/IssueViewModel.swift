@@ -55,6 +55,8 @@ extension IssueViewModel {
             self.error = "디코딩 에러"
         case .EncodingError:
             self.error = "인코딩 에러"
+        case .OAuthError(let error):
+            self.error = "\(error.localizedDescription)"
         case .Unknown:
             self.error = "잘 모르겠네요😅"
         }

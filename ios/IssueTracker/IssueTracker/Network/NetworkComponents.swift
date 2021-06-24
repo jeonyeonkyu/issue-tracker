@@ -13,6 +13,7 @@ enum NetworkError: Error {
     case BadResponse
     case DecodingError(Error)
     case EncodingError(Error)
+    case OAuthError(Error)
     case Unknown
     case Status(Int)
 }
@@ -36,8 +37,8 @@ enum EndPoint {
         components.host = EndPoint.host
         components.path = "\(path)"
         components.queryItems = [
-            URLQueryItem(name: "client", value: "ios"),
-            URLQueryItem(name: "code", value: code)
+            URLQueryItem(name: "code", value: code),
+            URLQueryItem(name: "type", value: "ios")
         ]
         
         return components.url
