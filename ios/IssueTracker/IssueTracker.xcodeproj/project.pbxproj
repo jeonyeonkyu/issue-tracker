@@ -384,10 +384,10 @@
 		FF79E01E267C74AA0088D2C7 /* NewIssue */ = {
 			isa = PBXGroup;
 			children = (
-				FF79E03226801F3B0088D2C7 /* Model */,
 				FF79E021267C74BD0088D2C7 /* ViewController */,
 				FF79E020267C74B50088D2C7 /* ViewModel */,
 				FF79E01F267C74AF0088D2C7 /* UseCase */,
+				FF79E03226801F3B0088D2C7 /* Model */,
 			);
 			path = NewIssue;
 			sourceTree = "<group>";
@@ -464,12 +464,13 @@
 		FF89A95C266F0BD000983577 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
-				FFAC0E422681B09A00E88E90 /* IssueDetail */,
-				FF79E01E267C74AA0088D2C7 /* NewIssue */,
-				FF89A963266F0BD000983577 /* Main.storyboard */,
 				FF76F8C226786FD000342633 /* Application */,
+				FF89A963266F0BD000983577 /* Main.storyboard */,
 				FF89A98E266F116000983577 /* IssueList */,
 				AEB5547B267B2B31003F631E /* IssueFilter */,
+				FF79E01E267C74AA0088D2C7 /* NewIssue */,
+				FFAC0E422681B09A00E88E90 /* IssueDetail */,
+				AE7505372670EFDC00BA14F7 /* Utility */,
 				AED83A4726772D1F00C36CA4 /* Network */,
 				FF89A98D266F109800983577 /* SupportingFiles */,
 			);
@@ -512,7 +513,6 @@
 				AE7505362670EFD300BA14F7 /* View */,
 				FF76F8CF2678770F00342633 /* UseCase */,
 				FF89A995267075A000983577 /* Model */,
-				AE7505372670EFDC00BA14F7 /* Utility */,
 			);
 			path = IssueList;
 			sourceTree = "<group>";
@@ -532,9 +532,9 @@
 		FFAC0E422681B09A00E88E90 /* IssueDetail */ = {
 			isa = PBXGroup;
 			children = (
-				FFE2AA182681C9EF0026EBD5 /* View */,
-				FFE2AA132681BB040026EBD5 /* ViewModel */,
 				FFE2AA102681B4C00026EBD5 /* ViewController */,
+				FFE2AA132681BB040026EBD5 /* ViewModel */,
+				FFE2AA182681C9EF0026EBD5 /* View */,
 				FFAC0E432681B0A100E88E90 /* Model */,
 			);
 			path = IssueDetail;
