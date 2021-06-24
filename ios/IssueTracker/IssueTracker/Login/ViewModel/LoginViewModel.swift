@@ -68,6 +68,5 @@ extension LoginViewModel {
             self.error = "잘 모르겠네요😅"
         }
     }
-
     
 }
