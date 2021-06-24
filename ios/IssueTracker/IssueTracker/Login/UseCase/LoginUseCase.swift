@@ -11,13 +11,13 @@ import Combine
 
 class LoginUseCase {
     
-    private var loginManager: OAuthManager
+    private var oauthManager: OAuthManager
     
     @Published private var error: NetworkError
     private var cancelBag = Set<AnyCancellable>()
     
     init(loginManager: OAuthManager) {
-        self.loginManager = loginManager
+        self.oauthManager = loginManager
         self.error = .Unknown
         bindJWT()
     }
@@ -27,25 +27,25 @@ class LoginUseCase {
 extension LoginUseCase {
     
     func initAuthSession(completion: @escaping (ASWebAuthenticationSession) -> ()) {
-        loginManager.requestCode { url, callBackUrlScheme in
+        oauthManager.requestCode { url, callBackUrlScheme in
             completion(ASWebAuthenticationSession.init(url: url, callbackURLScheme: callBackUrlScheme) { (callBack: URL?, error: Error?) in
                 guard error == nil, let successURL = callBack else {
                     self.error = NetworkError.OAuthError(error!)
                     return
                 }
-                self.loginManager.requestJWT(with: successURL)
+                self.oauthManager.requestJWT(with: successURL)
             })
         }
     }
     
     private func bindJWT() {
-        loginManager.fetchJWT()
+        oauthManager.fetchJWT()
             .receive(on: DispatchQueue.main)
             .sink { jwt in
                 KeychainManager.save(jwt: jwt.jwt)
             }.store(in: &cancelBag)
         
-        loginManager.fetchError()
+        oauthManager.fetchError()
             .receive(on: DispatchQueue.main)
             .sink { error in
                 self.error = error
