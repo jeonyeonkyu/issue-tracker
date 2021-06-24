@@ -302,12 +302,9 @@
 		AEB5149B26823810007DC865 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				AEB514992682380A007DC865 /* LoginViewController.swift */,
-				AEFD8EB426846F7A00F46832 /* LoginViewModel.swift */,
-				AEFD8EB22684632500F46832 /* LoginUseCase.swift */,
-				AEB5149C26825A99007DC865 /* LoginManager.swift */,
-				AEFD8EB02684596C00F46832 /* KeychainManager.swift */,
-				AEFD8EAE2684502A00F46832 /* Keychain.swift */,
+				AEFD8EB62684756200F46832 /* ViewController */,
+				AEFD8EB72684756F00F46832 /* ViewModel */,
+				AEFD8EB82684757D00F46832 /* UseCase */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -332,6 +329,40 @@
 				AEFD8EA826842BF800F46832 /* LoginURL.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		AEFD8EB62684756200F46832 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AEB514992682380A007DC865 /* LoginViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		AEFD8EB72684756F00F46832 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AEFD8EB426846F7A00F46832 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AEFD8EB82684757D00F46832 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				AEFD8EB22684632500F46832 /* LoginUseCase.swift */,
+				AEB5149C26825A99007DC865 /* LoginManager.swift */,
+				AEFD8EB02684596C00F46832 /* KeychainManager.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		AEFD8EB9268475DD00F46832 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				AEFD8EAE2684502A00F46832 /* Keychain.swift */,
+			);
+			path = Keychain;
 			sourceTree = "<group>";
 		};
 		FF76F8C226786FD000342633 /* Application */ = {
@@ -402,6 +433,7 @@
 				FF89A98E266F116000983577 /* IssueList */,
 				AEB5547B267B2B31003F631E /* IssueFilter */,
 				AED83A4726772D1F00C36CA4 /* Network */,
+				AEFD8EB9268475DD00F46832 /* Keychain */,
 				FF89A98D266F109800983577 /* SupportingFiles */,
 			);
 			path = IssueTracker;
