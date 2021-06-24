@@ -33,10 +33,10 @@ extension IssueCell {
         labelStackView.arrangedSubviews.forEach { label in
             label.removeFromSuperview()
         }
-        labels.forEach { label in
+        labels.forEach { [weak self] label in
             let label_ = IssueLabel()
             label_.fillUI(with: label)
-            self.labelStackView.addArrangedSubview(label_)
+            self?.labelStackView.addArrangedSubview(label_)
         }
     }
     

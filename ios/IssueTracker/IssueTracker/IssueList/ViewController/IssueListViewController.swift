@@ -10,15 +10,17 @@ import Combine
 
 struct IssueListViewControllerAction {
     let showNewIssueView: () -> ()
+    let showFilterView: () -> ()
 }
 
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
     
-    static func create(_ viewModel: IssueViewModel, _ action: IssueListViewControllerAction) -> IssueListViewController {
+    static func create(_ viewModel: IssueViewModel, _ dataSource: IssueDataSource, _ action: IssueListViewControllerAction) -> IssueListViewController {
         guard let vc = storyboard.instantiateViewController(identifier: storyboardID) as? IssueListViewController else {
             return IssueListViewController()
         }
         vc.viewModel = viewModel
+        vc.dataSource = dataSource
         vc.action = action
         return vc
     }
@@ -46,8 +48,8 @@ final class IssueListViewController: UIViewController, ViewControllerIdentifiera
     private var isCheckAll: Bool!
     private var action: IssueListViewControllerAction?
     private var viewModel: IssueViewModel!
+    private var dataSource: IssueDataSource!
     private var cancelBag = Set<AnyCancellable>()
-    private lazy var dataSource = IssueDataSource(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,20 +104,36 @@ extension IssueListViewController {
         return UITableView.automaticDimension
     }
     
+}
+
+//MARK:- Calling IssueList
+
+extension IssueListViewController: IssueFilterViewControllerDelegate {
+    
     private func bind() {
         viewModel.fetchIssueList().receive(on: DispatchQueue.main)
-            .sink { issues in
-                self.dataSource = IssueDataSource(viewModel: self.viewModel)
-                self.issueTableView.dataSource = self.dataSource
-                self.issueTableView.reloadData()
+            .dropFirst()
+            .sink { [weak self] issues in
+                self?.issueTableView.dataSource = self?.dataSource
+                self?.issueTableView.reloadData()
             }
             .store(in: &cancelBag)
         
         viewModel.fetchError().receive(on: DispatchQueue.main)
             .dropFirst()
-            .sink { error in
-                self.alertForNetwork(with: error)
+            .sink { [weak self]  error in
+                self?.alertForNetwork(with: error)
             }.store(in: &cancelBag)
+    }
+    
+    func issueFilterViewControllerDidCancel() {
+        viewModel.filter()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func issueFilterViewControllerDidSave() {
+        viewModel.filter()
+        dismiss(animated: true, completion: nil)
     }
     
 }
@@ -140,9 +158,9 @@ extension IssueListViewController: UITableViewDelegate {
     private func alertForDelete(with index: IndexPath) {
         let alert = UIAlertController(title: "정말로 이 이슈를 삭제하시겠습니까?", message: "", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "취소", style: .default, handler: nil)
-        let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
-            self.viewModel.deleteIssue(at: index.row)
-            self.issueTableView.deleteRows(at: [index], with: UITableView.RowAnimation.automatic)
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { [weak self] action in
+            self?.viewModel.deleteIssue(at: index.row)
+            self?.issueTableView.deleteRows(at: [index], with: UITableView.RowAnimation.automatic)
         }
         alert.addAction(cancel)
         alert.addAction(delete)
@@ -153,8 +171,8 @@ extension IssueListViewController: UITableViewDelegate {
         let close = UIContextualAction(style: .normal, title: "Close") { action, view, completion in
             completion(true)
         }
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { action, view, completion in
-            self.alertForDelete(with: indexPath)
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { [weak self] action, view, completion in
+            self?.alertForDelete(with: indexPath)
             completion(true)
         }
         close.image = UIImage(systemName: "archivebox")
@@ -229,14 +247,17 @@ extension IssueListViewController {
             issueNumLabel.textColor = .label
         }
     }
+    
 }
 
 //MARK: - Filtering Mode
 
 extension IssueListViewController {
+    
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        
+        action?.showFilterView()
     }
+    
 }
 
 //MARK: - PlustButtonTouched
