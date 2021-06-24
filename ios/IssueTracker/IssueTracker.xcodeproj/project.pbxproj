@@ -40,6 +40,8 @@
 		AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE2A4D42670A8C000FA6274 /* IssueLabel.swift */; };
 		AEFD8EA926842BF800F46832 /* LoginURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EA826842BF800F46832 /* LoginURL.swift */; };
 		AEFD8EAD2684381200F46832 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = AEFD8EAC2684381200F46832 /* JWTDecode */; };
+		AEFD8EAF2684502A00F46832 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EAE2684502A00F46832 /* Keychain.swift */; };
+		AEFD8EB12684596C00F46832 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EB02684596C00F46832 /* KeychainManager.swift */; };
 		FF76F8B52677300300342633 /* UIBarButtonItem+setTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8B42677300300342633 /* UIBarButtonItem+setTitle.swift */; };
 		FF76F8C82678701000342633 /* IssueTrackerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8C72678701000342633 /* IssueTrackerDIContainer.swift */; };
 		FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8CB2678704200342633 /* SceneFlowCoordinator.swift */; };
@@ -122,6 +124,8 @@
 		AEE2A4D22670A00300FA6274 /* IssueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
 		AEE2A4D42670A8C000FA6274 /* IssueLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLabel.swift; sourceTree = "<group>"; };
 		AEFD8EA826842BF800F46832 /* LoginURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginURL.swift; sourceTree = "<group>"; };
+		AEFD8EAE2684502A00F46832 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		AEFD8EB02684596C00F46832 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		FF76F8B42677300300342633 /* UIBarButtonItem+setTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+setTitle.swift"; sourceTree = "<group>"; };
 		FF76F8C72678701000342633 /* IssueTrackerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerDIContainer.swift; sourceTree = "<group>"; };
 		FF76F8CB2678704200342633 /* SceneFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 			isa = PBXGroup;
 			children = (
 				AEB514992682380A007DC865 /* LoginViewController.swift */,
+				AEFD8EB02684596C00F46832 /* KeychainManager.swift */,
+				AEFD8EAE2684502A00F46832 /* Keychain.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -690,8 +696,10 @@
 				AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */,
 				AEFD8EA926842BF800F46832 /* LoginURL.swift in Sources */,
 				AE7D391B2671A91400BF9487 /* UINibCreatable.swift in Sources */,
+				AEFD8EB12684596C00F46832 /* KeychainManager.swift in Sources */,
 				AE011CED267F8A3E00181FB9 /* FilterListCell.swift in Sources */,
 				FF76F8B52677300300342633 /* UIBarButtonItem+setTitle.swift in Sources */,
+				AEFD8EAF2684502A00F46832 /* Keychain.swift in Sources */,
 				AE011CF1267F8A8300181FB9 /* FilterViewModel.swift in Sources */,
 				FF89A999267077E800983577 /* User.swift in Sources */,
 				AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */,
