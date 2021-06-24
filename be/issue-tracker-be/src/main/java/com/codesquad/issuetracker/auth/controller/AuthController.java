@@ -1,6 +1,7 @@
 package com.codesquad.issuetracker.auth.controller;
 
 import com.codesquad.issuetracker.auth.dto.AuthResponse;
+import com.codesquad.issuetracker.auth.dto.Type;
 import com.codesquad.issuetracker.auth.service.AuthService;
 import com.codesquad.issuetracker.auth.dto.GitHubAccessTokenResponse;
 import com.codesquad.issuetracker.auth.util.JwtUtil;
@@ -26,18 +27,16 @@ public class AuthController {
 
     //Fixme : front로 변경
     @GetMapping("/callback")
-    public void callback(@RequestParam(value = "code") String code) throws AuthException {
-        auth(code);
+    public ResponseEntity<AuthResponse> callback(@RequestParam(value = "code") String code) throws AuthException {
+        return auth(code, "fe");
     }
 
-    @GetMapping()
-    public ResponseEntity<AuthResponse> auth(String code) throws AuthException {
-        GitHubAccessTokenResponse token = authService.getAccessToken(code);
+    @GetMapping
+    public ResponseEntity<AuthResponse> auth(String code, String type) throws AuthException {
+        GitHubAccessTokenResponse token = authService.getAccessToken(code, type);
         String accessToken = token.getAccessToken();
 
         UserDto userDto = authService.getUserFromGitHub(accessToken);
-
-        AuthResponse authResponse = new AuthResponse(JwtUtil.createJwt(userDto));
         
         ResponseEntity<AuthResponse> authResponseResponseEntity = ResponseEntity.status(HttpStatus.CREATED).
                 body(new AuthResponse(JwtUtil.createJwt(userDto)));

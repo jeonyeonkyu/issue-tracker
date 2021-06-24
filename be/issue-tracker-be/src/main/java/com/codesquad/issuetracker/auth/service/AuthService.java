@@ -2,6 +2,7 @@ package com.codesquad.issuetracker.auth.service;
 
 import com.codesquad.issuetracker.auth.dto.GitHubAccessTokenRequest;
 import com.codesquad.issuetracker.auth.dto.GitHubAccessTokenResponse;
+import com.codesquad.issuetracker.auth.dto.Type;
 import com.codesquad.issuetracker.user.UserDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -28,13 +29,20 @@ public class AuthService {
     @Value("${client_secret}")
     private String clientSecret;
 
+    @Value("${ios_client_id}")
+    private String iosClientId;
+
+    @Value("${ios_client_secret}")
+    private String iosClientSecret;
+
     private static RestTemplate restTemplate = new RestTemplate();
 
-    public GitHubAccessTokenResponse getAccessToken(String code) throws AuthException {
+    public GitHubAccessTokenResponse getAccessToken(String code, String type) throws AuthException {
+
         RequestEntity<GitHubAccessTokenRequest> request = RequestEntity
                 .post(gitHubAccessTokenUri)
                 .header("Accept", "application/json")
-                .body(new GitHubAccessTokenRequest(clientId, clientSecret, code));
+                .body(new GitHubAccessTokenRequest(getClientId(type), getClientSecret(type), code));
 
         ResponseEntity<GitHubAccessTokenResponse> response = restTemplate
                 .exchange(request, GitHubAccessTokenResponse.class);
@@ -57,5 +65,28 @@ public class AuthService {
                 .orElseThrow(() -> new AuthException("유저 정보 획득 실패"));
     }
 
+    private String getClientId(String type) {
+        if(Type.isFe(type)) {
+            return clientId;
+        }
+
+        if(Type.isIos(type)) {
+            return iosClientId;
+        }
+
+        throw new RuntimeException("타입 확인 불가");
+    }
+
+    private String getClientSecret(String type) {
+        if(Type.isFe(type)) {
+            return clientSecret;
+        }
+
+        if(Type.isIos(type)) {
+            return iosClientSecret;
+        }
+
+        throw new RuntimeException("타입 확인 불가");
+    }
 
 }

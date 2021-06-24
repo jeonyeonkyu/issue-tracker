@@ -1,6 +1,6 @@
 package com.codesquad.issuetracker.auth.intercepter;
 
-import com.codesquad.issuetracker.auth.LoginRequired;
+import com.codesquad.issuetracker.auth.exception.LoginRequired;
 import com.codesquad.issuetracker.auth.exception.AuthenticationException;
 import com.codesquad.issuetracker.auth.util.JwtUtil;
 import com.codesquad.issuetracker.user.UserDto;
