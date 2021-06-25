@@ -20,7 +20,7 @@ struct Parent: Hashable {
 
 struct Child: Hashable {
     let title: String
-    let id = UUID()
+    let id: Int 
 }
 
 enum Status: String, CaseIterable {

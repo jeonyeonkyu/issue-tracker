@@ -14,17 +14,18 @@ final class IssueViewModel {
     @Published private(set) var error: String
     
     private var fetchIssueListUseCase: FetchIssueListUseCase
-    var filterUseCase: FilterUseCase
+    private var fetchIssueDetailUseCase: FetchIssueDetailUseCase
+    var filterUseCase: IssueListFilterUseCase
     private var cancelBag: AnyCancellable!
-
-    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ filterUseCase: FilterUseCase) {
+    
+    init(_ fetchIssueListUseCase: FetchIssueListUseCase, _ filterUseCase: IssueListFilterUseCase, _ fetchIssueDetailUseCase: FetchIssueDetailUseCase) {
         self.fetchIssueListUseCase = fetchIssueListUseCase
+        self.fetchIssueDetailUseCase = fetchIssueDetailUseCase
         self.filterUseCase = filterUseCase
         self.issues = []
         self.error = ""
         loadIssues()
     }
-
 }
 
 
@@ -75,6 +76,19 @@ extension IssueViewModel {
 
     func deleteIssue(at index: Int) {
         issues.remove(at: index)
+    }
+    
+    func selectIssue(at index: Int, completion: @escaping (IssueDetail) -> Void ) {
+        let id = issues[index].id
+        
+        fetchIssueDetailUseCase.excute(id: id) { result in
+            switch result {
+            case .success(let issueDetail):
+                completion(issueDetail)
+            case .failure(let error):
+                self.handleError(error)
+            }
+        }
     }
     
     func filter() {

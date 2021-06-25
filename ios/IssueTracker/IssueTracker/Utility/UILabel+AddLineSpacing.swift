@@ -41,3 +41,16 @@ extension UILabel {
     }
 
 }
+
+extension UILabel {
+    func appendImage(imageName: String) {
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(systemName: imageName)?.withTintColor(textColor)
+        let attachmentString = NSAttributedString(attachment: attachment)
+        let contentString = NSMutableAttributedString(attributedString: attachmentString)
+        let text = self.text ?? ""
+        contentString.append(NSAttributedString(string: " \(text)" ))
+    
+        self.attributedText = contentString
+    }
+}

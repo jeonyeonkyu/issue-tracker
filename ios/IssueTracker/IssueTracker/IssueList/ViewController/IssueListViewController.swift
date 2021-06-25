@@ -10,7 +10,8 @@ import Combine
 
 struct IssueListViewControllerAction {
     let showNewIssueView: () -> ()
-    let showFilterView: () -> ()
+    let showIssueDetailView: (IssueDetail) -> ()
+    let showFilterView: (Bool, IssueFilterViewControllerDelegate) -> ()
 }
 
 final class IssueListViewController: UIViewController, ViewControllerIdentifierable {
@@ -218,8 +219,14 @@ extension IssueListViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        fillCheckButton(tableView)
-        changeIssueNumLabel(tableView)
+        if tableView.isEditing {
+            fillCheckButton(tableView)
+            changeIssueNumLabel(tableView)
+        } else {
+            viewModel.selectIssue(at: indexPath.row) { [weak self] issueDetail in
+                self?.action?.showIssueDetailView(issueDetail)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -255,7 +262,7 @@ extension IssueListViewController {
 extension IssueListViewController {
     
     @objc func filterButtonTouched(_ sender: UIBarButtonItem) {
-        action?.showFilterView()
+        action?.showFilterView(true, self)
     }
     
 }
