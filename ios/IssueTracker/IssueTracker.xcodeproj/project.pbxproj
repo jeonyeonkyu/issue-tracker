@@ -42,7 +42,6 @@
 		AEE2A4D32670A00300FA6274 /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE2A4D22670A00300FA6274 /* IssueViewModel.swift */; };
 		AEE2A4D52670A8C000FA6274 /* IssueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE2A4D42670A8C000FA6274 /* IssueLabel.swift */; };
 		AEFD8EA926842BF800F46832 /* LoginURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EA826842BF800F46832 /* LoginURL.swift */; };
-		AEFD8EAD2684381200F46832 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = AEFD8EAC2684381200F46832 /* JWTDecode */; };
 		AEFD8EAF2684502A00F46832 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EAE2684502A00F46832 /* Keychain.swift */; };
 		AEFD8EB12684596C00F46832 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EB02684596C00F46832 /* KeychainManager.swift */; };
 		AEFD8EB32684632500F46832 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD8EB22684632500F46832 /* LoginUseCase.swift */; };
@@ -52,7 +51,6 @@
 		FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8CB2678704200342633 /* SceneFlowCoordinator.swift */; };
 		FF76F8CE2678739B00342633 /* ViewControllerIdentifierable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8CD2678739B00342633 /* ViewControllerIdentifierable.swift */; };
 		FF76F8D12678772000342633 /* FetchIssueListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76F8D02678772000342633 /* FetchIssueListUseCase.swift */; };
-		FF79E018267C73570088D2C7 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = FF79E017267C73570088D2C7 /* MarkdownView */; };
 		FF79E024267C74F00088D2C7 /* NewIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E023267C74F00088D2C7 /* NewIssueViewController.swift */; };
 		FF79E027267C750A0088D2C7 /* MarkdownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E026267C750A0088D2C7 /* MarkdownViewController.swift */; };
 		FF79E029267C75130088D2C7 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF79E028267C75130088D2C7 /* PreviewViewController.swift */; };
@@ -76,6 +74,8 @@
 		FFAC0E3F268182BA00E88E90 /* NewIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAC0E3E268182BA00E88E90 /* NewIssue.swift */; };
 		FFAC0E452681B0A900E88E90 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAC0E442681B0A900E88E90 /* Comment.swift */; };
 		FFAC0E472681B0F100E88E90 /* IssueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAC0E462681B0F100E88E90 /* IssueDetail.swift */; };
+		FFBEB01A2685AE7500617054 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = FFBEB0192685AE7500617054 /* MarkdownView */; };
+		FFBEB01D2685AE9600617054 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = FFBEB01C2685AE9600617054 /* JWTDecode */; };
 		FFCDAC5A2683007C00D4ABFF /* FetchIssueDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC592683007C00D4ABFF /* FetchIssueDetailUseCase.swift */; };
 		FFCDAC5C268318CC00D4ABFF /* DateManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC5B268318CC00D4ABFF /* DateManagable.swift */; };
 		FFCDAC63268322C100D4ABFF /* OpenCloseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC62268322C000D4ABFF /* OpenCloseLabel.swift */; };
@@ -224,8 +224,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEFD8EAD2684381200F46832 /* JWTDecode in Frameworks */,
-				FF79E018267C73570088D2C7 /* MarkdownView in Frameworks */,
+				FFBEB01D2685AE9600617054 /* JWTDecode in Frameworks */,
+				FFBEB01A2685AE7500617054 /* MarkdownView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,8 +707,8 @@
 			);
 			name = IssueTracker;
 			packageProductDependencies = (
-				AEFD8EAC2684381200F46832 /* JWTDecode */,
-				FF79E017267C73570088D2C7 /* MarkdownView */,
+				FFBEB0192685AE7500617054 /* MarkdownView */,
+				FFBEB01C2685AE9600617054 /* JWTDecode */,
 			);
 			productName = IssueTracker;
 			productReference = FF89A95A266F0BD000983577 /* IssueTracker.app */;
@@ -790,8 +790,8 @@
 			);
 			mainGroup = FF89A951266F0BD000983577;
 			packageReferences = (
-				AEFD8EAB2684381200F46832 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
-				FF79E016267C73570088D2C7 /* XCRemoteSwiftPackageReference "MarkdownView" */,
+				FFBEB0182685AE7500617054 /* XCRemoteSwiftPackageReference "MarkdownView" */,
+				FFBEB01B2685AE9600617054 /* XCRemoteSwiftPackageReference "JWTDecode" */,
 			);
 			productRefGroup = FF89A95B266F0BD000983577 /* Products */;
 			projectDirPath = "";
@@ -1381,15 +1381,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AEFD8EAB2684381200F46832 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.1;
-			};
-		};
-		FF79E016267C73570088D2C7 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
+		FFBEB0182685AE7500617054 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/keitaoouchi/MarkdownView";
 			requirement = {
@@ -1397,18 +1389,26 @@
 				minimumVersion = 1.7.1;
 			};
 		};
+		FFBEB01B2685AE9600617054 /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AEFD8EAC2684381200F46832 /* JWTDecode */ = {
+		FFBEB0192685AE7500617054 /* MarkdownView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AEFD8EAB2684381200F46832 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
-			productName = JWTDecode;
-		};
-		FF79E017267C73570088D2C7 /* MarkdownView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FF79E016267C73570088D2C7 /* XCRemoteSwiftPackageReference "MarkdownView" */;
+			package = FFBEB0182685AE7500617054 /* XCRemoteSwiftPackageReference "MarkdownView" */;
 			productName = MarkdownView;
+		};
+		FFBEB01C2685AE9600617054 /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFBEB01B2685AE9600617054 /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

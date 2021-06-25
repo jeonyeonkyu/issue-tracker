@@ -44,7 +44,7 @@ extension NetworkManager: NetworkManageable {
     }
     
     func imageUpload<R: Decodable>(path: String, data: Data?, result: R.Type) -> AnyPublisher<R, NetworkError> {
-        guard let url = EndPoint.url(path: path) else {
+        guard let url = EndPoint.url(path: path, nil) else {
             return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
         }
         guard let data = data else { return Fail(error: NetworkError.BadRequest).eraseToAnyPublisher() }
