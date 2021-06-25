@@ -48,7 +48,7 @@ public class Issue {
 
     public Issue update(Issue issue) {
         this.title = issue.title;
-        this.author = issue.author;
+        this.isClosed = issue.isClosed;
         this.assignees = issue.assignees;
         this.labels = issue.labels;
         this.milestone = issue.milestone;
