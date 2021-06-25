@@ -15,10 +15,12 @@ final class FilterViewModel {
     
     private var fetchFilterUseCase: FetchFilterUseCase
     private var filterUseCase: FilterUseCase
-
-    init(_ fetchIssueListUseCase: FetchFilterUseCase, _ filterUseCase: FilterUseCase) {
+    private var isIssueListDelegate: Bool
+    
+    init(_ fetchIssueListUseCase: FetchFilterUseCase, _ filterUseCase: FilterUseCase, _ isIssueListDelegate: Bool) {
         self.fetchFilterUseCase = fetchIssueListUseCase
         self.filterUseCase = filterUseCase
+        self.isIssueListDelegate = isIssueListDelegate
         self.identifierFilter = []
         self.error = ""
         loadFilters()
@@ -62,12 +64,21 @@ extension FilterViewModel {
     }
     
     private func loadFilterList(with filterList: FilterList) {
-        identifierFilter = [
-            Parent(title: "상태", isStatus: true, children: Status.allCases.map { Child(title: $0.rawValue)}),
-            Parent(title: "작성자", isStatus: false, children: filterList.users.map{ Child(title: $0.name)}),
-            Parent(title: "레이블", isStatus: false, children: filterList.labels.map{ Child(title:  $0.name)}),
-            Parent(title: "마일스톤", isStatus: false, children: filterList.mileStone.map{ Child(title:  $0.name)})
-        ]
+        
+        if isIssueListDelegate {
+            identifierFilter = [
+                Parent(title: "상태", isStatus: true, children: Status.allCases.map { Child(title: $0.rawValue, id: $0.hashValue)}),
+                Parent(title: "작성자", isStatus: false, children: filterList.users.map{ Child(title: $0.name, id: $0.id)}),
+                Parent(title: "레이블", isStatus: false, children: filterList.labels.map{ Child(title:  $0.name, id: $0.id)}),
+                Parent(title: "마일스톤", isStatus: false, children: filterList.mileStone.map{ Child(title:  $0.name, id: $0.id)})
+            ]
+        } else {
+            identifierFilter = [
+                Parent(title: "레이블", isStatus: false, children: filterList.labels.map{ Child(title:  $0.name, id: $0.id)}),
+                Parent(title: "마일스톤", isStatus: false, children: filterList.mileStone.map{ Child(title:  $0.name, id: $0.id)}),
+                Parent(title: "담당자", isStatus: false, children: filterList.users.map{ Child(title: $0.name, id: $0.id)})
+            ]
+        }
     }
     
     func fetchFilterList() -> AnyPublisher<[Parent], Never> {

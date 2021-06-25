@@ -11,6 +11,7 @@ import Combine
 protocol NetworkManageable {
     func get<T: Decodable>(path: String, _ code: String?, type: T.Type) -> AnyPublisher<T, NetworkError>
     func post<T: Encodable, R: Decodable>(path: String, data: T, result: R.Type) -> AnyPublisher<R, NetworkError>
+    func imageUpload<R: Decodable>(path: String, data: Data?, result: R.Type) -> AnyPublisher<R, NetworkError>
 }
 
 
@@ -40,6 +41,21 @@ extension NetworkManager: NetworkManageable {
             return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
         }
         return request(url: url, data: data, result: result)
+    }
+    
+    func imageUpload<R: Decodable>(path: String, data: Data?, result: R.Type) -> AnyPublisher<R, NetworkError> {
+        guard let url = EndPoint.url(path: path) else {
+            return Fail(error: NetworkError.BadURL).eraseToAnyPublisher()
+        }
+        guard let data = data else { return Fail(error: NetworkError.BadRequest).eraseToAnyPublisher() }
+        let boundary = generateBoundaryString()
+        let bodyData = buildBody(boundary: boundary,
+                                 fieldName: "file",
+                                 data: data,
+                                 mimType: "image/jpeg",
+                                 fileName: "\(Date().description).jpg")
+
+        return request(url: url, data: bodyData, result: result, boundary: boundary)
     }
     
 }
@@ -90,4 +106,42 @@ extension NetworkManager {
             }.eraseToAnyPublisher()
     }
     
+}
+
+extension NetworkManager {
+    
+    func request<R: Decodable>(url: URL, data: Data, result: R.Type, boundary: String) -> AnyPublisher<R, NetworkError> {
+        
+        return Just(data)
+            .map { data -> URLRequest in
+                var request = URLRequest(url: url)
+                request.httpMethod = HTTPMethodType.post
+                request.httpBody = data
+                request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                return request
+            }
+            .flatMap { request in
+                return self.request(with: request, type: R.self)
+            }.eraseToAnyPublisher()
+    }
+}
+
+extension NetworkManager {
+    
+    private func generateBoundaryString() -> String {
+        return "Boundary-\(UUID().uuidString)"
+    }
+    
+    private func buildBody(boundary: String, fieldName: String, data: Data, mimType: String, fileName: String) -> Data {
+        let headerLines = ["--\(boundary)",
+                           "Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(fileName)\"",
+                           "Content-Type: \(mimType)",
+                           "\r\n"
+        ]
+        var bodyData = headerLines.joined(separator: "\r\n").data(using: .utf8)!
+        bodyData.append(data)
+        bodyData.append(contentsOf: "\r\n--\(boundary)--\r\n".data(using:.utf8)!)
+        
+        return bodyData
+    }
 }

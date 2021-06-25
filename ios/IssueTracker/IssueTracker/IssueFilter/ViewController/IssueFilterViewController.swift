@@ -41,6 +41,7 @@ final class IssueFilterViewController: UIViewController {
         button.addTarget(self, action: #selector(cancelButtonTouched(_:)), for: .touchUpInside)
         return UIBarButtonItem(customView: button)
     }()
+    
     private lazy var saveButton: UIBarButtonItem = {
         let button = UIButton(type: .system)
         button.setTitle("저장", for: .normal)
