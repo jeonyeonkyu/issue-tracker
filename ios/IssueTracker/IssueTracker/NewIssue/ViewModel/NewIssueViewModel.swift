@@ -54,6 +54,10 @@ extension NewIssueViewModel {
         filteringSections = filterUseCase.filteringSection()
     }
     
+    func deselectAll() {
+        filterUseCase.deselectAll()
+    }
+    
 }
 
 //MARK: Image Upload

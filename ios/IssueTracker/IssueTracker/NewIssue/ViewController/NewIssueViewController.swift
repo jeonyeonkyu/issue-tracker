@@ -30,6 +30,14 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var filterView: UIView!
     
+    private lazy var cancelButton: UIBarButtonItem = {
+        let button = UIButton(type: .system)
+        button.setTitle(" Back", for: .normal)
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.addTarget(self, action: #selector(cancelButtonTouched(_:)), for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }()
+    
     private var viewModel: NewIssueViewModel!
     private var action: NewIssueViewControllerAction?
     private var markdownViewController: MarkdownViewController?
@@ -59,6 +67,8 @@ extension NewIssueViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         setSegmentControl()
         setRightBarButtonItem()
+        navigationItem.setHidesBackButton(true, animated: false)
+        navigationItem.leftBarButtonItem = cancelButton
         navigationItem.titleView = segmentControl
     }
     
@@ -103,6 +113,11 @@ extension NewIssueViewController {
     
     @objc func filterViewTouched(_ sender: UITapGestureRecognizer) {
         action?.showFilterView(false, self)
+    }
+    
+    @objc func cancelButtonTouched(_ sender: UIBarButtonItem) {
+        viewModel.deselectAll()
+        navigationController?.popViewController(animated: true)
     }
     
 }

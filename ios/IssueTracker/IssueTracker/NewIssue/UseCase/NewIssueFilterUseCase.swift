@@ -12,7 +12,7 @@ protocol FilterListFiterable: FilterUseCase {
 }
 
 final class NewIssueFilterUseCase: FilterListFiterable {
-
+    
     enum FilteringList: Int, CaseIterable {
         case label
         case milestone
@@ -54,7 +54,7 @@ extension NewIssueFilterUseCase {
                 if index.section == FilteringList.milestone.rawValue {
                     selectedIndex[$0.rawValue] = [index]
                 } else {
-                 selectedIndex[$0.rawValue].append(index)
+                    selectedIndex[$0.rawValue].append(index)
                 }
             }
     }
@@ -71,7 +71,9 @@ extension NewIssueFilterUseCase {
                 selectedIndex[$0.rawValue].remove(at: deselectIndex) }
     }
     
-    func deselectAll() { }
+    func deselectAll() {
+        savedIndex = []
+    }
     
     func saveIndexPaths() {
         savedIndex = selectedIndexPaths()
