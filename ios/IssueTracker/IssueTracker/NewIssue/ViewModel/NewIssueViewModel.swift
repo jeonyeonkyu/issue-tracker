@@ -20,6 +20,7 @@ final class NewIssueViewModel {
     @Published private(set) var error: String
     @Published private(set) var filteringSections: [[Child?]]
     @Published private(set) var imagePath: String
+    @Published private(set) var isSaveable: Bool
     
     private var postNewIssueUseCase: PostNewIssueUseCase
     private var uploadImageUseCase: UploadImageUseCase
@@ -33,6 +34,7 @@ final class NewIssueViewModel {
         self.error = ""
         self.imagePath = ""
         self.filteringSections = []
+        self.isSaveable = false
         self.filterUseCase = filterUseCase
         
         setFilteringSections()
@@ -54,8 +56,8 @@ extension NewIssueViewModel {
         filteringSections = filterUseCase.filteringSection()
     }
     
-    func deselectAll() {
-        filterUseCase.deselectAll()
+    func resetSavedIndex() {
+        filterUseCase.resetSavedIndex()
     }
     
 }
@@ -84,6 +86,18 @@ extension NewIssueViewModel {
 //MARK: - New Issue Save n Post
 
 extension NewIssueViewModel {
+    
+    func fetchIsSavealbe() -> AnyPublisher<Bool, Never> {
+        return $isSaveable.eraseToAnyPublisher()
+    }
+    
+    func checkSaveable(_ title: String, _ comments: String) {
+        if !title.isEmpty && !comments.isEmpty {
+            isSaveable = true
+        } else {
+            isSaveable = false
+        }
+    }
     
     func saveNewIssue(_ title: String, _ comments: String, completion: @escaping (IssueDetail) -> Void ) {
         let assigneeIds: [Int]? = filteringSections[FilteringSection.assignees.rawValue].map { $0?.id }.compactMap { $0 }

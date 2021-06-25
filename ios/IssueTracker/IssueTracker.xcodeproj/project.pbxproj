@@ -70,6 +70,7 @@
 		FFCDAC63268322C100D4ABFF /* OpenCloseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC62268322C000D4ABFF /* OpenCloseLabel.swift */; };
 		FFCDAC65268434B800D4ABFF /* NewIssueFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC64268434B800D4ABFF /* NewIssueFilterUseCase.swift */; };
 		FFCDAC672685479E00D4ABFF /* FilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC662685479E00D4ABFF /* FilterUseCase.swift */; };
+		FFCDAC692685717E00D4ABFF /* TextAreaCheckableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCDAC682685717E00D4ABFF /* TextAreaCheckableDelegate.swift */; };
 		FFE2AA122681B4D10026EBD5 /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2AA112681B4D10026EBD5 /* IssueDetailViewController.swift */; };
 		FFE2AA152681BB0F0026EBD5 /* IssueDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2AA142681BB0F0026EBD5 /* IssueDetailViewModel.swift */; };
 		FFE2AA172681C6510026EBD5 /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2AA162681C6510026EBD5 /* Emoji.swift */; };
@@ -175,6 +176,7 @@
 		FFCDAC62268322C000D4ABFF /* OpenCloseLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCloseLabel.swift; sourceTree = "<group>"; };
 		FFCDAC64268434B800D4ABFF /* NewIssueFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueFilterUseCase.swift; sourceTree = "<group>"; };
 		FFCDAC662685479E00D4ABFF /* FilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterUseCase.swift; sourceTree = "<group>"; };
+		FFCDAC682685717E00D4ABFF /* TextAreaCheckableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAreaCheckableDelegate.swift; sourceTree = "<group>"; };
 		FFE2AA112681B4D10026EBD5 /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
 		FFE2AA142681BB0F0026EBD5 /* IssueDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewModel.swift; sourceTree = "<group>"; };
 		FFE2AA162681C6510026EBD5 /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 			isa = PBXGroup;
 			children = (
 				FF79E023267C74F00088D2C7 /* NewIssueViewController.swift */,
+				FFCDAC682685717E00D4ABFF /* TextAreaCheckableDelegate.swift */,
 				FF79E025267C74FC0088D2C7 /* Container */,
 			);
 			path = ViewController;
@@ -834,6 +837,7 @@
 				FF76F8C82678701000342633 /* IssueTrackerDIContainer.swift in Sources */,
 				FFAC0E3F268182BA00E88E90 /* NewIssue.swift in Sources */,
 				FF89A960266F0BD000983577 /* SceneDelegate.swift in Sources */,
+				FFCDAC692685717E00D4ABFF /* TextAreaCheckableDelegate.swift in Sources */,
 				AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */,
 				AE7D391B2671A91400BF9487 /* UINibCreatable.swift in Sources */,
 				AE011CED267F8A3E00181FB9 /* FilterListCell.swift in Sources */,

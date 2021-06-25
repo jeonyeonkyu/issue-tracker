@@ -8,6 +8,7 @@
 import Foundation
 
 protocol FilterListFiterable: FilterUseCase {
+    func resetSavedIndex()
     func filteringSection() -> [[Child?]]
 }
 
@@ -71,7 +72,9 @@ extension NewIssueFilterUseCase {
                 selectedIndex[$0.rawValue].remove(at: deselectIndex) }
     }
     
-    func deselectAll() {
+    func deselectAll() {  }
+    
+    func resetSavedIndex() {
         savedIndex = []
     }
     

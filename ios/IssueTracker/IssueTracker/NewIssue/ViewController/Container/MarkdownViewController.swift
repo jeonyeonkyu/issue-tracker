@@ -23,12 +23,14 @@ final class MarkdownViewController: UIViewController, ViewControllerIdentifierab
     
     private var viewModel: NewIssueViewModel!
     private var cancelBag = Set<AnyCancellable>()
+    var delegate: TextAreaCheckableDelegate?
     let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
         bind()
+        
     }
     
 }
@@ -47,6 +49,7 @@ extension MarkdownViewController {
     }
     
     private func setTextView() {
+        textView.delegate = self
         let imageMenuItem = UIMenuItem(title: "Insert Photo", action: #selector(imageMenuDidTapped(_:)))
         UIMenuController.shared.menuItems = [imageMenuItem]
     }
@@ -75,6 +78,16 @@ extension MarkdownViewController: UIImagePickerControllerDelegate & UINavigation
         let imageData = selectedImage.jpegData(compressionQuality: 0.2)
         viewModel.requestUploadImage(imageData)
         dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+//MARK: - Editing
+
+extension MarkdownViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        delegate?.checkTextArea()
     }
     
 }

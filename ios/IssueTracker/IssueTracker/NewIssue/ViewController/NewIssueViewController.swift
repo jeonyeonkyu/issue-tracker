@@ -38,6 +38,15 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
         return UIBarButtonItem(customView: button)
     }()
     
+    private lazy var saveButton: UIBarButtonItem = {
+        let button = UIButton(type: .system)
+        button.frame = CGRect(x: 0, y: 0, width: 38, height: 18)
+        button.setTitle("Save", for: .normal)
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(saveButtonTouched(_:)), for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }()
+    
     private var viewModel: NewIssueViewModel!
     private var action: NewIssueViewControllerAction?
     private var markdownViewController: MarkdownViewController?
@@ -48,6 +57,7 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
     override func viewDidLoad() {
         super.viewDidLoad()
         setting()
+        bind()
     }
     
 }
@@ -57,8 +67,14 @@ final class NewIssueViewController: UIViewController, ViewControllerIdentifierab
 extension NewIssueViewController {
     
     private func setting() {
+        setTextField()
         setNavigation()
         setFilterView()
+    }
+    
+    private func setTextField() {
+        titleTextField.delegate = self
+        markdownViewController?.delegate = self
     }
 
     private func setNavigation() {
@@ -66,9 +82,7 @@ extension NewIssueViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         setSegmentControl()
-        setRightBarButtonItem()
-        navigationItem.setHidesBackButton(true, animated: false)
-        navigationItem.leftBarButtonItem = cancelButton
+        setBarButtonItems()
         navigationItem.titleView = segmentControl
     }
     
@@ -92,32 +106,26 @@ extension NewIssueViewController {
         segmentControl.sendActions(for: .valueChanged)
     }
     
-    private func setRightBarButtonItem() {
-        let button = UIButton(type: .system)
-        button.setTitle("Save", for: .normal)
-        button.addTarget(self, action: #selector(saveButtonTouched(_:)), for: .touchUpInside)
-        button.tintColor = #colorLiteral(red: 0.6313168406, green: 0.6274867654, blue: 0.611690104, alpha: 1)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-    }
-
-    @objc func segmentChanged(_ sender: UISegmentedControl) {
-        updateView()
-    }
-    
-    @objc func saveButtonTouched(_ sender: UIButton) {
-        guard let title = titleTextField.text, let comments = markdownViewController?.textView.text else { return }
-        viewModel.saveNewIssue(title, comments) { [weak self] issueDetail in
-            self?.action?.showIssueDetailView(issueDetail)
-        }
-    }
-    
-    @objc func filterViewTouched(_ sender: UITapGestureRecognizer) {
-        action?.showFilterView(false, self)
+    private func setBarButtonItems() {
+        navigationItem.setHidesBackButton(true, animated: false)
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     @objc func cancelButtonTouched(_ sender: UIBarButtonItem) {
-        viewModel.deselectAll()
+        viewModel.resetSavedIndex()
         navigationController?.popViewController(animated: true)
+    }
+    
+}
+
+extension NewIssueViewController {
+    
+    func bind() {
+        viewModel.fetchIsSavealbe().receive(on: DispatchQueue.main)
+            .sink { [weak self] isSaveable in
+                self?.checkSaveButtonState(isSaveable)
+            }.store(in: &cancelBag)
     }
     
 }
@@ -125,6 +133,10 @@ extension NewIssueViewController {
 //MARK: - Segment Action
 
 extension NewIssueViewController {
+    
+    @objc func segmentChanged(_ sender: UISegmentedControl) {
+        updateView()
+    }
     
     private func add(asChildViewController viewController: UIViewController) {
         addChild(viewController)
@@ -158,6 +170,10 @@ extension NewIssueViewController {
 
 extension NewIssueViewController: IssueFilterViewControllerDelegate {
     
+    @objc func filterViewTouched(_ sender: UITapGestureRecognizer) {
+        action?.showFilterView(false, self)
+    }
+    
     func issueFilterViewControllerDidCancel() {
         dismiss(animated: true, completion: nil)
     }
@@ -165,6 +181,33 @@ extension NewIssueViewController: IssueFilterViewControllerDelegate {
     func issueFilterViewControllerDidSave() {
         viewModel.filter()
         dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+//MARK: - Save Button
+
+extension NewIssueViewController: UITextFieldDelegate, TextAreaCheckableDelegate {
+    
+    func checkSaveButtonState(_ isSaveable: Bool) {
+        saveButton.isEnabled = isSaveable
+    }
+    
+    func checkTextArea() {
+        guard let title = titleTextField.text, let comments = markdownViewController?.textView.text else { return }
+        viewModel.checkSaveable(title, comments)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        checkTextArea()
+        return true
+    }
+    
+    @objc func saveButtonTouched(_ sender: UIButton) {
+        guard let title = titleTextField.text, let comments = markdownViewController?.textView.text else { return }
+        viewModel.saveNewIssue(title, comments) { [weak self] issueDetail in
+            self?.action?.showIssueDetailView(issueDetail)
+        }
     }
     
 }
