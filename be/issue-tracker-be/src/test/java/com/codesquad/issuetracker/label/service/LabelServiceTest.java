@@ -45,7 +45,8 @@ class LabelServiceTest {
 
         LabelResponses actual = labelService.readAll();
 
-        then(actual).isEqualTo(expected);
+        then(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 
     @SuppressWarnings("unused")
@@ -81,7 +82,8 @@ class LabelServiceTest {
 
         LabelResponse actual = labelService.create(givenParameter);
 
-        thenVerifyLabel(actual, expected);
+        then(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 
     @SuppressWarnings("unused")
@@ -116,7 +118,8 @@ class LabelServiceTest {
 
         LabelResponse actual = labelService.update(given.getId(), LabelRequest.from(given));
 
-        thenVerifyLabel(actual, expected);
+        then(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 
     @SuppressWarnings("unused")
@@ -149,12 +152,5 @@ class LabelServiceTest {
                         1L
                 )
         );
-    }
-
-    private void thenVerifyLabel(LabelResponse actual, LabelResponse expected) {
-        assertThat(actual.getId()).isEqualTo(expected.getId());
-        assertThat(actual.getName()).isEqualTo(expected.getName());
-        assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
-        assertThat(actual.getColor()).isEqualTo(expected.getColor());
     }
 }

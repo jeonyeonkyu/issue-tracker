@@ -33,19 +33,10 @@ public class IssueService {
     }
 
     public IssueDetailResponse create(IssueRequest issueRequest) {
+        // TODO: 여기도 검증 필요
         Issue issueForSave = IssueDtoMapper.toEntity(issueRequest);
 
         return IssueDetailResponse.from(issueRepository.save(issueForSave));
-    }
-
-    public IssueDetailResponse update(long issueId, IssueRequest issueRequest) {
-        Issue issue = issueRepository.readById(issueId)
-                              .orElseThrow(() -> new EntityNotFoundException());
-
-        issue.update(IssueDtoMapper.toEntity(issueRequest));
-
-        return IssueDetailResponse.from(issueRepository.save(issue));
-
     }
 
     public IssueDetailResponse update(long issueId, IssueUpdateRequest issueUpdateRequest) {
@@ -55,6 +46,5 @@ public class IssueService {
         issue.update(IssueDtoMapper.toEntity(issueUpdateRequest));
 
         return IssueDetailResponse.from(issueRepository.save(issue));
-
     }
 }

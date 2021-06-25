@@ -39,7 +39,7 @@ public class LabelDtoMapper {
     }
 
     public static LabelResponses toResponses(Labels labels) {
-        if (labels.isEmpty()) {
+        if (labels == null) {
             return LabelResponses.from(Collections.emptyList());
         }
 

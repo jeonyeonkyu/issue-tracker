@@ -26,12 +26,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.BDDAssertions.then;
 
 @SpringBootTest(classes = {IssueService.class})
 class IssueServiceTest {
@@ -55,9 +57,8 @@ class IssueServiceTest {
 
         IssueResponses actual = issueService.readAll(user);
 
-        for (int i = 0; i < actual.getIssueResponses().size(); i++) {
-            IssueTestValidator.thenVerifyIssue(actual.getIssueResponses().get(i), expected.getIssueResponses().get(i));
-        }
+        then(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 
     @SuppressWarnings("unused")
@@ -174,7 +175,8 @@ class IssueServiceTest {
 
         IssueDetailResponse actual = issueService.readOne(given.getId());
 
-        IssueTestValidator.thenVerifyIssue(actual, expected);
+        then(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 
     @SuppressWarnings("unused")
@@ -243,7 +245,8 @@ class IssueServiceTest {
 
         IssueDetailResponse actual = issueService.create(issueRequest);
 
-        IssueTestValidator.thenVerifyIssue(actual, expected);
+        then(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 
     @SuppressWarnings("unused")
@@ -348,7 +351,6 @@ class IssueServiceTest {
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
                                 .author(UserDummyData.userFreddie())
                                 .assignees(UserDummyData.users())
-                                .labels(LabelDummyData.labels())
                                 .milestone(MilestoneDummyData.openedMilestone())
                                 .mainComment(IssueDummyData.commentByFreddie())
                                 .build(),
@@ -357,7 +359,6 @@ class IssueServiceTest {
                                 .mainCommentContents(IssueDummyData.commentByFreddie().getContents())
                                 .authorId(UserDummyData.userFreddie().getId())
                                 .assigneeIds(UserDummyData.users().stream().map(User::getId).collect(Collectors.toSet()))
-                                .labelIds(LabelDummyData.labels().stream().map(Label::getId).collect(Collectors.toSet()))
                                 .milestoneId(MilestoneDummyData.openedMilestone().getId())
                                 .build(),
                         IssueDetailResponse.builder()
@@ -367,7 +368,7 @@ class IssueServiceTest {
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
                                 .author(UserResponse.from(UserDummyData.userFreddie()))
                                 .assignees(UserResponses.from(UserDummyData.users()))
-                                .labels(LabelResponses.from(LabelDummyData.labels()))
+                                .labels(LabelResponses.from(Collections.emptyList()))
                                 .milestone(MilestoneResponse.from(MilestoneDummyData.openedMilestone()))
                                 .mainComment(CommentResponse.from(IssueDummyData.commentByFreddie()))
                                 .build()
@@ -405,6 +406,7 @@ class IssueServiceTest {
                                 .title("title")
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
                                 .author(UserResponse.from(UserDummyData.userFreddie()))
+                                .assignees(UserResponses.from(Collections.emptyList()))
                                 .labels(LabelResponses.from(LabelDummyData.labels()))
                                 .milestone(MilestoneResponse.from(MilestoneDummyData.openedMilestone()))
                                 .mainComment(CommentResponse.from(IssueDummyData.commentByFreddie()))
@@ -442,6 +444,7 @@ class IssueServiceTest {
                                 .number(1L)
                                 .title("title")
                                 .createDateTime(LocalDateTime.of(2021, 6, 21, 16, 0))
+                                .mainComment(CommentResponse.builder().build())
                                 .author(UserResponse.from(UserDummyData.userFreddie()))
                                 .assignees(UserResponses.from(UserDummyData.users()))
                                 .labels(LabelResponses.from(LabelDummyData.labels()))
@@ -463,7 +466,8 @@ class IssueServiceTest {
 
         IssueDetailResponse actual = issueService.update(givenForReadById.getId(), issueUpdateRequest);
 
-        IssueTestValidator.thenVerifyIssue(actual, expected);
+        then(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 
     @SuppressWarnings("unused")
