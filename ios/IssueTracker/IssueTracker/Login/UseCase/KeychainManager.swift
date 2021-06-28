@@ -16,15 +16,15 @@ class KeychainManager {
     }
     
     class func loadUser() -> User? {
-        guard let idData = Keychain.load(key: "jwt") else { return nil }
-        guard let id = String(data: idData, encoding: .utf8) else { return nil }
+        guard let jwtData = Keychain.load(key: "jwt") else { return nil }
+        guard let jwtString = String(data: jwtData, encoding: .utf8) else { return nil }
 
-        guard let userID = try? decode(jwt: id).body["name"] as? Int else { return nil }
-        guard let userEmail = try? decode(jwt: id).body["name"] as? String else { return nil }
-        guard let userName = try? decode(jwt: id).body["name"] as? String else { return nil }
-        guard let userProfileImage = try? decode(jwt: id).body["name"] as? String else { return nil }
+        guard let userID = try? decode(jwt: jwtString).body["id"] as? Int else { return nil }
+        let userEmail = try? decode(jwt: jwtString).body["email"] as? String ?? "user1@email.com"
+        guard let userName = try? decode(jwt: jwtString).body["displayName"] as? String else { return nil }
+        guard let userProfileImage = try? decode(jwt: jwtString).body["profilePhoto"] as? String else { return nil }
         
-        let user = User(id: userID, email: userEmail, name: userName, profileImage: userProfileImage)
+        let user = User(id: userID, email: userEmail!, name: userName, profileImage: userProfileImage)
         return user
     }
     
