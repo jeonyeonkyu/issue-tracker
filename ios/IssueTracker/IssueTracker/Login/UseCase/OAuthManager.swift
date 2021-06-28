@@ -8,11 +8,20 @@
 import Foundation
 import Combine
 
+protocol OAuthManager {
+    func requestCode(handler: @escaping (URL, String)->())
+    func requestJWT(with code: URL)
+    func fetchJWT() -> AnyPublisher<JWT, Never>
+    func fetchError() -> AnyPublisher<NetworkError, Never>
+}
+
+
 struct JWT: Decodable {
     let jwt: String
 }
 
-class OAuthManager {
+
+final class DefaultOAuthManager: OAuthManager {
     
     @Published private var jwt: JWT
     @Published private var error: NetworkError
@@ -28,7 +37,7 @@ class OAuthManager {
     
 }
 
-extension OAuthManager {
+extension DefaultOAuthManager {
     
     func requestCode(handler: @escaping (URL, String)->()) {
         let url = LoginURL.url()!
