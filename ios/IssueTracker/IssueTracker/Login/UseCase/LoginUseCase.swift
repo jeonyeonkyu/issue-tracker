@@ -11,12 +11,12 @@ import Combine
 
 class LoginUseCase {
     
-    private var oauthManager: OAuthManager
+    private var oauthManager: OAuthManagerable
     
     @Published private var error: NetworkError
     private var cancelBag = Set<AnyCancellable>()
     
-    init(loginManager: OAuthManager) {
+    init(loginManager: OAuthManagerable) {
         self.oauthManager = loginManager
         self.error = .Unknown
         bindJWT()

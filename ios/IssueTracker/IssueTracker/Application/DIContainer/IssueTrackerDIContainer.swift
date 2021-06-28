@@ -13,8 +13,8 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     private let issueListFilterUseCase = IssueListFilterUseCase()
     private let newIssueFilterUseCase = NewIssueFilterUseCase()
     
-    private func makeLoginManager() -> OAuthManager {
-        return OAuthManager(networkManager: networkManager)
+    private func makeLoginManager() -> OAuthManagerable {
+        return MockOAuthManager(networkManager: networkManager)
     }
     
     private func makeLoginUseCase() -> LoginUseCase {
