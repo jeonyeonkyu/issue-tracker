@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
 }
 
 
-extension LoginViewController: ASWebAuthenticationPresentationContextProviding, Alertable {
+extension LoginViewController: Alertable {
     
     private func bind() {
         viewModel.fetchError()
@@ -47,6 +47,11 @@ extension LoginViewController: ASWebAuthenticationPresentationContextProviding, 
                 self.showAlert(message: error)
             }.store(in: &cancelBag)
     }
+    
+}
+
+
+extension LoginViewController: ASWebAuthenticationPresentationContextProviding {
     
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return self.view.window ?? ASPresentationAnchor()
