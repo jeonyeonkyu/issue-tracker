@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class MockOAuthManager: OAuthManager {
+final class MockOAuthManager: OAuthManagerable {
     
     @Published private var jwt: JWT
     @Published private var error: NetworkError
