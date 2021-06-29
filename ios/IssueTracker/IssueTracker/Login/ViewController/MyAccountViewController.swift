@@ -40,18 +40,18 @@ class MyAccountViewController: UIViewController {
 extension MyAccountViewController {
     
     private func setUI() {
-        let frame = tabBarItem.accessibilityFrame
-        viewModel.fillUI { profileImage, _, _ in
-            self.tabBarItem = UITabBarItem(title: "Profile", image: profileImage.withRenderingMode(.alwaysOriginal), selectedImage: nil)
-            self.tabBarItem.image = profileImage
+        viewModel.fillUI { [weak self] profileImage, _, _ in
+            self?.tabBarItem.title = "Profile"
+            self?.tabBarItem.image = profileImage.withRenderingMode(.alwaysOriginal)
+            self?.tabBarItem.imageInsets = UIEdgeInsets(top: 110, left: 110, bottom: 110, right: 110)
         }
     }
     
     private func fillUI() {
-        viewModel.fillUI { profileImage, name, email in
-            self.profileImageView.image = profileImage
-            self.nameLabel.text = name
-            self.emailLabel.text = email
+        viewModel.fillUI { [weak self] profileImage, name, email in
+            self?.profileImageView.image = profileImage
+            self?.nameLabel.text = name
+            self?.emailLabel.text = email
         }
     }
     

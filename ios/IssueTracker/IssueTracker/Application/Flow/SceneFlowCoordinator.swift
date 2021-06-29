@@ -64,6 +64,7 @@ extension SceneFlowCoordinator {
         let viewControllers = [issueListViewController, loginViewController]
         let tabBarController = dependencies.makeIssueListTabBarController(viewControllers)
 
+        rootVC?.setNavigationBarHidden(true, animated: false)
         rootVC?.pushViewController(tabBarController, animated: true)
     }
     
