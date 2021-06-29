@@ -13,10 +13,10 @@ final class MockOAuthManager: OAuthManagerable {
     @Published private var jwt: JWT
     @Published private var error: NetworkError
     
-    private var networkManager: NetworkManageable!
+    private var networkManager: NetworkManagerable!
     private var cancelBag = Set<AnyCancellable>()
     
-    init(networkManager: NetworkManageable) {
+    init(networkManager: NetworkManagerable) {
         self.networkManager = networkManager
         self.jwt = JWT(jwt: "")
         self.error = .Unknown
