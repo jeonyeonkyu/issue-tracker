@@ -45,6 +45,7 @@ extension LoginViewController: Alertable {
             .receive(on: DispatchQueue.main)
             .sink { error in
                 self.showAlert(message: error)
+                self.webAuthSession = nil
             }.store(in: &cancelBag)
     }
     
@@ -65,6 +66,7 @@ extension LoginViewController: ASWebAuthenticationPresentationContextProviding {
     }
 
     @IBAction func githubLoginButtonTouched(_ sender: UIButton) {
+        configureWebAuthSession()
         webAuthSession?.start()
     }
     
