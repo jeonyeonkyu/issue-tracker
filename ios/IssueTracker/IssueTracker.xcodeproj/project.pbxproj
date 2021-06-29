@@ -35,6 +35,7 @@
 		AEB5149D26825A99007DC865 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB5149C26825A99007DC865 /* OAuthManager.swift */; };
 		AEB5547A267B2B1D003F631E /* IssueFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */; };
 		AEC6A0B226896C8300E4CF66 /* MockOAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC6A0B126896C8300E4CF66 /* MockOAuthManager.swift */; };
+		AEC6A0B4268994DF00E4CF66 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC6A0B3268994DF00E4CF66 /* LoginManager.swift */; };
 		AECEA442266F38D000855F20 /* IssueDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA441266F38D000855F20 /* IssueDataSource.swift */; };
 		AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECEA443266F3AD900855F20 /* IssueCell.swift */; };
 		AECEA446266F3AD900855F20 /* IssueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AECEA444266F3AD900855F20 /* IssueCell.xib */; };
@@ -148,6 +149,7 @@
 		AEB5149C26825A99007DC865 /* OAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthManager.swift; sourceTree = "<group>"; };
 		AEB55479267B2B1D003F631E /* IssueFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterViewController.swift; sourceTree = "<group>"; };
 		AEC6A0B126896C8300E4CF66 /* MockOAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOAuthManager.swift; sourceTree = "<group>"; };
+		AEC6A0B3268994DF00E4CF66 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		AECEA441266F38D000855F20 /* IssueDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDataSource.swift; sourceTree = "<group>"; };
 		AECEA443266F3AD900855F20 /* IssueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
 		AECEA444266F3AD900855F20 /* IssueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueCell.xib; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				AEFD8EB22684632500F46832 /* LoginUseCase.swift */,
+				AEC6A0B3268994DF00E4CF66 /* LoginManager.swift */,
 				AEB5149C26825A99007DC865 /* OAuthManager.swift */,
 				AEC6A0B126896C8300E4CF66 /* MockOAuthManager.swift */,
 				AEFD8EB02684596C00F46832 /* KeychainManager.swift */,
@@ -884,6 +887,7 @@
 				FF79E024267C74F00088D2C7 /* NewIssueViewController.swift in Sources */,
 				AE011CEF267F8A5100181FB9 /* SectionListCell.swift in Sources */,
 				AECEA445266F3AD900855F20 /* IssueCell.swift in Sources */,
+				AEC6A0B4268994DF00E4CF66 /* LoginManager.swift in Sources */,
 				AE7D39432672033800BF9487 /* UIView+HiddenWithAnimation.swift in Sources */,
 				AE90D883268502A4004719C5 /* MyAccountViewModel.swift in Sources */,
 				FF76F8CC2678704200342633 /* SceneFlowCoordinator.swift in Sources */,

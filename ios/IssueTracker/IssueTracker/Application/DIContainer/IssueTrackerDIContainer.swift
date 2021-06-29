@@ -13,6 +13,30 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     private let issueListFilterUseCase = IssueListFilterUseCase()
     private let newIssueFilterUseCase = NewIssueFilterUseCase()
     
+}
+
+
+extension IssueTrackerDIContainer {
+    
+    func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController {
+        return UINavigationController(rootViewController: makeIssueListViewController(action))
+    }
+    
+    func makeIssueListTabBarController(_ viewControllers: [UIViewController]) -> UITabBarController {
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = viewControllers
+        return tabBarController
+    }
+    
+    func makeSceneFlowCoordinator(_ rootViewController: UINavigationController) -> SceneFlowCoordinator {
+        return SceneFlowCoordinator(rootViewController, self)
+    }
+}
+
+//MARK: - Login ViewController
+
+extension IssueTrackerDIContainer {
+    
     private func makeLoginManager() -> OAuthManagerable {
         return MockOAuthManager(networkManager: networkManager)
     }
@@ -25,9 +49,19 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
         return LoginViewModel(loginUseCase: makeLoginUseCase())
     }
     
-    private func makeLoginViewController() -> LoginViewController {
+    func makeLoginViewController() -> LoginViewController {
         return LoginViewController.create(makeLoginViewModel())
     }
+    
+    func makeMyAccountViewController() -> MyAccountViewController {
+        return MyAccountViewController.create(MyAccountViewModel())
+    }
+    
+}
+
+//MARK: - IssueList ViewController
+
+extension IssueTrackerDIContainer {
     
     private func makeFetchIssueListUseCase() -> FetchIssueListUseCase {
         return DefaultFetchIssueListUseCase(networkManager: networkManager)
@@ -36,18 +70,10 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
     private func makeFetchIssueDetailUseCase() -> FetchIssueDetailUseCase {
         return DefaultFetchIssueDetailUseCase(networkManager: networkManager)
     }
-    
-    private func makeFetchFilterUseCase() -> FetchFilterUseCase {
-        return DefaultFetchFilterUseCase(networkManager: networkManager)
-    }
+
     
     private func makeIssueListViewModel() -> IssueViewModel {
         return IssueViewModel(makeFetchIssueListUseCase(), issueListFilterUseCase, makeFetchIssueDetailUseCase())
-    }
-    
-    private func makeFilterViewModel(_ isIssueListDelegate: Bool) -> FilterViewModel {
-        let usecase: FilterUseCase = isIssueListDelegate ? issueListFilterUseCase : newIssueFilterUseCase
-        return FilterViewModel(makeFetchFilterUseCase(), usecase, isIssueListDelegate)
     }
     
     private func makeIssueListViewController(_ action: IssueListViewControllerAction) -> IssueListViewController {
@@ -56,24 +82,25 @@ final class IssueTrackerDIContainer: SceneFlowCoordinatorDependencies {
         return IssueListViewController.create(viewModel, dataSource, action)
     }
     
+}
+
+//MARK: - Filter ViewController
+
+extension IssueTrackerDIContainer {
+    
+    private func makeFetchFilterUseCase() -> FetchFilterUseCase {
+        return DefaultFetchFilterUseCase(networkManager: networkManager)
+    }
+    
+    private func makeFilterViewModel(_ isIssueListDelegate: Bool) -> FilterViewModel {
+        let usecase: FilterUseCase = isIssueListDelegate ? issueListFilterUseCase : newIssueFilterUseCase
+        return FilterViewModel(makeFetchFilterUseCase(), usecase, isIssueListDelegate)
+    }
+    
     func makeIssueFilterViewController(_ isIssueListDelegate: Bool) -> IssueFilterViewController {
         return IssueFilterViewController.create(makeFilterViewModel(isIssueListDelegate))
     }
     
-    func makeIssueListNavigationController(_ action: IssueListViewControllerAction) -> UINavigationController {
-        return UINavigationController(rootViewController: makeLoginViewController())
-        //makeIssueListViewController(action))
-    }
-    
-    func makeIssueListTabBarController(_ viewControllers: [UIViewController]) -> UITabBarController {
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = viewControllers
-        return tabBarController
-    }
-    
-    func makeSceneFlowCoordinator(_ rootViewController: UINavigationController) -> SceneFlowCoordinator {
-        return SceneFlowCoordinator(rootViewController, self)
-    }
 }
 
 //MARK: - NewIssue ViewController

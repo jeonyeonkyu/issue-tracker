@@ -27,6 +27,7 @@ class MyAccountViewModel {
     
     func logout() {
         KeychainManager.delete()
+        LoginManager.shared.checkLogin()
     }
     
 }

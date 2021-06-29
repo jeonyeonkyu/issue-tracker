@@ -30,13 +30,22 @@ class MyAccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setUI()
+        fillUI()
     }
     
 }
 
 
 extension MyAccountViewController {
+    
+    private func setUI() {
+        let frame = tabBarItem.accessibilityFrame
+        viewModel.fillUI { profileImage, _, _ in
+            self.tabBarItem = UITabBarItem(title: "Profile", image: profileImage.withRenderingMode(.alwaysOriginal), selectedImage: nil)
+            self.tabBarItem.image = profileImage
+        }
+    }
     
     private func fillUI() {
         viewModel.fillUI { profileImage, name, email in

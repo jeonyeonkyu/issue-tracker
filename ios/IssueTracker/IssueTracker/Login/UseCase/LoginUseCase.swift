@@ -40,9 +40,11 @@ extension LoginUseCase {
     
     private func bindJWT() {
         oauthManager.fetchJWT()
+            .dropFirst(1)
             .receive(on: DispatchQueue.main)
             .sink { jwt in
                 KeychainManager.save(jwt: jwt.jwt)
+                LoginManager.shared.checkLogin()
             }.store(in: &cancelBag)
         
         oauthManager.fetchError()
