@@ -321,6 +321,7 @@
 				AE7505322670EE0600BA14F7 /* UIColor+hexToUIColor.swift */,
 				FF76F8B42677300300342633 /* UIBarButtonItem+setTitle.swift */,
 				FF76F8CD2678739B00342633 /* ViewControllerIdentifierable.swift */,
+				AE90D87E2684F1C8004719C5 /* Alertable.swift */,
 				FFCDAC5B268318CC00D4ABFF /* DateManagable.swift */,
 				FFCDAC662685479E00D4ABFF /* FilterUseCase.swift */,
 			);
@@ -391,7 +392,6 @@
 			children = (
 				AEB514992682380A007DC865 /* LoginViewController.swift */,
 				AE90D8802684F30E004719C5 /* MyAccountViewController.swift */,
-				AE90D87E2684F1C8004719C5 /* Alertable.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
